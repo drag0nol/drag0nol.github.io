@@ -1,9 +1,15 @@
+:root{
+    --bg_color : indigo;
+    --bg2_color : rgb(108, 4, 245);
+    --text_color : black;
+}
+
 *{
-    color: black;
+    color: white;
     font-family: 'Courier New', Courier, monospace;
 }
 body{
-    background-color: darkgray
+    background-color: var(--bg_color)
 }
 
 
@@ -15,7 +21,7 @@ header{
     margin: 0px;
     left: 0;
     top: 0;
-    background-color: darkgray;
+    background-color: var(--bg_color);
     z-index: 10;
 }
 h1{
@@ -32,7 +38,7 @@ ul li{
     text-align: center;
     text-align: left;
     margin: 5px;
-    background-color: darkgrey;
+    background-color: var(--bg_color);
     padding: 5px;
     border-radius: 25px;
     width: fit-content;
@@ -41,7 +47,7 @@ ul li{
 }
 
 ul li:hover{
-    background-color: rgb(70, 70, 70);
+    background-color: blueviolet;
     padding: 5px 20px 5px 20px;
     transition: .5s;
 }
@@ -53,21 +59,25 @@ a{
 
 
 .left-side{
-    width: 25%;
+    width: 250px;
     height: 100%;
     position: fixed;
-    padding-top: 100px;
+    top: 100px;
     left: 0;
-    top: 0;
-    background-color: darkgray;
+    background-color: var(--bg_color);
 }
 .right-side{
-    width: 75%;
-    border-radius: 50px 0 0 0;
-    background-color: gray;
+    border-radius: 25px 0 0 25px;
+    background-color: var(--bg2_color);
     position: absolute;
-    right: 0;
+    left: 250px;
     top: 100px;
+}
+
+.right-side p{
+    border: solid 2px rgb(116, 40, 245);
+    border-radius: 25px;
+    box-shadow: 5px 5px 5px purple
 }
 
 .right-side h2{
