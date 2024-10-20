@@ -1,15 +1,18 @@
 :root{
-    --bg_color : indigo;
-    --bg2_color : rgb(108, 4, 245);
-    --text_color : black;
+    --bg_color : rgb(160, 1, 1);
+    --bg2_color : rgb(43, 43, 43);
+    --text_color : white;
+    --bg-button: rgb(231, 0, 0);
+    --border-color: rgb(245, 40, 40);
+    --shadow-color: red;
 }
 
 *{
-    color: white;
+    color: var(--text_color);
     font-family: 'Courier New', Courier, monospace;
 }
 body{
-    background-color: var(--bg_color)
+    background-color: var(--bg_color);
 }
 
 
@@ -64,8 +67,8 @@ ul li{
 }
 
 ul li:hover{
-    background-color: blueviolet;
-    padding: 5px 20px 5px 20px;
+    background-color: var(--bg-button);
+    padding: 5px 10px 5px 10px;
     transition: .5s;
 }
 
@@ -78,9 +81,10 @@ a{
 
 
 .right-side p{
-    border: solid 2px rgb(116, 40, 245);
+    border: solid 2px var(--border-color);
     border-radius: 25px;
-    box-shadow: 5px 5px 5px purple
+    box-shadow: 5px 5px 5px var(--shadow-color);
+    margin: 30px;
 }
 
 .right-side h2{
