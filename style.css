@@ -46,11 +46,12 @@ header{
 
 .stat{
     border: solid 2px var(--border-color);
-    background-color: var(--bg2_color);
     border-radius: 25px;
     box-shadow: 5px 5px 5px var(--shadow-color);
     margin: 10px;
     transition: 0.5s;
+    width: 95%;
+    height: auto;
 }
 
 .stat:hover{
