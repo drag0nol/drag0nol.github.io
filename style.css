@@ -43,6 +43,9 @@ header{
     left: 250px;
     top: 100px;
 }
+.statmenu{
+    width: 100%;
+}
 
 .stat{
     border: solid 2px var(--border-color);
