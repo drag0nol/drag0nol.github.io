@@ -44,6 +44,18 @@ header{
     top: 100px;
 }
 
+.stat{
+    border: solid 2px var(--border-color);
+    border-radius: 25px;
+    box-shadow: 5px 5px 5px var(--shadow-color);
+    margin: 10px;
+    transition: 0.5s;
+}
+
+.stat:hover{
+    background-color: var(--bg_color);
+}
+
 h1{
     margin: 10px;
     padding: 5px;
@@ -54,7 +66,12 @@ ul{
     text-align: center;
 }
 
-ul li{
+li{
+    list-style-type: none;
+
+}
+
+ul.menu li{
     text-align: center;
     text-align: left;
     margin: 5px;
@@ -66,7 +83,7 @@ ul li{
     list-style-type: none;
 }
 
-ul li:hover{
+ul.menu li:hover{
     background-color: var(--bg-button);
     padding: 5px 10px 5px 10px;
     transition: .5s;
