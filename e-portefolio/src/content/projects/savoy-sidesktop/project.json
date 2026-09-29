@@ -1,0 +1,225 @@
+{
+  "title": "SIDesktop 2.0",
+  "category": "Stage BUT2",
+  "summary": "Refonte outil interne (supervision/reporting) pour Savoy International. API .NET + Vue.js, droits, proactivité.",
+  "tags": [
+    ".NET",
+    "Vue.js",
+    "DB2 / SQL Server"
+  ],
+  "order": 2,
+  "header": {
+    "kicker": "Stage BUT2",
+    "title": "SIDesktop 2.0 — Supervision & Reporting",
+    "smallTitle": true,
+    "subtitle": "Refonte de l'outil interne pour Savoy International (Cluses)",
+    "criteria": {
+      "title": "Apprentissages Critiques mobilisés",
+      "items": [
+        {
+          "code": "AC21.01",
+          "text": "Spécifications fonctionnelles et non fonctionnelles"
+        },
+        {
+          "code": "AC21.04",
+          "text": "Tests & validation"
+        },
+        {
+          "code": "AC22.03",
+          "text": "Sécurisation des données et du code"
+        },
+        {
+          "code": "AC31.02",
+          "text": "Faire évoluer une application existante"
+        }
+      ]
+    },
+    "factsStyle": "chips",
+    "facts": [
+      {
+        "icon": "🏢",
+        "text": "Entreprise : Savoy International (rang 1 industriel)"
+      },
+      {
+        "icon": "⏱️",
+        "text": "Durée : 3 mois"
+      },
+      {
+        "icon": "📋",
+        "text": "Mission : Refonte SIDesktop (supervision & reporting)"
+      },
+      {
+        "icon": "🚀",
+        "text": "Méthode : Agile (sprints hebdo)"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "title": "Partie 1 : Contexte & Besoin",
+      "blocks": [
+        {
+          "type": "callout",
+          "size": "sm",
+          "paragraphs": [
+            "**Objectif** : refondre SIDesktop 1.0 en application web unique qui supervise les indicateurs métier et agit de manière proactive (auto-corrections, notifications, reporting).",
+            "**Problèmes de l'existant** : ergonomie lourde (multiples fenêtres), déploiement client lourd, navigation difficile, absence de proactivité.",
+            "**Cible** : comptables, contrôleurs de gestion, paie, logistique, commerce, qualité, achats/appro, production."
+          ]
+        },
+        {
+          "type": "image",
+          "images": [
+            {
+              "file": "logo.png",
+              "caption": "Logo entreprise",
+              "fit": "contain"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 2 : Architecture & Technologies",
+      "blocks": [
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "title": "⚙️ Architecture logicielle (MVC)",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "API .NET (C#, Entity Framework) pour indicateurs et actions",
+                "Front Vue.js (SPA) pour consultation et administration",
+                "Séparation API / client pour déploiements indépendants",
+                "Tests unitaires API + tests unitaires & end-to-end front"
+              ]
+            },
+            {
+              "title": "🗄️ Architecture matérielle",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "Serveur Windows pour héberger API + client",
+                "Base DB2 (ERP IBM) comme source métier",
+                "Base SQL Server support (droits, tâches, mails, indicateurs)",
+                "PCA / PRA validés pour continuité de service"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "title": "🛠️ Stack & outils",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "C#, .NET, Entity Framework",
+                "Vue.js, HTML/CSS, stores pour cache",
+                "SQL Server (support) + DB2 (ERP)",
+                "Visual Studio / VS Code, GitHub, Office 365"
+              ]
+            },
+            {
+              "title": "🧪 Qualité & tests",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "Projet de tests unitaires pour l'API",
+                "Tests unitaires & end-to-end côté web",
+                "Vérification préproduction"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 3 : Réalisations clés",
+      "blocks": [
+        {
+          "type": "callout",
+          "size": "sm",
+          "paragraphs": [],
+          "items": [
+            "Refonte ergonomique : passage multi-fenêtres → SPA à onglets (domaines / sociétés).",
+            "API .NET + EF découplée du front, accessible navigateur interne.",
+            "Gestion fine des droits (utilisateurs, domaines, sociétés, tâches/indicateurs) et notifications e-mail.",
+            "Supervision proactive : récupération périodique, auto-corrections quand possibles, escalade mail en cas d'échec.",
+            "Tests (unitaires + e2e) pour limiter les régressions avant préproduction."
+          ],
+          "bullet": "arrow"
+        }
+      ]
+    },
+    {
+      "title": "Partie 4 : Organisation & Méthode",
+      "blocks": [
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "title": "🚀 Méthodologie",
+              "text": "Agile en sprints hebdomadaires avec revue le jeudi : priorisation courte, ajustements rapides avec le maître de stage.",
+              "size": "sm"
+            },
+            {
+              "title": "🤝 Collaboration & outils",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "GitHub pour versioning et revues",
+                "Office 365 pour suivi/communication",
+                "Réunions hebdo pour arbitrer et valider"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 5 : Compétences mobilisées",
+      "blocks": [
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "icon": "⚙️",
+              "iconSize": "2xl",
+              "title": "UE Réaliser",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "**AC21.01** — Spécifications fonctionnelles & non fonctionnelles",
+                "**AC21.04** — Tests & validation",
+                "**AC31.02** — Faire évoluer une application existante"
+              ]
+            },
+            {
+              "icon": "🔒",
+              "iconSize": "2xl",
+              "title": "UE Optimiser",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "**AC22.03** — Sécurisation des données et du code (droits, DB2/SQL Server)",
+                "**AC32.03** — Choisir et utiliser des bibliothèques adaptées (Entity Framework, tooling Vue)"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

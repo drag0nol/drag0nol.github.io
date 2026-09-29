@@ -1,0 +1,319 @@
+{
+  "title": "Hunter",
+  "category": "TP — Jeu",
+  "summary": "Jeu d'élimination Unity en équipe de 3. Répartition claire : gameplay, 3D/Blender, audio.",
+  "tags": [
+    "Unity",
+    "C#",
+    "Blender",
+    "Équipe"
+  ],
+  "order": 3,
+  "header": {
+    "kicker": "Projet étudiant — Jeu Unity",
+    "title": "Hunter",
+    "subtitle": "Jeu d'élimination de monstres — Unity — 1 semaine en équipe de 3",
+    "criteria": {
+      "title": "Apprentissages Critiques",
+      "items": [
+        {
+          "code": "AC16.03",
+          "text": "Identifier les statuts, fonctions et rôles de chaque membre d'une équipe pluridisciplinaire"
+        },
+        {
+          "code": "AC16.04",
+          "text": "Acquérir les compétences interpersonnelles pour travailler en équipe"
+        },
+        {
+          "code": "AC26.02",
+          "text": "Appliquer une démarche pour intégrer une équipe informatique au sein d'une organisation"
+        },
+        {
+          "code": "AC26.03",
+          "text": "Mobiliser les compétences interpersonnelles pour travailler dans une équipe informatique"
+        }
+      ]
+    },
+    "factsStyle": "plain",
+    "facts": [
+      {
+        "icon": "👥",
+        "text": "**Équipe de 3** personnes"
+      },
+      {
+        "icon": "⏱️",
+        "text": "**1 semaine** de développement"
+      },
+      {
+        "icon": "🎮",
+        "text": "**Unity** / **C#**"
+      },
+      {
+        "icon": "🎨",
+        "text": "**Blender** / **Assets**"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "title": "Partie 1 : Concept & Objectif",
+      "blocks": [
+        {
+          "type": "callout",
+          "size": "lg",
+          "paragraphs": [
+            "Hunter est un jeu d'élimination de monstres où le joueur doit **tuer le maximum de monstres pour gagner des points d'expérience**.",
+            "Ce projet a été réalisé en **équipe de trois**, avec une répartition claire des responsabilités : développement gameplay, création d'assets 3D (Blender) et design sonore."
+          ]
+        },
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "title": "🎯 Objectif Principal",
+              "text": "Tuer le maximum de monstres pour accumuler des points d'expérience"
+            },
+            {
+              "title": "🕹️ Genre",
+              "text": "Jeu d'action — Élimination de vagues de monstres"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 2 : Gameplay & Mécanique",
+      "blocks": [
+        {
+          "type": "callout",
+          "size": "lg",
+          "paragraphs": [
+            "Le joueur dispose de **deux armes distinctes** avec des mécaniques différentes. Le choix stratégique entre rapidité et puissance influence la progression et le scoring.",
+            "Les monstres apparaissent en vagues progressives, augmentant la **difficulté** au fil du temps."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "⚔️ Système d'Armes"
+        },
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "gradient",
+          "cards": [
+            {
+              "icon": "⚡",
+              "iconSize": "3xl",
+              "title": "Pistolet Laser",
+              "bullet": "dot",
+              "items": [
+                "**Portée :** courte",
+                "**Cadence :** rapide",
+                "**Dégâts :** faibles",
+                "**Stratégie :** pour une élimination continue"
+              ]
+            },
+            {
+              "icon": "🎯",
+              "iconSize": "3xl",
+              "title": "Fusil de Précision",
+              "bullet": "dot",
+              "items": [
+                "**Portée :** longue",
+                "**Cadence :** lente",
+                "**Dégâts :** élevés",
+                "**Stratégie :** pour éliminer rapidement les cibles prioritaires"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "cards",
+          "columns": 1,
+          "style": "plain",
+          "cards": [
+            {
+              "title": "📊 Progression & Classement",
+              "bullet": "arrow",
+              "items": [
+                "Chaque monstre tué rapporte des points d'expérience",
+                "Vagues progressives : difficulté croissante à chaque élimination",
+                "Système de score permettant le classement et la rejouabilité"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 3 : Création d'Assets & Design",
+      "blocks": [
+        {
+          "type": "cards",
+          "columns": 3,
+          "style": "plain",
+          "cards": [
+            {
+              "title": "🗺️ Carte & Environnement",
+              "text": "Créée avec les assets standards Unity pour un environnement cohérent et jouable.",
+              "size": "sm"
+            },
+            {
+              "title": "🎨 Armes & Monstres",
+              "text": "Modélisation 3D avec Blender pour créer armes et monstres personnalisés.",
+              "size": "sm"
+            },
+            {
+              "title": "🔊 Conception Sonore",
+              "text": "Sons d'ambiance et effets créés par l'équipe pour l'immersion.",
+              "size": "sm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 4 : Travail d'Équipe & Collaboration",
+      "blocks": [
+        {
+          "type": "callout",
+          "size": "lg",
+          "paragraphs": [
+            "Ce projet a mis en avant l'**importance du travail en équipe**. Chacun des trois membres a pris en charge un domaine spécifique tout en gardant une communication constante pour assurer la cohésion globale du jeu.",
+            "Cette expérience démontre notre capacité à nous **organiser, déléguer** et **collaborer efficacement** dans un contexte de développement multimédia."
+          ]
+        },
+        {
+          "type": "cards",
+          "columns": 3,
+          "style": "plain",
+          "cards": [
+            {
+              "icon": "💻",
+              "iconSize": "3xl",
+              "title": "Gameplay & Code",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "Développement de la logique du jeu",
+                "Système de combat",
+                "Gestion des vagues de monstres",
+                "Classement & progression"
+              ]
+            },
+            {
+              "icon": "🎨",
+              "iconSize": "3xl",
+              "title": "3D & Assets",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "Modélisation Blender (armes, monstres)",
+                "Intégration des assets dans Unity",
+                "Design visuel & couleurs",
+                "Animations & effets visuels"
+              ]
+            },
+            {
+              "icon": "🔊",
+              "iconSize": "3xl",
+              "title": "Audio & UX",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "Design sonore personnalisé",
+                "Effets de tir & impact",
+                "Ambiance & musique",
+                "Interface utilisateur"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 5 : Compétences Mobilisées",
+      "blocks": [
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "icon": "👥",
+              "iconSize": "2xl",
+              "title": "UE Collaborer — Niveau 1",
+              "bullet": "dot",
+              "size": "sm",
+              "subtitle": "Identifier ses aptitudes pour travailler dans une équipe",
+              "items": [
+                "**AC16.03** – Identifier les statuts, fonctions et rôles de chaque membre d'une équipe pluridisciplinaire",
+                "**AC16.04** – Acquérir les compétences interpersonnelles pour travailler en équipe"
+              ]
+            },
+            {
+              "icon": "🤝",
+              "iconSize": "2xl",
+              "title": "UE Collaborer — Niveau 2",
+              "bullet": "dot",
+              "size": "sm",
+              "subtitle": "Situer son rôle et ses missions au sein d'une équipe informatique",
+              "items": [
+                "**AC26.02** – Appliquer une démarche pour intégrer une équipe informatique au sein d'une organisation",
+                "**AC26.03** – Mobiliser les compétences interpersonnelles pour travailler dans une équipe informatique"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "callout",
+          "size": "sm",
+          "title": "💡 Points forts du projet",
+          "paragraphs": [],
+          "items": [
+            "Répartition claire des responsabilités entre les trois membres",
+            "Communication constante pour assurer la cohésion du jeu",
+            "Intégration transparente de tous les éléments (code, 3D, audio)",
+            "Démonstration de compétences pluridisciplinaires"
+          ],
+          "bullet": "arrow"
+        }
+      ]
+    },
+    {
+      "title": "Partie 6 : Architecture & Stack",
+      "blocks": [
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "title": "🛠️ Stack Technologique",
+              "bullet": "square",
+              "items": [
+                "**Moteur :** Unity",
+                "**Langage :** C#",
+                "**Modélisation 3D :** Blender",
+                "**Assets :** Unity Asset Store",
+                "**Audio :** DAW personnalisée"
+              ]
+            },
+            {
+              "title": "✅ Réalisations Techniques",
+              "bullet": "arrow",
+              "items": [
+                "Système de combat complet avec deux armes distinctes",
+                "Apparition et gestion des vagues de monstres",
+                "Physique de jeu et collisions",
+                "Système de classement et progression"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

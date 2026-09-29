@@ -1,7 +1,9 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { supabase, supabaseEnabled } from '@/lib/supabase'
-import { remoteRows, loadRemote } from '@/content/remote'
+import { remoteRows, editableProjects, loadRemote } from '@/content/remote'
+import { rawProjects, upgradeLegacy } from '@/content'
+import ProjectEditor from '@/components/ProjectEditor.vue'
 
 const input = 'w-full px-3 py-2 rounded-lg bg-slate-900/70 border border-indigo-500/30 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-400'
 const btn = 'px-4 py-2 rounded-lg font-semibold text-white transition-colors'
@@ -17,7 +19,7 @@ const error = ref('')
 const busy = ref(false)
 
 const tab = ref('project')
-const editing = ref(null) // { id, kind, form }
+const editing = ref(null) // { id, slug, kind, baseSlug, form }
 
 onMounted(async () => {
   if (!supabaseEnabled) {
@@ -38,118 +40,123 @@ async function signIn() {
   if (e) error.value = e.message
   else login.value.password = ''
 }
-
 const signOut = () => supabase.auth.signOut()
-
-const rows = computed(() => remoteRows.value.filter((r) => r.kind === tab.value))
-const titleOf = (r) => r.data.title || r.slug
-
-const lines = (s) => s.split('\n').map((l) => l.trim()).filter(Boolean)
-const csv = (s) => s.split(',').map((l) => l.trim()).filter(Boolean)
 
 const slugify = (s) =>
   s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+const clone = (o) => JSON.parse(JSON.stringify(o))
 
-const emptyProject = () => ({
-  publie: true,
-  title: '',
-  category: '',
-  summary: '',
-  status: '',
-  order: 0,
-  tags: '',
-  subtitle: '',
-  meta: '',
-  cover: '',
-  sections: [{ title: '', text: '', bullets: '', images: [] }],
-  links: [],
-})
-const emptyFormation = () => ({ icon: '🎓', title: '', subtitle: '', period: '', text: '', tags: '' })
-
-// Base de données -> formulaire
-function toForm(kind, d) {
-  if (kind === 'formation') {
-    return {
-      ...emptyFormation(),
-      ...d,
-      tags: (d.tags || []).map((t) => (t.url ? `${t.label} | ${t.url}` : t.label)).join('\n'),
-    }
-  }
+// ---------- Projets ----------
+function projectShape(data) {
+  const d = upgradeLegacy(clone(data))
   return {
-    ...emptyProject(),
+    publie: true,
+    tone: 'indigo',
+    order: 0,
+    category: '',
+    summary: '',
+    status: '',
+    cover: '',
     ...d,
-    tags: (d.tags || []).join(', '),
-    meta: (d.meta || []).join('\n'),
-    sections: (d.sections || []).map((s) => ({
-      title: s.title || '',
-      text: [].concat(s.text || []).join('\n\n'),
-      bullets: [].concat(s.bullets || []).join('\n'),
-      images: (s.images || []).map((i) => ({ url: i.url, caption: i.caption || '' })),
-    })),
-    links: d.links || [],
+    tags: d.tags || [],
+    header: { kicker: '', subtitle: '', factsStyle: 'plain', ...d.header, facts: d.header.facts || [] },
+    sections: d.sections.map((s) => ({ title: s.title || '', blocks: s.blocks })),
   }
 }
+const emptyProject = () =>
+  projectShape({
+    title: '',
+    header: { title: '' },
+    sections: [{ title: '', blocks: [{ type: 'callout', size: 'lg', tone: 'indigo', paragraphs: [], items: [] }] }],
+  })
 
-// Formulaire -> base de données
-function toData(kind, f) {
-  if (kind === 'formation') {
-    return {
-      icon: f.icon,
-      title: f.title,
-      subtitle: f.subtitle,
-      period: f.period,
-      text: f.text,
-      tags: lines(f.tags).map((l) => {
-        const [label, url] = l.split('|').map((x) => x.trim())
-        return url ? { label, url } : { label }
-      }),
-    }
+// Les images du dépôt (champ `file`) sont référencées par "projet/fichier" quand on copie un projet.
+function qualifyImages(data, slug) {
+  const q = (f) => (f && !f.includes('/') && !/^(https?:)?\/\//.test(f) ? `${slug}/${f}` : f)
+  if (data.cover) data.cover = q(data.cover)
+  for (const s of data.sections)
+    for (const b of s.blocks) if (b.type === 'image') for (const i of b.images) if (!i.url && i.file) i.file = q(i.file)
+  return data
+}
+
+function newProject() {
+  editing.value = { id: null, slug: null, kind: 'project', baseSlug: '', form: emptyProject() }
+  message.value = error.value = ''
+}
+function editProject(p) {
+  editing.value = {
+    id: p.row?.id ?? null,
+    slug: p.slug,
+    kind: 'project',
+    baseSlug: rawProjects[p.slug] ? p.slug : '',
+    form: projectShape(p.data),
   }
+  message.value = error.value = ''
+}
+function duplicateProject(p) {
+  const form = projectShape(p.data)
+  form.title = `${form.title} (copie)`
+  form.header.title = `${form.header.title} (copie)`
+  qualifyImages(form, p.slug)
+  editing.value = { id: null, slug: null, kind: 'project', baseSlug: '', form }
+  message.value = error.value = ''
+}
+
+// ---------- Formations ----------
+const emptyFormation = () => ({ icon: '🎓', title: '', subtitle: '', period: '', text: '', tags: '' })
+function formationForm(d) {
+  return { ...emptyFormation(), ...d, tags: (d.tags || []).map((t) => (t.url ? `${t.label} | ${t.url}` : t.label)).join('\n') }
+}
+function formationData(f) {
   return {
-    publie: f.publie,
+    icon: f.icon,
     title: f.title,
-    category: f.category,
-    summary: f.summary,
-    status: f.status,
-    order: Number(f.order) || 0,
-    tags: csv(f.tags),
     subtitle: f.subtitle,
-    meta: lines(f.meta),
-    cover: f.cover,
-    sections: f.sections.map((s) => ({
-      title: s.title,
-      text: s.text.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean),
-      bullets: lines(s.bullets),
-      images: s.images,
-    })),
-    links: f.links.filter((l) => l.label && l.url),
+    period: f.period,
+    text: f.text,
+    tags: f.tags.split('\n').map((l) => l.trim()).filter(Boolean).map((l) => {
+      const [label, url] = l.split('|').map((x) => x.trim())
+      return url ? { label, url } : { label }
+    }),
   }
 }
+const formationRows = computed(() => remoteRows.value.filter((r) => r.kind === 'formation'))
 
-function startNew() {
-  editing.value = { id: null, slug: null, kind: tab.value, form: tab.value === 'project' ? emptyProject() : emptyFormation() }
+function newFormation() {
+  editing.value = { id: null, slug: null, kind: 'formation', form: emptyFormation() }
+  message.value = error.value = ''
+}
+function editFormation(r) {
+  editing.value = { id: r.id, slug: r.slug, kind: 'formation', form: formationForm(r.data) }
   message.value = error.value = ''
 }
 
-function startEdit(r) {
-  editing.value = { id: r.id, slug: r.slug, kind: r.kind, form: toForm(r.kind, r.data) }
-  message.value = error.value = ''
-}
-
+// ---------- Enregistrer / supprimer ----------
 async function save() {
   const { id, kind, form } = editing.value
-  if (!form.title.trim()) {
+  const title = kind === 'project' ? form.title || form.header.title : form.title
+  if (!title || !title.trim()) {
     error.value = 'Le titre est obligatoire.'
     return
   }
+  let data = form
+  if (kind === 'project') {
+    data = clone(form)
+    data.title = title
+    data.header.title = data.header.title || title
+    data.order = Number(data.order) || 0
+  } else data = formationData(form)
+
+  const slug = editing.value.slug || slugify(title) || String(Date.now())
+  if (!editing.value.slug && kind === 'project' && (rawProjects[slug] || editableProjects.value.some((p) => p.slug === slug))) {
+    error.value = 'Un projet avec ce titre existe déjà. Change le titre.'
+    return
+  }
+
   busy.value = true
   error.value = message.value = ''
-  const data = toData(kind, form)
-  const slug = editing.value.slug || slugify(form.title) || String(Date.now())
   const q = supabase.from('content')
-  const { error: e } = id
-    ? await q.update({ data }).eq('id', id)
-    : await q.insert({ kind, slug, data })
+  const { error: e } = id ? await q.update({ data }).eq('id', id) : await q.insert({ kind, slug, data })
   busy.value = false
   if (e) {
     error.value = e.code === '23505' ? 'Un élément avec ce titre existe déjà.' : e.message
@@ -160,49 +167,23 @@ async function save() {
   message.value = 'Enregistré. Visible tout de suite sur le site.'
 }
 
-async function remove(r) {
-  if (!confirm(`Supprimer « ${titleOf(r)} » ?`)) return
-  const { error: e } = await supabase.from('content').delete().eq('id', r.id)
+async function removeRow(row, label, text = 'Supprimer') {
+  if (!confirm(`${text} « ${label} » ?`)) return
+  const { error: e } = await supabase.from('content').delete().eq('id', row.id)
   if (e) error.value = e.message
   else {
     await loadRemote()
-    message.value = 'Supprimé.'
+    message.value = text === 'Supprimer' ? 'Supprimé.' : 'Version d’origine rétablie.'
   }
 }
 
 async function upload(file) {
-  const name = `${Date.now()}-${slugify(file.name.replace(/\.[^.]+$/, '')) || 'image'}.${file.name.split('.').pop().toLowerCase()}`
+  const ext = (file.name.split('.').pop() || 'png').toLowerCase()
+  const name = `${Date.now()}-${slugify(file.name.replace(/\.[^.]+$/, '')) || 'image'}.${ext}`
   const { error: e } = await supabase.storage.from('images').upload(name, file, { contentType: file.type })
   if (e) throw e
   return supabase.storage.from('images').getPublicUrl(name).data.publicUrl
 }
-
-async function onImages(ev, section) {
-  error.value = ''
-  busy.value = true
-  try {
-    for (const file of ev.target.files) section.images.push({ url: await upload(file), caption: '' })
-  } catch (e) {
-    error.value = "Envoi de l'image impossible : " + e.message
-  }
-  busy.value = false
-  ev.target.value = ''
-}
-
-async function onCover(ev) {
-  error.value = ''
-  busy.value = true
-  try {
-    editing.value.form.cover = await upload(ev.target.files[0])
-  } catch (e) {
-    error.value = "Envoi de l'image impossible : " + e.message
-  }
-  busy.value = false
-  ev.target.value = ''
-}
-
-const addSection = () => editing.value.form.sections.push({ title: '', text: '', bullets: '', images: [] })
-const addLink = () => editing.value.form.links.push({ label: '', url: '' })
 </script>
 
 <template>
@@ -240,25 +221,46 @@ const addLink = () => editing.value.form.links.push({ label: '', url: '' })
           <div class="flex gap-3 mb-6">
             <button :class="tab === 'project' ? btnMain : btnGhost" @click="tab = 'project'">Projets</button>
             <button :class="tab === 'formation' ? btnMain : btnGhost" @click="tab = 'formation'">Formations</button>
-            <button :class="btnMain + ' ml-auto'" @click="startNew">+ Ajouter</button>
+            <button :class="btnMain + ' ml-auto'" @click="tab === 'project' ? newProject() : newFormation()">+ Ajouter</button>
           </div>
 
-          <p v-if="!rows.length" class="text-slate-400">Rien d'ajouté ici pour l'instant. Le contenu des fichiers du dépôt n'apparaît pas dans cette liste.</p>
-          <ul class="space-y-3">
-            <li v-for="r in rows" :key="r.id" class="flex items-center gap-3 bg-slate-800/60 border border-indigo-500/20 rounded-xl p-4">
-              <span class="flex-1 font-semibold text-white">{{ titleOf(r) }}
-                <span v-if="r.data.publie === false" class="ml-2 text-xs text-amber-300">(masqué)</span>
-              </span>
-              <button :class="btnGhost" @click="startEdit(r)">Modifier</button>
-              <button :class="btnDanger" @click="remove(r)">Supprimer</button>
-            </li>
-          </ul>
+          <template v-if="tab === 'project'">
+            <p class="text-sm text-slate-400 mb-4">
+              Tous les projets sont modifiables, y compris ceux du dépôt : la version modifiée remplace l'original.
+              « Dupliquer » sert de modèle pour créer une page similaire.
+            </p>
+            <ul class="space-y-3">
+              <li v-for="p in editableProjects" :key="p.slug" class="flex flex-wrap items-center gap-3 bg-slate-800/60 border border-indigo-500/20 rounded-xl p-4">
+                <span class="flex-1 min-w-[10rem] font-semibold text-white">
+                  {{ p.data.title }}
+                  <span class="ml-2 text-xs px-2 py-0.5 rounded-full bg-slate-700 text-slate-300">{{ p.source }}</span>
+                  <span v-if="p.data.publie === false" class="ml-1 text-xs text-amber-300">(masqué)</span>
+                </span>
+                <router-link :to="'/projects/' + p.slug" :class="btnGhost">Voir</router-link>
+                <button :class="btnGhost" @click="editProject(p)">Modifier</button>
+                <button :class="btnGhost" @click="duplicateProject(p)">Dupliquer</button>
+                <button v-if="p.row && p.source === 'modifié'" :class="btnDanger" @click="removeRow(p.row, p.data.title, 'Rétablir l’original de')">Rétablir l'original</button>
+                <button v-else-if="p.row" :class="btnDanger" @click="removeRow(p.row, p.data.title)">Supprimer</button>
+              </li>
+            </ul>
+          </template>
+
+          <template v-else>
+            <p v-if="!formationRows.length" class="text-slate-400">Aucune formation ajoutée ici. Celles des fichiers du dépôt n'apparaissent pas dans cette liste.</p>
+            <ul class="space-y-3">
+              <li v-for="r in formationRows" :key="r.id" class="flex items-center gap-3 bg-slate-800/60 border border-indigo-500/20 rounded-xl p-4">
+                <span class="flex-1 font-semibold text-white">{{ r.data.title }}</span>
+                <button :class="btnGhost" @click="editFormation(r)">Modifier</button>
+                <button :class="btnDanger" @click="removeRow(r, r.data.title)">Supprimer</button>
+              </li>
+            </ul>
+          </template>
         </template>
 
         <!-- Formulaire -->
         <form v-else class="space-y-5" @submit.prevent="save">
           <h2 class="text-2xl font-bold text-indigo-200">
-            {{ editing.id ? 'Modifier' : 'Ajouter' }} {{ editing.kind === 'project' ? 'un projet' : 'une formation' }}
+            {{ editing.id || editing.slug ? 'Modifier' : 'Ajouter' }} {{ editing.kind === 'project' ? 'un projet' : 'une formation' }}
           </h2>
 
           <template v-if="editing.kind === 'formation'">
@@ -274,52 +276,15 @@ const addLink = () => editing.value.form.links.push({ label: '', url: '' })
             </label>
           </template>
 
-          <template v-else>
-            <input v-model="editing.form.title" placeholder="Titre du projet" required :class="input" />
-            <div class="grid md:grid-cols-2 gap-3">
-              <input v-model="editing.form.category" placeholder="Catégorie (ex. SAE — Jeu)" :class="input" />
-              <input v-model="editing.form.status" placeholder="Badge (ex. EN COURS)" :class="input" />
-            </div>
-            <textarea v-model="editing.form.summary" rows="2" placeholder="Résumé affiché sur la carte" :class="input"></textarea>
-            <input v-model="editing.form.tags" placeholder="Technologies, séparées par des virgules" :class="input" />
-            <input v-model="editing.form.subtitle" placeholder="Sous-titre de la page du projet" :class="input" />
-            <label class="block text-sm text-slate-400">Infos rapides, une par ligne (ex. 👥 Projet en équipe de 2)
-              <textarea v-model="editing.form.meta" rows="2" :class="input + ' mt-1'"></textarea>
-            </label>
-            <div class="flex flex-wrap items-center gap-4 text-sm text-slate-400">
-              <label>Image de la carte <input type="file" accept="image/*" @change="onCover" class="block mt-1" /></label>
-              <img v-if="editing.form.cover" :src="editing.form.cover" class="h-16 rounded" />
-              <label class="ml-auto flex items-center gap-2"><input type="checkbox" v-model="editing.form.publie" /> Publié</label>
-              <label class="flex items-center gap-2">Ordre <input type="number" v-model="editing.form.order" :class="input + ' w-20'" /></label>
-            </div>
+          <ProjectEditor
+            v-else
+            :form="editing.form"
+            :base-slug="editing.baseSlug"
+            :upload="upload"
+            @error="(m) => (error = m)"
+          />
 
-            <div v-for="(s, i) in editing.form.sections" :key="i" class="bg-slate-800/60 border border-indigo-500/20 rounded-xl p-4 space-y-3">
-              <div class="flex gap-3">
-                <input v-model="s.title" :placeholder="'Titre de la section ' + (i + 1)" :class="input" />
-                <button type="button" :class="btnDanger" @click="editing.form.sections.splice(i, 1)">✕</button>
-              </div>
-              <textarea v-model="s.text" rows="4" placeholder="Texte (une ligne vide = nouveau paragraphe)" :class="input"></textarea>
-              <textarea v-model="s.bullets" rows="3" placeholder="Liste à puces, un point par ligne" :class="input"></textarea>
-              <div v-for="(img, j) in s.images" :key="img.url" class="flex items-center gap-3">
-                <img :src="img.url" class="h-14 rounded" />
-                <input v-model="img.caption" placeholder="Légende" :class="input" />
-                <button type="button" :class="btnDanger" @click="s.images.splice(j, 1)">✕</button>
-              </div>
-              <label class="block text-sm text-slate-400">Ajouter des images
-                <input type="file" accept="image/*" multiple class="block mt-1" @change="onImages($event, s)" />
-              </label>
-            </div>
-            <button type="button" :class="btnGhost" @click="addSection">+ Section</button>
-
-            <div v-for="(l, i) in editing.form.links" :key="i" class="flex gap-3">
-              <input v-model="l.label" placeholder="Texte du bouton" :class="input" />
-              <input v-model="l.url" placeholder="https://..." :class="input" />
-              <button type="button" :class="btnDanger" @click="editing.form.links.splice(i, 1)">✕</button>
-            </div>
-            <button type="button" :class="btnGhost" @click="addLink">+ Lien</button>
-          </template>
-
-          <div class="flex gap-3 pt-4">
+          <div class="flex gap-3 pt-4 sticky bottom-0 bg-slate-900/90 py-3">
             <button :class="btnMain" :disabled="busy">{{ busy ? 'Patiente…' : 'Enregistrer' }}</button>
             <button type="button" :class="btnGhost" @click="editing = null">Annuler</button>
           </div>

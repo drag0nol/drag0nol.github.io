@@ -26,6 +26,8 @@ mkdirSync(dir, { recursive: true })
 const model = JSON.parse(readFileSync(join(root, '_modele', 'project.json'), 'utf8'))
 model.publie = true
 model.title = title
+model.header.title = title
+model.order = 99
 writeFileSync(join(dir, 'project.json'), JSON.stringify(model, null, 2) + '\n')
 
 console.log(`Projet créé : src/content/projects/${slug}/project.json`)

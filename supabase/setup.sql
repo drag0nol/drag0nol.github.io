@@ -22,8 +22,8 @@ create policy "content_read" on public.content
 drop policy if exists "content_owner_write" on public.content;
 create policy "content_owner_write" on public.content
   for all to authenticated
-  using (lower(auth.jwt() ->> 'email') = lower('TON_EMAIL'))
-  with check (lower(auth.jwt() ->> 'email') = lower('TON_EMAIL'));
+  using (lower(auth.jwt() ->> 'email') = lower('ethann.cochenet@gmail.com'))
+  with check (lower(auth.jwt() ->> 'email') = lower('ethann.cochenet@gmail.com'));
 
 -- Images : bucket public en lecture, écriture réservée au propriétaire
 insert into storage.buckets (id, name, public)
@@ -33,14 +33,14 @@ on conflict (id) do nothing;
 drop policy if exists "images_owner_insert" on storage.objects;
 create policy "images_owner_insert" on storage.objects
   for insert to authenticated
-  with check (bucket_id = 'images' and lower(auth.jwt() ->> 'email') = lower('TON_EMAIL'));
+  with check (bucket_id = 'images' and lower(auth.jwt() ->> 'email') = lower('ethann.cochenet@gmail.com'));
 
 drop policy if exists "images_owner_update" on storage.objects;
 create policy "images_owner_update" on storage.objects
   for update to authenticated
-  using (bucket_id = 'images' and lower(auth.jwt() ->> 'email') = lower('TON_EMAIL'));
+  using (bucket_id = 'images' and lower(auth.jwt() ->> 'email') = lower('ethann.cochenet@gmail.com'));
 
 drop policy if exists "images_owner_delete" on storage.objects;
 create policy "images_owner_delete" on storage.objects
   for delete to authenticated
-  using (bucket_id = 'images' and lower(auth.jwt() ->> 'email') = lower('TON_EMAIL'));
+  using (bucket_id = 'images' and lower(auth.jwt() ->> 'email') = lower('ethann.cochenet@gmail.com'));

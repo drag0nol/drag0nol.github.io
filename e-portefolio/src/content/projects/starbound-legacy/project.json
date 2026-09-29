@@ -1,0 +1,272 @@
+{
+  "title": "StarBound Legacy",
+  "category": "SAE — Jeu",
+  "summary": "Jeu de tir spatial en WPF/C#, 2 semaines en binôme. Gestion collisions, shop, progression.",
+  "tags": [
+    "WPF",
+    "C#",
+    "Jeu"
+  ],
+  "order": 1,
+  "header": {
+    "kicker": "Projet étudiant — SAE",
+    "title": "StarBound Legacy",
+    "subtitle": "Jeu de tir spatial — WPF / C# — 2 semaines en binôme",
+    "criteria": {
+      "title": "Apprentissages Critiques",
+      "items": [
+        {
+          "code": "AC11.01",
+          "text": "Implémenter des conceptions simples"
+        },
+        {
+          "code": "AC11.04",
+          "text": "Développer des interfaces utilisateurs"
+        },
+        {
+          "code": "AC12.01",
+          "text": "Analyser un problème avec méthode"
+        },
+        {
+          "code": "AC12.02",
+          "text": "Comparer des algorithmes"
+        }
+      ]
+    },
+    "factsStyle": "plain",
+    "facts": [
+      {
+        "icon": "🎓",
+        "text": "**SAE** — 1ère année BUT Informatique"
+      },
+      {
+        "icon": "👥",
+        "text": "**Groupe de 2** personnes"
+      },
+      {
+        "icon": "⏱️",
+        "text": "**2 semaines** de développement"
+      },
+      {
+        "icon": "💻",
+        "text": "**WPF** / **C#**"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "title": "Partie 1 : Concept & Objectif",
+      "blocks": [
+        {
+          "type": "callout",
+          "size": "lg",
+          "paragraphs": [
+            "StarBound Legacy est un jeu de tir spatial arcade. Objectif : **éliminer tous les obstacles** en évitant astéroïdes et ennemis à difficulté croissante.",
+            "SAE appliquant conception, implémentation, tests et gestion des exigences fonctionnelles et non-fonctionnelles."
+          ]
+        },
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "title": "🎯 Objectif Principal",
+              "text": "Éliminer tous les obstacles devant le joueur"
+            },
+            {
+              "title": "🕹️ Genre",
+              "text": "Jeu de tir spatial arcade"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "images": [
+            {
+              "file": "menu-principal.png",
+              "caption": "Menu principal / Écran de démarrage"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 2 : Gameplay & Mécanique",
+      "blocks": [
+        {
+          "type": "callout",
+          "size": "lg",
+          "paragraphs": [
+            "Le joueur **évite astéroïdes et ennemis**, ce qui m'a fait travailler la **gestion des collisions** et la **physique du jeu**.",
+            "Les astéroïdes sont **indestructibles** aux projectiles standards, obligeant l'évitement et l'équilibrage."
+          ]
+        },
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "title": "✈️ Contrôles du Joueur",
+              "bullet": "dot",
+              "items": [
+                "Mouvements (haut, bas, gauche, droite)",
+                "Tir projectiles standards",
+                "Utilisation des bonus du magasin"
+              ]
+            },
+            {
+              "title": "⚔️ Ennemis & Obstacles",
+              "bullet": "dot",
+              "items": [
+                "Ennemis destructibles",
+                "Astéroïdes indestructibles (évitement)",
+                "Difficulté progressive"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "images": [
+            {
+              "file": "gameplay.png",
+              "caption": "Gameplay en action"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 3 : Système de Magasin & Progression",
+      "blocks": [
+        {
+          "type": "callout",
+          "size": "lg",
+          "paragraphs": [
+            "Monnaie = score → permet d'acheter des améliorations.",
+            "Implémentation d'une **gestion des ressources** et d'une **UI de magasin**."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "🛒 Bonus Disponibles"
+        },
+        {
+          "type": "cards",
+          "columns": 3,
+          "style": "gradient",
+          "cards": [
+            {
+              "icon": "🛡️",
+              "iconSize": "3xl",
+              "title": "Bouclier",
+              "text": "Invincibilité temporaire et points bonus."
+            },
+            {
+              "icon": "❤️",
+              "iconSize": "3xl",
+              "title": "Kit de Soins",
+              "text": "Restaure la santé à 100%."
+            },
+            {
+              "icon": "💣",
+              "iconSize": "3xl",
+              "title": "Bombe Nucléaire",
+              "text": "Nettoie l'écran (destruction massive)."
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "images": [
+            {
+              "file": "shop.png",
+              "caption": "Interface du Magasin"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 4 : Architecture & Implémentation",
+      "blocks": [
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "title": "✅ Réalisations Techniques",
+              "bullet": "arrow",
+              "items": [
+                "Gestion complète des collisions et physique du jeu",
+                "Système de shop fonctionnel avec gestion des ressources",
+                "Système de progression avec difficulté croissante",
+                "Interface utilisateur intuitive et responsive"
+              ]
+            },
+            {
+              "title": "🛠️ Stack Technologique",
+              "bullet": "square",
+              "items": [
+                "**Langage :** C#",
+                "**UI :** WPF",
+                "**Runtime :** .NET Framework",
+                "**IDE :** Visual Studio"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 5 : Compétences",
+      "blocks": [
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "icon": "⚙️",
+              "iconSize": "2xl",
+              "title": "UE Réaliser",
+              "bullet": "dot",
+              "size": "sm",
+              "subtitle": "Niveau 1 : Développer des applications simples",
+              "items": [
+                "**AC11.01** – Implémenter des conceptions simples",
+                "**AC11.04** – Développer des interfaces utilisateurs"
+              ]
+            },
+            {
+              "icon": "🚀",
+              "iconSize": "2xl",
+              "title": "UE Optimiser",
+              "bullet": "dot",
+              "size": "sm",
+              "subtitle": "Niveau 1 : Appréhender et construire des algorithmes",
+              "items": [
+                "**AC12.01** – Analyser un problème avec méthode",
+                "**AC12.02** – Comparer des algorithmes"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Code Source",
+      "blocks": [
+        {
+          "type": "button",
+          "icon": "📂",
+          "label": "Voir le code sur GitHub",
+          "url": "https://github.com/HonoreBessonMagdelain/StarBound_Legacy"
+        }
+      ]
+    }
+  ]
+}

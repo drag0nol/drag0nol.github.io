@@ -1,0 +1,318 @@
+{
+  "title": "Marathon de Beaune",
+  "category": "TP — Gestion",
+  "summary": "Application de gestion des inscriptions. WPF/C#, base de données SQL, listes coureurs/courses, système d'inscription.",
+  "tags": [
+    "WPF",
+    "C#",
+    "SQL"
+  ],
+  "order": 5,
+  "header": {
+    "kicker": "Projet étudiant — SAE",
+    "title": "Semi-Marathon de Beaune",
+    "subtitle": "Application de gestion des inscriptions — Base de données & Interface",
+    "criteria": {
+      "title": "Apprentissages Critiques",
+      "items": [
+        {
+          "code": "AC14.01",
+          "text": "Mettre à jour et interroger une base de données relationnelle"
+        },
+        {
+          "code": "AC14.02",
+          "text": "Visualiser des données"
+        },
+        {
+          "code": "AC11.02",
+          "text": "Élaborer des conceptions simples"
+        },
+        {
+          "code": "AC11.04",
+          "text": "Développer des interfaces utilisateurs"
+        },
+        {
+          "code": "AC22.01",
+          "text": "Choisir des structures de données complexes adaptées au problème"
+        }
+      ]
+    },
+    "factsStyle": "plain",
+    "facts": [
+      {
+        "icon": "🎓",
+        "text": "**SAE** — BUT Informatique"
+      },
+      {
+        "icon": "👥",
+        "text": "**Projet en équipe de 2**"
+      },
+      {
+        "icon": "🗄️",
+        "text": "**PostgreSQL** / **WPF** / **REST**"
+      },
+      {
+        "icon": "🏃",
+        "text": "**Gestion d'événement**"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "title": "Partie 1 : Concept & Objectif",
+      "blocks": [
+        {
+          "type": "callout",
+          "size": "lg",
+          "paragraphs": [
+            "Application développée pour gérer les **inscriptions des coureurs au Semi-Marathon de Beaune**. L'objectif était de créer un système permettant de visualiser les coureurs inscrits, les courses disponibles et d'effectuer des inscriptions de manière intuitive.",
+            "Ce projet a mis l'accent sur la **gestion de base de données relationnelle** et le **développement d'interfaces utilisateurs ergonomiques**."
+          ]
+        },
+        {
+          "type": "cards",
+          "columns": 3,
+          "style": "plain",
+          "cards": [
+            {
+              "title": "🎯 Objectif",
+              "text": "Faciliter la gestion des inscriptions pour l'événement du Semi-Marathon de Beaune",
+              "size": "sm"
+            },
+            {
+              "title": "📊 Type",
+              "text": "Application de gestion événementielle avec base de données",
+              "size": "sm"
+            },
+            {
+              "title": "👤 Utilisateurs",
+              "text": "Organisateurs de l'événement et personnel d'inscription",
+              "size": "sm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 2 : Fonctionnalités Principales",
+      "blocks": [
+        {
+          "type": "heading",
+          "text": "🔐 Système d'Authentification"
+        },
+        {
+          "type": "callout",
+          "size": "lg",
+          "paragraphs": [
+            "Page de connexion sécurisée permettant aux organisateurs d'accéder à l'interface de gestion. Authentification basée sur identifiants stockés en base de données."
+          ]
+        },
+        {
+          "type": "image",
+          "images": [
+            {
+              "file": "connexion.png",
+              "caption": "Page de Connexion"
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "📋 Gestion des Inscriptions"
+        },
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "icon": "👥",
+              "iconSize": "3xl",
+              "title": "Liste des Coureurs",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "Affichage de tous les coureurs inscrits",
+                "Informations détaillées par coureur",
+                "Recherche et filtrage des participants",
+                "Mise à jour des données en temps réel"
+              ]
+            },
+            {
+              "icon": "🏁",
+              "iconSize": "3xl",
+              "title": "Liste des Courses",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "Affichage des courses disponibles",
+                "Détails des parcours et distances",
+                "Horaires et points de départ",
+                "Nombre d'inscrits par course"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "callout",
+          "size": "lg",
+          "title": "✅ Inscription à une Course",
+          "paragraphs": [
+            "Fonctionnalité permettant de **sélectionner un coureur et l'inscrire à une course spécifique**. Le système vérifie les contraintes (places disponibles, doublons) et met à jour la base de données instantanément."
+          ],
+          "items": [
+            "Sélection intuitive du coureur dans la liste",
+            "Choix de la course parmi celles disponibles",
+            "Validation et confirmation d'inscription",
+            "Mise à jour automatique des listes et compteurs"
+          ],
+          "bullet": "arrow"
+        },
+        {
+          "type": "image",
+          "images": [
+            {
+              "file": "menu.png",
+              "caption": "Interface Principale (Menu)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 3 : Architecture Base de Données",
+      "blocks": [
+        {
+          "type": "callout",
+          "size": "lg",
+          "paragraphs": [
+            "Base de données **PostgreSQL** conçue pour gérer les **coureurs, courses et inscriptions**. Architecture **REST** avec Entity Framework pour l'accès aux données, garantissant l'intégrité et facilitant les requêtes."
+          ]
+        },
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "title": "🗄️ Tables Principales",
+              "bullet": "arrow",
+              "size": "sm",
+              "items": [
+                "**Coureurs** : informations personnelles (nom, prénom, club, catégorie...)",
+                "**Courses** : détails des épreuves (distance, horaire, prix...)",
+                "**Inscriptions** : liaison coureurs ↔ courses avec dossard et statut",
+                "**Utilisateurs** : authentification pour les organisateurs"
+              ]
+            },
+            {
+              "title": "🔗 Opérations CRUD",
+              "bullet": "arrow",
+              "size": "sm",
+              "items": [
+                "**CREATE** : ajout de nouveaux coureurs et inscriptions",
+                "**READ** : requêtes SQL pour afficher listes et détails",
+                "**UPDATE** : modification des informations existantes",
+                "**DELETE** : suppression d'inscriptions si nécessaire"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 4 : Architecture & Technologies",
+      "blocks": [
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "title": "🛠️ Stack Technologique",
+              "bullet": "square",
+              "items": [
+                "**Langage :** C#",
+                "**Interface :** WPF (Windows Presentation Foundation)",
+                "**Base de données :** PostgreSQL",
+                "**ORM :** Entity Framework Core",
+                "**Architecture :** REST API",
+                "**IDE :** Visual Studio"
+              ]
+            },
+            {
+              "title": "✅ Réalisations Techniques",
+              "bullet": "arrow",
+              "items": [
+                "Modèle de données PostgreSQL normalisé",
+                "API REST avec Entity Framework Core",
+                "Requêtes LINQ et migrations automatiques",
+                "Interface WPF réactive et ergonomique",
+                "Gestion des erreurs et validations"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 5 : Compétences Mobilisées",
+      "blocks": [
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "icon": "🗄️",
+              "iconSize": "2xl",
+              "title": "UE Gérer",
+              "bullet": "dot",
+              "size": "sm",
+              "subtitle": "Niveau 1 : Concevoir et mettre en place une base de données",
+              "items": [
+                "**AC14.01** – Mettre à jour et interroger une base de données relationnelle",
+                "**AC14.02** – Visualiser des données"
+              ]
+            },
+            {
+              "icon": "⚙️",
+              "iconSize": "2xl",
+              "title": "UE Réaliser",
+              "bullet": "dot",
+              "size": "sm",
+              "subtitle": "Niveau 1 : Développer des applications simples",
+              "items": [
+                "**AC11.02** – Élaborer des conceptions simples",
+                "**AC11.04** – Développer des interfaces utilisateurs"
+              ]
+            },
+            {
+              "icon": "🚀",
+              "iconSize": "2xl",
+              "title": "UE Optimiser",
+              "bullet": "dot",
+              "size": "sm",
+              "subtitle": "Niveau 2 : Structures de données adaptées",
+              "items": [
+                "**AC22.01** – Choisir des structures de données complexes adaptées au problème"
+              ]
+            },
+            {
+              "icon": "💡",
+              "iconSize": "2xl",
+              "title": "Points Forts",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "Modélisation relationnelle complète",
+                "Interface ergonomique et intuitive",
+                "Gestion efficace des inscriptions"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

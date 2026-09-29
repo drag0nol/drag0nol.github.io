@@ -1,0 +1,423 @@
+{
+  "title": "🎰 CASPINO",
+  "category": "SAE S5 — IoT & Mobile",
+  "summary": "Casino en ligne. Kotlin mobile + Raspberry Pi serveurs + alarme/lumière IoT. BDD multi-jeux.",
+  "tags": [
+    "Kotlin",
+    "Raspberry Pi",
+    "IoT"
+  ],
+  "status": "EN COURS",
+  "tone": "amber",
+  "order": 4,
+  "header": {
+    "kicker": "SAE Semestre 5 — Projet en cours",
+    "title": "🎰 CASPINO",
+    "subtitle": "Casino en ligne connecté — Kotlin Mobile + Raspberry Pi + IoT — Démarré le 27 octobre 2024",
+    "notice": {
+      "tone": "amber",
+      "icon": "⚠️",
+      "title": "Projet en cours de développement",
+      "text": "Ce projet est actuellement en développement dans le cadre de la SAE du semestre 5. Certaines fonctionnalités sont encore en phase de conception et d'implémentation."
+    },
+    "criteria": {
+      "title": "Apprentissages Critiques mobilisés",
+      "items": [
+        {
+          "code": "AC31.01",
+          "text": "Choisir et implémenter les architectures adaptées (multi-serveurs Raspberry Pi)"
+        },
+        {
+          "code": "AC31.03",
+          "text": "Intégrer des solutions dans un environnement de production"
+        },
+        {
+          "code": "AC32.03",
+          "text": "Choisir et utiliser des bibliothèques et méthodes dédiées au domaine"
+        },
+        {
+          "code": "AC23.01",
+          "text": "Concevoir et développer des applications communicantes"
+        },
+        {
+          "code": "AC23.02",
+          "text": "Utiliser des serveurs et des services réseaux virtualisés"
+        },
+        {
+          "code": "AC24.01",
+          "text": "Optimiser les modèles de données de l'entreprise"
+        },
+        {
+          "code": "AC24.02",
+          "text": "Assurer la sécurité des données (intégrité et confidentialité)"
+        },
+        {
+          "code": "AC26.03",
+          "text": "Mobiliser les compétences interpersonnelles pour travailler dans une équipe"
+        }
+      ]
+    },
+    "factsStyle": "plain",
+    "facts": [
+      {
+        "icon": "👥",
+        "text": "**Équipe de 3** personnes"
+      },
+      {
+        "icon": "🎓",
+        "text": "**SAE** — Semestre 5 BUT Informatique"
+      },
+      {
+        "icon": "📱",
+        "text": "**Kotlin** / **Raspberry Pi**"
+      },
+      {
+        "icon": "🔌",
+        "text": "**IoT** intégré"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "title": "Partie 1 : Concept & Vision",
+      "blocks": [
+        {
+          "type": "callout",
+          "size": "lg",
+          "paragraphs": [
+            "**CASPINO** est un casino en ligne innovant développé dans le cadre de la SAE du semestre 5. Le projet combine **application mobile Kotlin**, **serveurs distribués Raspberry Pi** et **intégration IoT** pour créer une expérience de jeu immersive et connectée.",
+            "L'architecture innovante repose sur des **Raspberry Pi dédiés pour chaque jeu**, offrant modularité, scalabilité et une expérience temps réel optimisée."
+          ]
+        },
+        {
+          "type": "cards",
+          "columns": 3,
+          "style": "plain",
+          "cards": [
+            {
+              "title": "🎯 Objectif",
+              "text": "Casino en ligne complet avec architecture distribuée et bonus IoT immersifs",
+              "size": "sm"
+            },
+            {
+              "title": "🎲 Genre",
+              "text": "Application de jeux d'argent fictif — Machine à sous & jeux de casino",
+              "size": "sm"
+            },
+            {
+              "title": "🚀 Innovation",
+              "text": "Intégration IoT pour alarmes de jackpot et lumières de fidélité",
+              "size": "sm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 2 : Architecture & Technologies",
+      "blocks": [
+        {
+          "type": "heading",
+          "text": "🏗️ Architecture Distribuée"
+        },
+        {
+          "type": "callout",
+          "size": "lg",
+          "paragraphs": [
+            "Chaque jeu du casino tourne sur son **propre serveur Raspberry Pi**, permettant une architecture modulaire et scalable. Cette approche offre isolation des jeux, maintenance simplifiée et montée en charge flexible."
+          ]
+        },
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "icon": "📱",
+              "iconSize": "3xl",
+              "title": "Client Mobile",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "**Kotlin** pour Android",
+                "Interface utilisateur moderne et réactive",
+                "Communication temps réel avec les serveurs",
+                "Gestion des comptes joueurs",
+                "Historique des gains et transactions"
+              ]
+            },
+            {
+              "icon": "🖥️",
+              "iconSize": "3xl",
+              "title": "Serveurs Raspberry Pi",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "Un Raspberry Pi par jeu de casino",
+                "Logique métier isolée",
+                "Calcul des gains et probabilités",
+                "API REST pour communication mobile",
+                "Synchronisation base de données"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "🗄️ Gestion des Données"
+        },
+        {
+          "type": "cards",
+          "columns": 1,
+          "style": "plain",
+          "cards": [
+            {
+              "title": "",
+              "bullet": "arrow",
+              "items": [
+                "**Base de données centralisée** pour les comptes joueurs, soldes et transactions",
+                "**Historique des parties** : conservation des gains, pertes et jackpots",
+                "**Système de fidélité** : points accumulés, niveaux et bonus",
+                "**Sécurité** : chiffrement des données sensibles et transactions sécurisées"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "🛠️ Stack Technologique"
+        },
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "title": "Front-end Mobile",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "**Kotlin** (Android)",
+                "Jetpack Compose / XML layouts",
+                "Retrofit pour API REST",
+                "Coroutines pour asynchrone"
+              ]
+            },
+            {
+              "title": "Back-end & Infrastructure",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "**Raspberry Pi** (serveurs jeux)",
+                "Python / Node.js (API serveurs)",
+                "PostgreSQL / MySQL (BDD)",
+                "GPIO pour contrôle IoT"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 3 : Système de Fidélité & IoT",
+      "blocks": [
+        {
+          "type": "callout",
+          "tone": "amber",
+          "size": "lg",
+          "paragraphs": [
+            "Les joueurs peuvent **activer une alarme et une lumière connectées** grâce à leurs gains et points de fidélité. L'alarme se déclenche automatiquement lors d'un **jackpot aux machines à sous**, créant une expérience immersive et festive."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "🎁 Bonus de Fidélité"
+        },
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "gradient",
+          "cards": [
+            {
+              "icon": "🚨",
+              "iconSize": "3xl",
+              "title": "Alarme Connectée",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "Déclenchement automatique sur jackpot",
+                "Activation manuelle via points fidélité",
+                "Sons personnalisables",
+                "Contrôle depuis l'app mobile"
+              ]
+            },
+            {
+              "icon": "💡",
+              "iconSize": "3xl",
+              "title": "Lumière de Fidélité",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "Activation par gains accumulés",
+                "Changements de couleur selon niveaux",
+                "Animations sur gros gains",
+                "Intégration Raspberry Pi GPIO"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 4 : Jeux & Mécaniques",
+      "blocks": [
+        {
+          "type": "cards",
+          "columns": 3,
+          "style": "gradient",
+          "cards": [
+            {
+              "icon": "🎰",
+              "iconPosition": "top",
+              "title": "Machine à Sous",
+              "text": "Jackpots progressifs, bonus tours, multiplicateurs et alarme IoT lors des gros gains.",
+              "size": "sm"
+            },
+            {
+              "icon": "🃏",
+              "iconPosition": "top",
+              "title": "Jeux de Cartes",
+              "text": "Blackjack, Poker et autres classiques avec serveurs dédiés pour chaque variante.",
+              "size": "sm"
+            },
+            {
+              "icon": "🎲",
+              "iconPosition": "top",
+              "title": "Jeux de Dés",
+              "text": "Craps et autres jeux de hasard avec animations temps réel et système de paris.",
+              "size": "sm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 5 : Organisation & Collaboration",
+      "blocks": [
+        {
+          "type": "callout",
+          "size": "lg",
+          "paragraphs": [
+            "Projet réalisé en **équipe de 3 personnes** avec répartition des responsabilités : développement mobile (Kotlin), infrastructure serveurs (Raspberry Pi) et intégration IoT + base de données. Communication régulière et revues de code pour assurer la cohésion du projet."
+          ]
+        },
+        {
+          "type": "cards",
+          "columns": 3,
+          "style": "plain",
+          "cards": [
+            {
+              "icon": "📱",
+              "iconSize": "3xl",
+              "title": "Mobile Dev",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "Application Kotlin Android",
+                "UI/UX des jeux",
+                "API REST client",
+                "Gestion états utilisateur"
+              ]
+            },
+            {
+              "icon": "🖥️",
+              "iconSize": "3xl",
+              "title": "Infrastructure",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "Configuration Raspberry Pi",
+                "Serveurs jeux (API)",
+                "Déploiement & monitoring",
+                "Réseau & sécurité"
+              ]
+            },
+            {
+              "icon": "🔌",
+              "iconSize": "3xl",
+              "title": "IoT & Data",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "Alarme & lumières GPIO",
+                "Base de données",
+                "Système de fidélité",
+                "Intégration hardware"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 6 : Compétences Mobilisées",
+      "blocks": [
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "icon": "⚙️",
+              "iconSize": "2xl",
+              "title": "UE Réaliser & Optimiser",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "Architecture multi-serveurs distribuée",
+                "Développement mobile Kotlin performant",
+                "Optimisation temps réel et scalabilité"
+              ]
+            },
+            {
+              "icon": "🖥️",
+              "iconSize": "2xl",
+              "title": "UE Administrer",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "Configuration & déploiement Raspberry Pi",
+                "Administration serveurs Linux",
+                "Sécurisation des services réseaux"
+              ]
+            },
+            {
+              "icon": "🗄️",
+              "iconSize": "2xl",
+              "title": "UE Gérer",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "Conception base de données relationnelle",
+                "Gestion transactions et intégrité données",
+                "Requêtes optimisées et indexation"
+              ]
+            },
+            {
+              "icon": "👥",
+              "iconSize": "2xl",
+              "title": "UE Collaborer & Conduire",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "Travail en équipe de 3 avec répartition claire",
+                "Gestion de projet SAE (planification, suivi)",
+                "Communication technique et coordination"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -4,15 +4,44 @@
   "category": "TP — Exemple",
   "summary": "Courte description affichée sur la carte de la page Projets.",
   "tags": ["Vue.js", "JavaScript"],
-  "subtitle": "Sous-titre affiché en haut de la page du projet",
-  "meta": ["🎓 SAE — BUT Informatique", "👥 Projet en équipe de 2"],
+  "tone": "indigo",
+  "order": 99,
+  "header": {
+    "kicker": "Projet étudiant — SAE",
+    "title": "Exemple de projet",
+    "subtitle": "Sous-titre affiché sous le titre",
+    "criteria": {
+      "title": "Apprentissages Critiques",
+      "items": [{ "code": "AC11.01", "text": "Implémenter des conceptions simples" }]
+    },
+    "factsStyle": "plain",
+    "facts": [
+      { "icon": "🎓", "text": "**SAE** — BUT Informatique" },
+      { "icon": "👥", "text": "**Équipe de 2** personnes" }
+    ]
+  },
   "sections": [
     {
-      "title": "Présentation",
-      "text": ["Premier paragraphe.", "Deuxième paragraphe."],
-      "bullets": ["Un point", "Un autre point"],
-      "images": [{ "file": "capture.png", "caption": "Légende de l'image" }]
+      "title": "Partie 1 : Concept & Objectif",
+      "blocks": [
+        {
+          "type": "callout",
+          "size": "lg",
+          "paragraphs": ["Texte avec du **gras** entre doubles étoiles.", "Deuxième paragraphe."]
+        },
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            { "title": "🎯 Objectif", "text": "Texte de la carte" },
+            { "icon": "⚙️", "iconSize": "3xl", "title": "Carte avec liste", "items": ["Un point", "Un autre point"], "bullet": "arrow" }
+          ]
+        },
+        { "type": "heading", "text": "Un sous-titre" },
+        { "type": "image", "images": [{ "file": "capture.png", "caption": "Légende de l'image" }] },
+        { "type": "button", "icon": "📂", "label": "Voir le code sur GitHub", "url": "https://github.com/" }
+      ]
     }
-  ],
-  "links": [{ "label": "Code source", "url": "https://github.com/" }]
+  ]
 }

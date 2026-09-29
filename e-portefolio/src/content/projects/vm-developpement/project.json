@@ -1,0 +1,366 @@
+{
+  "title": "VM Développement",
+  "category": "TP — Administration",
+  "summary": "Configuration d'une machine virtuelle optimisée. VirtualBox, installation système, configuration réseau, outils de développement.",
+  "tags": [
+    "VirtualBox",
+    "Système",
+    "Réseau"
+  ],
+  "order": 6,
+  "header": {
+    "kicker": "Projet étudiant — TP",
+    "title": "VM Développement Optimisée",
+    "subtitle": "Configuration d'une machine virtuelle pour environnement de développement",
+    "criteria": {
+      "title": "Apprentissages Critiques",
+      "items": [
+        {
+          "code": "AC13.03",
+          "text": "Installer et configurer un système d'exploitation et des outils de développement"
+        },
+        {
+          "code": "AC13.04",
+          "text": "Configurer un poste de travail dans un réseau d'entreprise"
+        },
+        {
+          "code": "AC15.01",
+          "text": "Appréhender les besoins du client et de l'utilisateur"
+        },
+        {
+          "code": "AC13.01",
+          "text": "Identifier les différents composants d'un système numérique"
+        },
+        {
+          "code": "AC25.01",
+          "text": "Accompagner les utilisateurs et favoriser l'autonomie"
+        }
+      ]
+    },
+    "factsStyle": "plain",
+    "facts": [
+      {
+        "icon": "🎓",
+        "text": "**TP** — BUT Informatique"
+      },
+      {
+        "icon": "👥",
+        "text": "**Équipe de 2**"
+      },
+      {
+        "icon": "💻",
+        "text": "**VirtualBox** / **Configuration Système**"
+      },
+      {
+        "icon": "🛠️",
+        "text": "**Administration Systèmes**"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "title": "Partie 1 : Concept & Objectif",
+      "blocks": [
+        {
+          "type": "callout",
+          "size": "lg",
+          "paragraphs": [
+            "Projet réalisé en binôme consistant à **créer une machine virtuelle pour un environnement de développement léger et optimisé**. L'objectif était de répondre aux besoins spécifiques d'un utilisateur en configurant une VM complète avec tous les outils nécessaires.",
+            "Ce projet a mis l'accent sur l'**analyse des besoins utilisateur**, l'**installation système**, la **configuration réseau** et le **déploiement d'outils de développement**."
+          ]
+        },
+        {
+          "type": "cards",
+          "columns": 3,
+          "style": "plain",
+          "cards": [
+            {
+              "title": "🎯 Objectif",
+              "text": "Créer un environnement de développement léger, optimisé et prêt à l'emploi",
+              "size": "sm"
+            },
+            {
+              "title": "📊 Type",
+              "text": "Configuration système et administration réseau",
+              "size": "sm"
+            },
+            {
+              "title": "👤 Utilisateurs",
+              "text": "Développeur nécessitant un environnement isolé et performant",
+              "size": "sm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 2 : Analyse des Besoins",
+      "blocks": [
+        {
+          "type": "callout",
+          "size": "lg",
+          "title": "📋 Cahier des Charges Utilisateur",
+          "paragraphs": [
+            "Après échange avec l'utilisateur, nous avons identifié les besoins suivants :"
+          ],
+          "items": [
+            "**Environnement léger** : ressources optimisées pour ne pas surcharger la machine hôte",
+            "**Outils de développement** : IDE complet (Visual Studio) et outils annexes",
+            "**Connectivité réseau** : accès internet et intégration au réseau d'entreprise",
+            "**Facilité d'utilisation** : environnement prêt à l'emploi, sans configuration supplémentaire",
+            "**Performance** : temps de démarrage rapide et exécution fluide"
+          ],
+          "bullet": "arrow"
+        },
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "icon": "👤",
+              "iconSize": "3xl",
+              "title": "Profil Utilisateur",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "Développeur avec besoins spécifiques",
+                "Besoin d'isolation pour les tests",
+                "Ressources machine limitées",
+                "Intégration réseau d'entreprise"
+              ]
+            },
+            {
+              "icon": "⚡",
+              "iconSize": "3xl",
+              "title": "Contraintes Identifiées",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "RAM limitée (allocation optimale)",
+                "Espace disque à minimiser",
+                "Performances à maintenir",
+                "Compatibilité réseau requise"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 3 : Configuration & Installation",
+      "blocks": [
+        {
+          "type": "heading",
+          "text": "🖥️ Création de la Machine Virtuelle"
+        },
+        {
+          "type": "callout",
+          "size": "lg",
+          "title": "VirtualBox — Configuration Matérielle",
+          "paragraphs": [],
+          "items": [
+            "**Système d'exploitation** : Windows 10/11 ou Linux (selon besoins)",
+            "**RAM allouée** : optimisée selon machine hôte (4-8 GB)",
+            "**Stockage** : disque virtuel dynamique pour économiser l'espace",
+            "**Processeurs** : allocation de cœurs adaptée",
+            "**Carte réseau** : mode pont pour intégration réseau d'entreprise"
+          ],
+          "bullet": "arrow"
+        },
+        {
+          "type": "heading",
+          "text": "🔧 Installation du Système & Outils"
+        },
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "icon": "💿",
+              "iconSize": "3xl",
+              "title": "Système d'Exploitation",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "Installation OS depuis ISO",
+                "Configuration initiale utilisateur",
+                "Mises à jour système",
+                "Optimisation des services",
+                "Drivers et Guest Additions"
+              ]
+            },
+            {
+              "icon": "🛠️",
+              "iconSize": "3xl",
+              "title": "Outils de Développement",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "**Visual Studio** (IDE principal)",
+                "Compilateurs et SDKs",
+                "Git & gestionnaire de versions",
+                "Navigateurs web pour tests",
+                "Outils de débogage"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "callout",
+          "size": "lg",
+          "title": "🌐 Configuration Réseau d'Entreprise",
+          "paragraphs": [],
+          "items": [
+            "**Mode pont** : intégration directe au réseau local",
+            "**Adresse IP** : configuration DHCP ou IP fixe selon politique",
+            "**DNS** : serveurs d'entreprise configurés",
+            "**Partage de fichiers** : accès aux ressources partagées",
+            "**Tests de connectivité** : validation ping et accès services"
+          ],
+          "bullet": "arrow"
+        }
+      ]
+    },
+    {
+      "title": "Partie 4 : Optimisations & Performance",
+      "blocks": [
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "title": "⚡ Optimisations Système",
+              "bullet": "arrow",
+              "size": "sm",
+              "items": [
+                "Désactivation des services inutiles",
+                "Effets visuels minimisés",
+                "Démarrage rapide configuré",
+                "Disque virtuel optimisé (allocation dynamique)",
+                "Mémoire virtuelle ajustée"
+              ]
+            },
+            {
+              "title": "✅ Validation & Tests",
+              "bullet": "arrow",
+              "size": "sm",
+              "items": [
+                "Tests de performance (CPU, RAM, disque)",
+                "Validation connectivité réseau",
+                "Tests compilation et débogage",
+                "Vérification accès ressources partagées",
+                "Formation utilisateur final"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 5 : Technologies & Outils",
+      "blocks": [
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "title": "🛠️ Stack Technologique",
+              "bullet": "square",
+              "items": [
+                "**Virtualisation :** VirtualBox",
+                "**OS :** Windows 10/11 ou Linux",
+                "**IDE :** Visual Studio",
+                "**Réseau :** Mode pont, DHCP/IP fixe",
+                "**Outils :** Git, compilateurs, SDKs"
+              ]
+            },
+            {
+              "title": "✅ Réalisations Techniques",
+              "bullet": "arrow",
+              "items": [
+                "VM optimisée et performante",
+                "Intégration réseau d'entreprise réussie",
+                "Environnement de développement complet",
+                "Documentation de configuration",
+                "Formation et accompagnement utilisateur"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partie 6 : Compétences Mobilisées",
+      "blocks": [
+        {
+          "type": "cards",
+          "columns": 2,
+          "style": "plain",
+          "cards": [
+            {
+              "icon": "🖥️",
+              "iconSize": "2xl",
+              "title": "UE Administrer",
+              "bullet": "dot",
+              "size": "sm",
+              "subtitle": "Niveau 1 : Installer et configurer un poste de travail",
+              "items": [
+                "**AC13.01** – Identifier les différents composants d'un système numérique",
+                "**AC13.03** – Installer et configurer un système d'exploitation et des outils de développement",
+                "**AC13.04** – Configurer un poste de travail dans un réseau d'entreprise"
+              ]
+            },
+            {
+              "icon": "🤝",
+              "iconSize": "2xl",
+              "title": "UE Collaborer",
+              "bullet": "dot",
+              "size": "sm",
+              "subtitle": "Niveau 1 : Identifier les besoins métiers",
+              "items": [
+                "**AC15.01** – Appréhender les besoins du client et de l'utilisateur"
+              ],
+              "extra": [
+                {
+                  "subtitle": "Niveau 2 : Satisfaire les besoins des utilisateurs",
+                  "items": [
+                    "**AC25.01** – Accompagner les utilisateurs et favoriser l'autonomie"
+                  ]
+                }
+              ]
+            },
+            {
+              "icon": "👥",
+              "iconSize": "2xl",
+              "title": "Travail en Équipe",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "Répartition des tâches entre binôme",
+                "Collaboration sur configuration système",
+                "Communication avec utilisateur final"
+              ]
+            },
+            {
+              "icon": "💡",
+              "iconSize": "2xl",
+              "title": "Points Forts",
+              "bullet": "dot",
+              "size": "sm",
+              "items": [
+                "Analyse précise des besoins",
+                "Configuration réseau maîtrisée",
+                "Environnement optimisé et performant",
+                "Documentation complète fournie"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

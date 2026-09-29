@@ -2,25 +2,19 @@
 
 Site portfolio (Vue 3 + Vite). Les projets et formations se gèrent sans toucher au code.
 
-## Ajouter un projet
+## Ajouter un projet (dans les fichiers)
 
 ```
 npm run new:project -- "Nom du projet"
 ```
 
-Cela crée `src/content/projects/nom-du-projet/project.json`.
+Crée `src/content/projects/nom-du-projet/project.json` (copie de `_modele/project.json`, qui montre tous les types de blocs).
+Mets les images dans le même dossier et référence-les par leur nom de fichier.
+Une page = un en-tête (`header`) + des `sections`, chacune contenant des blocs :
+`callout` (texte), `heading` (sous-titre), `cards` (grille de cartes), `image`, `button`.
+Les six projets d'origine sont écrits dans ce format et servent de modèles.
 
-1. Copie tes images (png, jpg, webp, gif...) dans ce même dossier.
-2. Édite `project.json` (voir `src/content/projects/_modele/project.json`) :
-   - `title`, `category`, `summary`, `tags` : carte sur la page Projets
-   - `status` : badge optionnel (ex. `"EN COURS"`)
-   - `cover` : image de la carte (par défaut la première image du dossier)
-   - `subtitle`, `meta` : en-tête de la page du projet
-   - `sections` : liste de blocs `title`, `text` (texte ou liste de paragraphes), `bullets`, `images` (`{ "file": "capture.png", "caption": "..." }`)
-   - `links` : boutons `{ "label", "url" }`
-   - `order` : ordre d'affichage (petit nombre = en premier)
-   - `"publie": false` masque le projet
-3. Supprimer le dossier supprime le projet.
+En pratique, le plus simple est d'utiliser l'éditeur en ligne (`/admin`, voir plus bas).
 
 ## Ajouter une formation
 
@@ -65,3 +59,13 @@ Seul le compte admin peut écrire (règles côté serveur dans `supabase/setup.s
 6. Va sur `https://drag0nol.github.io/admin`.
 
 La clé `anon` est publique par conception. Ne mets jamais la clé `service_role` dans le site.
+
+
+### L'éditeur de projets
+
+Dans `/admin` > Projets :
+- **Tous les projets** (ceux du dépôt aussi) se modifient. La version modifiée remplace l'original ; « Rétablir l'original » l'annule.
+- **Dupliquer** copie un projet comme point de départ d'une nouvelle page.
+- Une page se compose d'une carte (page Projets), d'un en-tête (bandeau d'avertissement, apprentissages critiques, badges) et de sections faites de blocs : texte, sous-titre, cartes (2 ou 3 colonnes, icône, liste, sous-groupes), images avec légende, bouton.
+- **Aperçu** montre la page exactement comme sur le site avant d'enregistrer.
+- `**gras**` fonctionne dans les textes.
