@@ -69,3 +69,4 @@ Dans `/admin` > Projets :
 - Une page se compose d'une carte (page Projets), d'un en-tête (bandeau d'avertissement, apprentissages critiques, badges) et de sections faites de blocs : texte, sous-titre, cartes (2 ou 3 colonnes, icône, liste, sous-groupes), images avec légende, bouton.
 - **Aperçu** montre la page exactement comme sur le site avant d'enregistrer.
 - `**gras**` fonctionne dans les textes.
+- **Hauteur max d'une image** (images seules et diapositives de carrousel) : valeur + unité `px` (taille exacte), `vh` (% de la hauteur de l'écran, s'adapte à l'appareil) ou `rem`. Vide = pas de limite. Dans `project.json` : `"maxHeight": "300px"`. L'image est réduite sans être déformée ni rognée.

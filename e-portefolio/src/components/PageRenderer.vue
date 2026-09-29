@@ -4,6 +4,7 @@ import { rich } from '@/content/richtext'
 import { tone, bulletOf } from '@/content/tones'
 import CardView from './CardView.vue'
 import CarouselBlock from './CarouselBlock.vue'
+import ImageView from './ImageView.vue'
 
 defineProps({ project: { type: Object, required: true } })
 
@@ -119,20 +120,7 @@ const COLUMNS = { 1: '', 2: 'md:grid-cols-2', 3: 'md:grid-cols-3' }
               :class="b.images.length > 1 ? 'md:grid-cols-2' : ''"
               class="grid grid-cols-1 gap-6 mb-8"
             >
-              <div v-for="(img, i) in b.images" :key="i">
-                <p v-if="img.caption" class="text-slate-400 text-sm mb-2">📸 {{ img.caption }}</p>
-                <div
-                  :class="img.fit === 'contain' ? 'flex items-center justify-center h-40' : ''"
-                  class="bg-slate-800/50 rounded-lg border border-indigo-500/30 overflow-hidden shadow-lg"
-                >
-                  <img
-                    :src="img.src"
-                    :alt="img.caption || project.title"
-                    :class="img.fit === 'contain' ? 'h-full w-auto object-contain' : 'w-full h-auto object-cover'"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
+              <ImageView v-for="(img, i) in b.images" :key="i" :img="img" :alt="project.title" />
             </div>
 
             <!-- Bouton -->

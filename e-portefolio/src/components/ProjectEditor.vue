@@ -4,6 +4,7 @@ import { ref, computed } from 'vue'
 import ListInput from './ListInput.vue'
 import PageRenderer from './PageRenderer.vue'
 import CardEditor from './CardEditor.vue'
+import MaxHeightInput from './MaxHeightInput.vue'
 import { normalizeProject, resolverFor } from '@/content'
 
 const props = defineProps({
@@ -246,14 +247,19 @@ const previewProject = computed(() =>
 
         <!-- Images -->
         <template v-else-if="b.type === 'image'">
-          <div v-for="(img, ii) in b.images" :key="ii" class="flex items-center gap-3">
-            <img :src="imgSrc(img)" class="h-14 w-20 object-cover rounded bg-slate-700" />
-            <input v-model="img.caption" placeholder="Légende" :class="input" />
-            <select v-model="img.fit" :class="input + ' w-auto'">
-              <option value="">Pleine largeur</option>
-              <option value="contain">Logo (contenu)</option>
-            </select>
-            <button type="button" :class="danger" @click="b.images.splice(ii, 1)">✕</button>
+          <div v-for="(img, ii) in b.images" :key="ii" :class="box + ' bg-slate-900/50'">
+            <div class="flex items-center gap-3">
+              <img :src="imgSrc(img)" class="h-14 w-20 object-cover rounded bg-slate-700" />
+              <input v-model="img.caption" placeholder="Légende" :class="input" />
+              <button type="button" :class="danger" @click="b.images.splice(ii, 1)">✕</button>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+              <select v-model="img.fit" :class="input + ' w-auto'">
+                <option value="">Pleine largeur</option>
+                <option value="contain">Logo (contenu)</option>
+              </select>
+              <MaxHeightInput v-model="img.maxHeight" />
+            </div>
           </div>
           <label :class="label">Ajouter des images
             <input type="file" accept="image/*" multiple class="block mt-1" @change="uploadImages($event, b.images)" />
@@ -289,13 +295,18 @@ const previewProject = computed(() =>
               <button type="button" :class="danger" @click="b.slides.splice(li, 1)">✕</button>
             </div>
 
-            <div v-if="sl.type === 'image'" class="flex items-center gap-3">
-              <img :src="imgSrc(sl)" class="h-14 w-20 object-cover rounded bg-slate-700" />
-              <input v-model="sl.caption" placeholder="Légende" :class="input" />
-              <select v-model="sl.fit" :class="input + ' w-auto'">
-                <option value="">Pleine largeur</option>
-                <option value="contain">Logo (contenu)</option>
-              </select>
+            <div v-if="sl.type === 'image'" class="space-y-3">
+              <div class="flex items-center gap-3">
+                <img :src="imgSrc(sl)" class="h-14 w-20 object-cover rounded bg-slate-700" />
+                <input v-model="sl.caption" placeholder="Légende" :class="input" />
+              </div>
+              <div class="flex flex-wrap items-center gap-3">
+                <select v-model="sl.fit" :class="input + ' w-auto'">
+                  <option value="">Pleine largeur</option>
+                  <option value="contain">Logo (contenu)</option>
+                </select>
+                <MaxHeightInput v-model="sl.maxHeight" />
+              </div>
             </div>
 
             <CardEditor v-else-if="sl.type === 'card'" :card="sl" />

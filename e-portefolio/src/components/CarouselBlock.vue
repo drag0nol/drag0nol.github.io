@@ -4,6 +4,7 @@ import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { rich } from '@/content/richtext'
 import { tone, bulletOf } from '@/content/tones'
 import CardView from './CardView.vue'
+import ImageView from './ImageView.vue'
 
 const props = defineProps({
   block: { type: Object, required: true },
@@ -59,20 +60,7 @@ onBeforeUnmount(stop)
     <div ref="track" class="carousel-track flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth" @scroll.passive="onScroll">
       <div v-for="(s, i) in slides" :key="i" :class="WIDTHS[perView]" class="snap-start shrink-0">
         <!-- Image -->
-        <div v-if="s.type === 'image'">
-          <p v-if="s.caption" class="text-slate-400 text-sm mb-2">📸 {{ s.caption }}</p>
-          <div
-            :class="s.fit === 'contain' ? 'flex items-center justify-center h-40' : ''"
-            class="bg-slate-800/50 rounded-lg border border-indigo-500/30 overflow-hidden shadow-lg"
-          >
-            <img
-              :src="s.src"
-              :alt="s.caption || alt"
-              :class="s.fit === 'contain' ? 'h-full w-auto object-contain' : perView > 1 ? 'w-full h-56 object-cover' : 'w-full h-auto object-cover'"
-              loading="lazy"
-            />
-          </div>
-        </div>
+        <ImageView v-if="s.type === 'image'" :img="s" :alt="alt" :compact="perView > 1" />
 
         <!-- Carte -->
         <CardView v-else-if="s.type === 'card'" :card="s" :variant="block.cardStyle || 'plain'" class="h-full" />
