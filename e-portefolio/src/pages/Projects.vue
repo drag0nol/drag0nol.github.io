@@ -1,5 +1,5 @@
 <script setup>
-import { projects } from '@/content'
+import { allProjects as projects } from '@/content/remote'
 </script>
 
 <template>

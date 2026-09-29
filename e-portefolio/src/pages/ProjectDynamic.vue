@@ -1,10 +1,10 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { getProject } from '@/content'
+import { findProject, remoteLoaded } from '@/content/remote'
 
 const route = useRoute()
-const project = computed(() => getProject(route.params.slug))
+const project = computed(() => findProject(route.params.slug))
 </script>
 
 <template>
@@ -12,7 +12,9 @@ const project = computed(() => getProject(route.params.slug))
     <div class="absolute top-10 left-10 w-72 h-72 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
     <div class="absolute top-40 right-20 w-72 h-72 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
 
-    <div v-if="!project" class="relative z-10 max-w-5xl mx-auto px-6 py-24 text-center">
+    <div v-if="!project && !remoteLoaded" class="relative z-10 max-w-5xl mx-auto px-6 py-24 text-center text-slate-300">Chargement…</div>
+
+    <div v-else-if="!project" class="relative z-10 max-w-5xl mx-auto px-6 py-24 text-center">
       <h1 class="text-4xl font-bold text-white mb-4">Projet introuvable</h1>
       <router-link to="/projects" class="text-indigo-300 hover:text-indigo-200">← Retour aux projets</router-link>
     </div>

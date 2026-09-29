@@ -47,3 +47,21 @@ npm run deploy    # build + publication de dist/ sur la branche gp-page
 
 `npm run deploy` publie uniquement le build sur la branche `gp-page` (GitHub Pages).
 Pense aussi à commit/push les changements de contenu sur `master`.
+
+## Ajouter du contenu depuis le site (sans commit)
+
+Page `/admin` : connexion, puis ajout / modification / suppression de projets et formations, avec envoi d'images.
+Les données sont stockées dans Supabase et visibles immédiatement (pas de rebuild, pas de commit).
+Seul le compte admin peut écrire (règles côté serveur dans `supabase/setup.sql`).
+
+### Mise en place (une seule fois)
+
+1. Crée un projet gratuit sur https://supabase.com.
+2. **Authentication > Users > Add user** : crée ton compte (email + mot de passe, coche « Auto Confirm »).
+   **Authentication > Sign In / Providers** : désactive « Allow new users to sign up ».
+3. **SQL Editor** : ouvre `supabase/setup.sql`, remplace `TON_EMAIL` par l'email du compte, exécute.
+4. **Project Settings > API** : copie l'URL et la clé `anon` dans `e-portefolio/.env.local` (voir `.env.example`).
+5. `npm run deploy` une fois pour publier le site avec cette configuration.
+6. Va sur `https://drag0nol.github.io/admin`.
+
+La clé `anon` est publique par conception. Ne mets jamais la clé `service_role` dans le site.

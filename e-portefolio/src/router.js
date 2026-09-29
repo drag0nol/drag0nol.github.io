@@ -13,6 +13,7 @@ import ProjectCaspino from './pages/ProjectCaspino.vue'
 import ProjectMarathon from './pages/ProjectMarathon.vue'
 import ProjectVM from './pages/ProjectVM.vue'
 import ProjectDynamic from './pages/ProjectDynamic.vue'
+import Admin from './pages/Admin.vue'
 
 const routes = [
   { path: '/', component: Home, name: 'Home' },
@@ -28,6 +29,7 @@ const routes = [
   { path: '/projects/caspino', component: ProjectCaspino, name: 'ProjectCaspino' },
   { path: '/projects/marathon-beaune', component: ProjectMarathon, name: 'ProjectMarathon' },
   { path: '/projects/vm-developpement', component: ProjectVM, name: 'ProjectVM' },
+  { path: '/admin', component: Admin, name: 'Admin' },
   { path: '/projects/:slug', component: ProjectDynamic, name: 'ProjectDynamic' }
 ]
 

@@ -1,5 +1,5 @@
 <script setup>
-import { formations } from '@/content'
+import { allFormations as formations } from '@/content/remote'
 </script>
 
 <template>

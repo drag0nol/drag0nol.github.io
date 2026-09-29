@@ -16,6 +16,7 @@
     "new:project": "node scripts/new-project.js"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.117.2",
     "pinia": "^3.0.4",
     "vue": "^3.5.25",
     "vue-router": "^5.3.1"
