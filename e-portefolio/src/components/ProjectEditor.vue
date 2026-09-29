@@ -3,6 +3,7 @@
 import { ref, computed } from 'vue'
 import ListInput from './ListInput.vue'
 import PageRenderer from './PageRenderer.vue'
+import CardEditor from './CardEditor.vue'
 import { normalizeProject, resolverFor } from '@/content'
 
 const props = defineProps({
@@ -28,6 +29,7 @@ const BLOCK_TYPES = [
   ['heading', 'Sous-titre'],
   ['cards', 'Cartes'],
   ['image', 'Image'],
+  ['carousel', 'Carrousel'],
   ['button', 'Bouton'],
 ]
 const BLOCK_LABEL = Object.fromEntries(BLOCK_TYPES)
@@ -39,6 +41,7 @@ const newBlock = (type) =>
     callout: { type, tone: 'indigo', size: 'lg', title: '', paragraphs: [], items: [], bullet: 'arrow' },
     cards: { type, columns: 2, style: 'plain', cards: [newCard()] },
     image: { type, images: [] },
+    carousel: { type, perView: 1, autoplay: 0, cardStyle: 'plain', slides: [] },
     button: { type, icon: '📂', label: '', url: '' },
   })[type]
 
@@ -58,6 +61,20 @@ async function uploadImages(ev, images) {
   }
   ev.target.value = ''
 }
+async function uploadSlides(ev, slides) {
+  try {
+    for (const file of ev.target.files) slides.push({ type: 'image', url: await props.upload(file), caption: '' })
+  } catch (e) {
+    emit('error', "Envoi de l'image impossible : " + e.message)
+  }
+  ev.target.value = ''
+}
+const SLIDE_LABEL = { image: 'Image', card: 'Carte', text: 'Texte' }
+const newSlide = (type) =>
+  type === 'card'
+    ? { type, ...newCard() }
+    : { type, tone: 'indigo', title: '', paragraphs: [], items: [], bullet: 'arrow' }
+
 async function uploadCover(ev) {
   try {
     props.form.cover = await props.upload(ev.target.files[0])
@@ -222,44 +239,7 @@ const previewProject = computed(() =>
               <button type="button" :class="small" @click="duplicate(b.cards, ci)">Dupliquer</button>
               <button type="button" :class="danger" @click="b.cards.splice(ci, 1)">✕</button>
             </div>
-            <div class="grid grid-cols-[70px_1fr] gap-2">
-              <input v-model="c.icon" placeholder="🎯" :class="input" />
-              <input v-model="c.title" placeholder="Titre de la carte" :class="input" />
-            </div>
-            <div v-if="c.icon" class="flex gap-3 text-sm">
-              <select v-model="c.iconPosition" :class="input + ' w-auto'">
-                <option value="left">Icône à gauche du titre</option>
-                <option value="top">Icône au-dessus (centrée)</option>
-              </select>
-              <select v-model="c.iconSize" :class="input + ' w-auto'">
-                <option value="3xl">Grande icône</option>
-                <option value="2xl">Icône moyenne</option>
-              </select>
-            </div>
-            <input v-model="c.subtitle" placeholder="Sous-titre en gras (facultatif)" :class="input" />
-            <textarea v-model="c.text" rows="2" placeholder="Texte (facultatif, **gras**)" :class="input"></textarea>
-            <label :class="label">Liste (une entrée par ligne, **gras** possible)
-              <ListInput v-model="c.items" :rows="4" />
-            </label>
-            <div class="flex gap-3 text-sm">
-              <select v-model="c.bullet" :class="input + ' w-auto'">
-                <option value="dot">Puce •</option>
-                <option value="arrow">Puce ▸</option>
-                <option value="square">Puce ▫️</option>
-                <option value="none">Sans puce</option>
-              </select>
-              <select v-model="c.size" :class="input + ' w-auto'">
-                <option value="base">Texte normal</option>
-                <option value="sm">Petit texte</option>
-              </select>
-            </div>
-
-            <div v-for="(g, gi) in c.extra" :key="gi" :class="box + ' bg-slate-900/50'">
-              <input v-model="g.subtitle" placeholder="Sous-titre du groupe" :class="input" />
-              <ListInput v-model="g.items" :rows="3" />
-              <button type="button" :class="danger" @click="c.extra.splice(gi, 1)">Retirer le groupe</button>
-            </div>
-            <button type="button" :class="small" @click="(c.extra = c.extra || []).push({ subtitle: '', items: [] })">+ Second groupe (sous-titre + liste)</button>
+            <CardEditor :card="c" />
           </div>
           <button type="button" :class="small" @click="b.cards.push(newCard())">+ Carte</button>
         </template>
@@ -277,6 +257,70 @@ const previewProject = computed(() =>
           </div>
           <label :class="label">Ajouter des images
             <input type="file" accept="image/*" multiple class="block mt-1" @change="uploadImages($event, b.images)" />
+          </label>
+        </template>
+
+        <!-- Carrousel -->
+        <template v-else-if="b.type === 'carousel'">
+          <div class="flex flex-wrap gap-3 text-sm text-slate-400">
+            <select v-model.number="b.perView" :class="input + ' w-auto'">
+              <option :value="1">1 élément à la fois</option>
+              <option :value="2">2 à la fois (ordinateur)</option>
+              <option :value="3">3 à la fois (ordinateur)</option>
+            </select>
+            <select v-model.number="b.autoplay" :class="input + ' w-auto'">
+              <option :value="0">Défilement manuel</option>
+              <option :value="3">Auto : 3 s</option>
+              <option :value="5">Auto : 5 s</option>
+              <option :value="8">Auto : 8 s</option>
+            </select>
+            <select v-model="b.cardStyle" :class="input + ' w-auto'">
+              <option value="plain">Cartes simples</option>
+              <option value="gradient">Cartes dégradées</option>
+            </select>
+          </div>
+
+          <div v-for="(sl, li) in b.slides" :key="li" :class="box">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-semibold text-slate-300 flex-1">Diapositive {{ li + 1 }} — {{ SLIDE_LABEL[sl.type] }}</span>
+              <button type="button" :class="small" @click="move(b.slides, li, -1)">←</button>
+              <button type="button" :class="small" @click="move(b.slides, li, 1)">→</button>
+              <button type="button" :class="small" @click="duplicate(b.slides, li)">Dupliquer</button>
+              <button type="button" :class="danger" @click="b.slides.splice(li, 1)">✕</button>
+            </div>
+
+            <div v-if="sl.type === 'image'" class="flex items-center gap-3">
+              <img :src="imgSrc(sl)" class="h-14 w-20 object-cover rounded bg-slate-700" />
+              <input v-model="sl.caption" placeholder="Légende" :class="input" />
+              <select v-model="sl.fit" :class="input + ' w-auto'">
+                <option value="">Pleine largeur</option>
+                <option value="contain">Logo (contenu)</option>
+              </select>
+            </div>
+
+            <CardEditor v-else-if="sl.type === 'card'" :card="sl" />
+
+            <template v-else>
+              <select v-model="sl.tone" :class="input + ' w-auto'">
+                <option value="indigo">Indigo</option>
+                <option value="amber">Ambre</option>
+              </select>
+              <input v-model="sl.title" placeholder="Titre (facultatif)" :class="input" />
+              <label :class="label">Paragraphes (ligne vide = nouveau paragraphe)
+                <ListInput v-model="sl.paragraphs" mode="para" :rows="3" />
+              </label>
+              <label :class="label">Liste à puces (facultatif)
+                <ListInput v-model="sl.items" :rows="3" />
+              </label>
+            </template>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <button type="button" :class="small" @click="b.slides.push(newSlide('card'))">+ Carte</button>
+            <button type="button" :class="small" @click="b.slides.push(newSlide('text'))">+ Texte</button>
+          </div>
+          <label :class="label">Ajouter des images (une diapositive par image)
+            <input type="file" accept="image/*" multiple class="block mt-1" @change="uploadSlides($event, b.slides)" />
           </label>
         </template>
 

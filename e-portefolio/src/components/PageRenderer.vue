@@ -1,33 +1,13 @@
 <script setup>
 // Affiche une page de projet à partir de son modèle de données (voir src/content/index.js).
 import { rich } from '@/content/richtext'
+import { tone, bulletOf } from '@/content/tones'
+import CardView from './CardView.vue'
+import CarouselBlock from './CarouselBlock.vue'
 
 defineProps({ project: { type: Object, required: true } })
 
-const BULLETS = { dot: '•', arrow: '▸', square: '▫️' }
-
-const TONES = {
-  indigo: {
-    box: 'from-indigo-500/20 to-slate-700/20 border-indigo-500/30',
-    title: 'text-indigo-200',
-    bold: 'text-indigo-300',
-  },
-  amber: {
-    box: 'from-amber-500/20 to-slate-700/20 border-amber-500/30',
-    title: 'text-amber-200',
-    bold: 'text-amber-300',
-  },
-}
-const tone = (t) => TONES[t] || TONES.indigo
-
 const COLUMNS = { 1: '', 2: 'md:grid-cols-2', 3: 'md:grid-cols-3' }
-
-const cardClass = (b) =>
-  b.style === 'gradient'
-    ? 'bg-gradient-to-br from-slate-800/50 to-slate-700/30 rounded-lg p-6 border border-indigo-500/20 hover:border-indigo-400/40 transition-all'
-    : 'bg-slate-800/50 rounded-lg p-6 border border-indigo-500/20'
-
-const bulletOf = (c) => (c.bullet === 'none' ? '' : BULLETS[c.bullet] ?? BULLETS.dot)
 </script>
 
 <template>
@@ -125,33 +105,12 @@ const bulletOf = (c) => (c.bullet === 'none' ? '' : BULLETS[c.bullet] ?? BULLETS
               :class="COLUMNS[b.columns] ?? COLUMNS[2]"
               class="grid grid-cols-1 gap-6 mb-8"
             >
-              <div v-for="(c, ci) in b.cards" :key="ci" :class="cardClass(b)">
-                <div v-if="c.icon && c.iconPosition === 'top'" class="text-4xl mb-3 text-center">{{ c.icon }}</div>
-                <h4 v-if="c.icon && c.iconPosition === 'top'" class="text-indigo-300 font-bold text-lg text-center mb-3">{{ c.title }}</h4>
-                <div v-else-if="c.icon" class="flex items-center gap-3 mb-4">
-                  <span :class="c.iconSize === '2xl' ? 'text-2xl' : 'text-3xl'">{{ c.icon }}</span>
-                  <h4 class="text-indigo-300 font-bold text-lg">{{ c.title }}</h4>
-                </div>
-                <h3 v-else-if="c.title" class="text-indigo-300 font-bold text-lg mb-3">{{ c.title }}</h3>
+              <CardView v-for="(c, ci) in b.cards" :key="ci" :card="c" :variant="b.style" />
+            </div>
 
-                <p v-if="c.subtitle" class="text-slate-300 text-sm mb-4 font-semibold">{{ c.subtitle }}</p>
-                <p v-if="c.text" :class="c.size === 'sm' ? 'text-sm' : ''" class="text-slate-300" v-html="rich(c.text, 'text-indigo-300')"></p>
-                <ul v-if="c.items && c.items.length" :class="c.size === 'sm' ? 'space-y-2 text-sm' : 'space-y-3'" class="text-slate-300">
-                  <li v-for="(it, i) in c.items" :key="i" class="flex items-start gap-3">
-                    <span v-if="bulletOf(c)" class="text-indigo-400 flex-shrink-0">{{ bulletOf(c) }}</span>
-                    <span v-html="rich(it)"></span>
-                  </li>
-                </ul>
-                <template v-for="(g, gi) in c.extra" :key="gi">
-                  <p v-if="g.subtitle" class="text-slate-300 text-sm mb-4 mt-4 font-semibold">{{ g.subtitle }}</p>
-                  <ul v-if="g.items && g.items.length" :class="c.size === 'sm' ? 'space-y-2 text-sm' : 'space-y-3'" class="text-slate-300">
-                    <li v-for="(it, i) in g.items" :key="i" class="flex items-start gap-3">
-                      <span v-if="bulletOf(c)" class="text-indigo-400 flex-shrink-0">{{ bulletOf(c) }}</span>
-                      <span v-html="rich(it)"></span>
-                    </li>
-                  </ul>
-                </template>
-              </div>
+            <!-- Carrousel -->
+            <div v-else-if="b.type === 'carousel'" class="mb-8">
+              <CarouselBlock :block="b" :alt="project.title" />
             </div>
 
             <!-- Images -->

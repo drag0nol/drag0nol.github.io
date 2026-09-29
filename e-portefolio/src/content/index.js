@@ -62,7 +62,18 @@ export function normalizeProject(data, slug, resolve = () => undefined) {
     cover: image(up.cover),
     sections: up.sections.map((s) => ({
       ...s,
-      blocks: s.blocks.map((b) => (b.type === 'image' ? { ...b, images: normImages(b.images) } : b)),
+      blocks: s.blocks.map((b) => {
+        if (b.type === 'image') return { ...b, images: normImages(b.images) }
+        if (b.type === 'carousel') {
+          return {
+            ...b,
+            slides: toList(b.slides)
+              .map((sl) => (sl.type === 'image' ? { ...sl, src: sl.url || image(sl.file) } : sl))
+              .filter((sl) => sl.type !== 'image' || sl.src),
+          }
+        }
+        return b
+      }),
     })),
   }
 }

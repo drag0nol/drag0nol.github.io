@@ -75,7 +75,10 @@ function qualifyImages(data, slug) {
   const q = (f) => (f && !f.includes('/') && !/^(https?:)?\/\//.test(f) ? `${slug}/${f}` : f)
   if (data.cover) data.cover = q(data.cover)
   for (const s of data.sections)
-    for (const b of s.blocks) if (b.type === 'image') for (const i of b.images) if (!i.url && i.file) i.file = q(i.file)
+    for (const b of s.blocks) {
+      const imgs = b.type === 'image' ? b.images : b.type === 'carousel' ? b.slides.filter((x) => x.type === 'image') : []
+      for (const i of imgs) if (!i.url && i.file) i.file = q(i.file)
+    }
   return data
 }
 

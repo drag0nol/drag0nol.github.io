@@ -3,7 +3,10 @@
   "title": "Exemple de projet",
   "category": "TP — Exemple",
   "summary": "Courte description affichée sur la carte de la page Projets.",
-  "tags": ["Vue.js", "JavaScript"],
+  "tags": [
+    "Vue.js",
+    "JavaScript"
+  ],
   "tone": "indigo",
   "order": 99,
   "header": {
@@ -12,12 +15,23 @@
     "subtitle": "Sous-titre affiché sous le titre",
     "criteria": {
       "title": "Apprentissages Critiques",
-      "items": [{ "code": "AC11.01", "text": "Implémenter des conceptions simples" }]
+      "items": [
+        {
+          "code": "AC11.01",
+          "text": "Implémenter des conceptions simples"
+        }
+      ]
     },
     "factsStyle": "plain",
     "facts": [
-      { "icon": "🎓", "text": "**SAE** — BUT Informatique" },
-      { "icon": "👥", "text": "**Équipe de 2** personnes" }
+      {
+        "icon": "🎓",
+        "text": "**SAE** — BUT Informatique"
+      },
+      {
+        "icon": "👥",
+        "text": "**Équipe de 2** personnes"
+      }
     ]
   },
   "sections": [
@@ -27,20 +41,82 @@
         {
           "type": "callout",
           "size": "lg",
-          "paragraphs": ["Texte avec du **gras** entre doubles étoiles.", "Deuxième paragraphe."]
+          "paragraphs": [
+            "Texte avec du **gras** entre doubles étoiles.",
+            "Deuxième paragraphe."
+          ]
         },
         {
           "type": "cards",
           "columns": 2,
           "style": "plain",
           "cards": [
-            { "title": "🎯 Objectif", "text": "Texte de la carte" },
-            { "icon": "⚙️", "iconSize": "3xl", "title": "Carte avec liste", "items": ["Un point", "Un autre point"], "bullet": "arrow" }
+            {
+              "title": "🎯 Objectif",
+              "text": "Texte de la carte"
+            },
+            {
+              "icon": "⚙️",
+              "iconSize": "3xl",
+              "title": "Carte avec liste",
+              "items": [
+                "Un point",
+                "Un autre point"
+              ],
+              "bullet": "arrow"
+            }
           ]
         },
-        { "type": "heading", "text": "Un sous-titre" },
-        { "type": "image", "images": [{ "file": "capture.png", "caption": "Légende de l'image" }] },
-        { "type": "button", "icon": "📂", "label": "Voir le code sur GitHub", "url": "https://github.com/" }
+        {
+          "type": "heading",
+          "text": "Un sous-titre"
+        },
+        {
+          "type": "image",
+          "images": [
+            {
+              "file": "capture.png",
+              "caption": "Légende de l'image"
+            }
+          ]
+        },
+        {
+          "type": "carousel",
+          "perView": 2,
+          "autoplay": 0,
+          "cardStyle": "plain",
+          "slides": [
+            {
+              "type": "card",
+              "icon": "🎯",
+              "title": "Carte du carrousel",
+              "text": "Une carte dans un carrousel",
+              "items": [
+                "Point 1",
+                "Point 2"
+              ],
+              "bullet": "arrow"
+            },
+            {
+              "type": "text",
+              "title": "Diapositive de texte",
+              "paragraphs": [
+                "Du texte avec du **gras**."
+              ]
+            },
+            {
+              "type": "image",
+              "file": "capture.png",
+              "caption": "Une image"
+            }
+          ]
+        },
+        {
+          "type": "button",
+          "icon": "📂",
+          "label": "Voir le code sur GitHub",
+          "url": "https://github.com/"
+        }
       ]
     }
   ]

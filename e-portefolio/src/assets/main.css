@@ -56,3 +56,11 @@ input[type='file']:focus-visible {
   outline: 2px solid rgb(129 140 248);
   outline-offset: 2px;
 }
+
+/* Carrousel : masque la barre de défilement */
+.carousel-track {
+  scrollbar-width: none;
+}
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
