@@ -7,19 +7,12 @@
     "Raspberry Pi",
     "IoT"
   ],
-  "status": "EN COURS",
-  "tone": "amber",
+  "tone": "indigo",
   "order": 4,
   "header": {
-    "kicker": "SAE Semestre 5 — Projet en cours",
+    "kicker": "Projet étudiant — SAE Semestre 5",
     "title": "🎰 CASPINO",
-    "subtitle": "Casino en ligne connecté — Kotlin Mobile + Raspberry Pi + IoT — Démarré le 27 octobre 2024",
-    "notice": {
-      "tone": "amber",
-      "icon": "⚠️",
-      "title": "Projet en cours de développement",
-      "text": "Ce projet est actuellement en développement dans le cadre de la SAE du semestre 5. Certaines fonctionnalités sont encore en phase de conception et d'implémentation."
-    },
+    "subtitle": "Casino en ligne connecté — Kotlin Mobile + Raspberry Pi + IoT",
     "criteria": {
       "title": "Apprentissages Critiques mobilisés",
       "items": [
@@ -223,7 +216,7 @@
       "blocks": [
         {
           "type": "callout",
-          "tone": "amber",
+          "tone": "indigo",
           "size": "lg",
           "paragraphs": [
             "Les joueurs peuvent **activer une alarme et une lumière connectées** grâce à leurs gains et points de fidélité. L'alarme se déclenche automatiquement lors d'un **jackpot aux machines à sous**, créant une expérience immersive et festive."
