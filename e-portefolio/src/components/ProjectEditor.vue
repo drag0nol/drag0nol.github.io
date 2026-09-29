@@ -355,7 +355,7 @@ const previewProject = computed(() =>
     <button type="button" :class="btn + ' !bg-emerald-700 hover:!bg-emerald-600'" @click="preview = true">👁 Aperçu de la page</button>
     <div v-if="preview" class="fixed inset-0 z-[100] overflow-auto bg-slate-900">
       <button type="button" :class="btn + ' fixed top-4 right-4 z-[110] !bg-red-600'" @click="preview = false">✕ Fermer l'aperçu</button>
-      <PageRenderer :project="previewProject" />
+      <PageRenderer :project="previewProject" :show-back="false" />
     </div>
   </div>
 </template>

@@ -6,7 +6,10 @@ import CardView from './CardView.vue'
 import CarouselBlock from './CarouselBlock.vue'
 import ImageView from './ImageView.vue'
 
-defineProps({ project: { type: Object, required: true } })
+defineProps({
+  project: { type: Object, required: true },
+  showBack: { type: Boolean, default: true }, // boutons « retour » (masqués dans l'aperçu de l'éditeur)
+})
 
 const COLUMNS = { 1: '', 2: 'md:grid-cols-2', 3: 'md:grid-cols-3' }
 </script>
@@ -20,6 +23,14 @@ const COLUMNS = { 1: '', 2: 'md:grid-cols-2', 3: 'md:grid-cols-3' }
     <div class="relative z-10">
       <!-- En-tête -->
       <header class="pt-12 pb-8 max-w-5xl mx-auto px-6">
+        <div v-if="showBack" class="mb-6">
+          <router-link
+          to="/projects"
+          class="inline-flex items-center gap-2 px-4 py-2 bg-slate-800/60 hover:bg-indigo-600 border border-indigo-500/30 text-indigo-200 hover:text-white font-semibold rounded-lg transition-colors"
+        >
+          <span>←</span><span>Retour aux projets</span>
+        </router-link>
+        </div>
         <p v-if="project.header.kicker" class="text-sm uppercase tracking-[0.2em] text-indigo-300/70">{{ project.header.kicker }}</p>
         <h1 :class="project.header.smallTitle ? 'text-4xl mb-3' : 'text-5xl mb-4'" class="font-bold text-white">{{ project.header.title }}</h1>
         <p v-if="project.header.subtitle" class="text-indigo-300 text-lg mb-6">{{ project.header.subtitle }}</p>
@@ -136,6 +147,15 @@ const COLUMNS = { 1: '', 2: 'md:grid-cols-2', 3: 'md:grid-cols-3' }
             </div>
           </template>
         </section>
+
+        <div v-if="showBack" class="mt-16">
+          <router-link
+          to="/projects"
+          class="inline-flex items-center gap-2 px-4 py-2 bg-slate-800/60 hover:bg-indigo-600 border border-indigo-500/30 text-indigo-200 hover:text-white font-semibold rounded-lg transition-colors"
+        >
+          <span>←</span><span>Retour aux projets</span>
+        </router-link>
+        </div>
       </main>
     </div>
   </div>
