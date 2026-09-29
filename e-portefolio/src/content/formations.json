@@ -1,0 +1,44 @@
+[
+  {
+    "icon": "🎓",
+    "title": "Baccalauréat",
+    "subtitle": "Lycée Charles Poncet — Cluses",
+    "period": "Obtention du baccalauréat en 2023",
+    "tags": [
+      {
+        "label": "Année : 2023"
+      },
+      {
+        "label": "Spécialité : Mathématiques"
+      },
+      {
+        "label": "Spécialité : Numérique et Sciences Informatiques (NSI)"
+      }
+    ]
+  },
+  {
+    "icon": "🏫",
+    "title": "BUT Informatique",
+    "subtitle": "IUT d'Annecy — BUT Informatique",
+    "period": "2023 — Présent (Parcours : Réalisation d'applications)",
+    "text": "Modules clés : architecture logicielle, développement web, bases de données, sécurité, gestion de projet.",
+    "tags": [
+      {
+        "label": "IUT Annecy"
+      },
+      {
+        "label": "BUT Informatique"
+      },
+      {
+        "label": "2023 - Aujourd'hui"
+      },
+      {
+        "label": "Site IUT Annecy",
+        "url": "https://iut.univ-smb.fr"
+      },
+      {
+        "label": "Parcours : Réalisation d'applications"
+      }
+    ]
+  }
+]

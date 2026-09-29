@@ -1,4 +1,5 @@
 <script setup>
+import { projects } from '@/content'
 </script>
 
 <template>
@@ -115,6 +116,22 @@
               <span class="px-3 py-1 bg-indigo-500/30 text-indigo-200 rounded-full">Réseau</span>
             </div>
             <router-link to="/projects/vm-developpement" class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors">
+              Voir la page
+              <span>→</span>
+            </router-link>
+          </div>
+
+          <!-- Projets ajoutés via src/content/projects/<nom>/project.json -->
+          <div v-for="p in projects" :key="p.slug" class="bg-gradient-to-r from-indigo-500/20 to-slate-700/20 rounded-2xl p-6 border border-indigo-500/30 hover:border-indigo-400/50 transition-all relative">
+            <div v-if="p.status" class="absolute top-3 right-3 px-2 py-1 bg-amber-500/30 text-amber-200 text-xs font-bold rounded">{{ p.status }}</div>
+            <img v-if="p.cover" :src="p.cover" :alt="p.title" class="w-full h-40 object-cover rounded-lg mb-4" loading="lazy" />
+            <p class="text-sm uppercase tracking-[0.2em] text-indigo-300/70 mb-2">{{ p.category }}</p>
+            <h2 class="text-2xl font-bold text-white mb-2">{{ p.title }}</h2>
+            <p class="text-slate-300 mb-4">{{ p.summary }}</p>
+            <div class="flex flex-wrap gap-2 mb-4 text-sm">
+              <span v-for="t in p.tags" :key="t" class="px-3 py-1 bg-indigo-500/30 text-indigo-200 rounded-full">{{ t }}</span>
+            </div>
+            <router-link :to="'/projects/' + p.slug" class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors">
               Voir la page
               <span>→</span>
             </router-link>

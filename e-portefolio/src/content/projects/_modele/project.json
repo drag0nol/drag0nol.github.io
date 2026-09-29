@@ -1,0 +1,18 @@
+{
+  "publie": false,
+  "title": "Exemple de projet",
+  "category": "TP — Exemple",
+  "summary": "Courte description affichée sur la carte de la page Projets.",
+  "tags": ["Vue.js", "JavaScript"],
+  "subtitle": "Sous-titre affiché en haut de la page du projet",
+  "meta": ["🎓 SAE — BUT Informatique", "👥 Projet en équipe de 2"],
+  "sections": [
+    {
+      "title": "Présentation",
+      "text": ["Premier paragraphe.", "Deuxième paragraphe."],
+      "bullets": ["Un point", "Un autre point"],
+      "images": [{ "file": "capture.png", "caption": "Légende de l'image" }]
+    }
+  ],
+  "links": [{ "label": "Code source", "url": "https://github.com/" }]
+}

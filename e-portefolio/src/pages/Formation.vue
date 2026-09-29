@@ -1,4 +1,5 @@
 <script setup>
+import { formations } from '@/content'
 </script>
 
 <template>
@@ -14,35 +15,20 @@
       </header>
 
       <main class="max-w-6xl mx-auto px-6 py-12">
-        <section class="mb-12">
+        <section v-for="f in formations" :key="f.title + f.period" class="mb-12">
           <div class="bg-gradient-to-r from-indigo-500/20 to-slate-700/20 rounded-3xl p-8 border border-indigo-500/30">
-            <h2 class="text-2xl font-bold text-indigo-200 mb-4">🎓 Baccalauréat</h2>
-            <p class="text-slate-300 mb-2">Obtention du baccalauréat en 2023</p>
-            <p class="text-slate-400 mb-4">Lycée Charles Poncet — Cluses</p>
-            <div class="flex gap-2 flex-wrap">
-              <span class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm">Année : 2023</span>
-              <span class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm">Spécialité : Mathématiques</span>
-              <span class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm">Spécialité : Numérique et Sciences Informatiques (NSI)</span>
+            <h2 class="text-2xl font-bold text-indigo-200 mb-4">{{ f.icon }} {{ f.title }}</h2>
+            <p v-if="f.subtitle" class="text-slate-300 mb-2">{{ f.subtitle }}</p>
+            <p v-if="f.period" class="text-slate-400 mb-4">{{ f.period }}</p>
+            <p v-if="f.text" class="text-slate-300 mb-4">{{ f.text }}</p>
+            <div v-if="f.tags && f.tags.length" class="flex gap-2 flex-wrap">
+              <template v-for="t in f.tags" :key="t.label">
+                <a v-if="t.url" :href="t.url" target="_blank" rel="noopener" class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm">{{ t.label }}</a>
+                <span v-else class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm">{{ t.label }}</span>
+              </template>
             </div>
           </div>
         </section>
-
-        <section class="mb-12">
-          <div class="bg-gradient-to-r from-indigo-500/20 to-slate-700/20 rounded-3xl p-8 border border-indigo-500/30">
-            <h2 class="text-2xl font-bold text-indigo-200 mb-4">🏫 BUT Informatique</h2>
-            <p class="text-slate-300 mb-2">IUT d'Annecy — BUT Informatique</p>
-            <p class="text-slate-400 mb-4">2023 — Présent (Parcours : Réalisation d'applications)</p>
-            <p class="text-slate-300 mb-4">Modules clés : architecture logicielle, développement web, bases de données, sécurité, gestion de projet.</p>
-            <div class="flex gap-2 flex-wrap">
-              <span class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm">IUT Annecy</span>
-                <span class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm">BUT Informatique</span>
-              <span class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm">2023 - Aujourd'hui</span>
-                <a class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm" href="https://iut.univ-smb.fr" target="_blank" rel="noopener">Site IUT Annecy</a>
-              <span class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm">Parcours : Réalisation d'applications</span>
-            </div>
-          </div>
-        </section>
-
       </main>
     </div>
   </div>

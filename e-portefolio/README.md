@@ -1,38 +1,49 @@
 # e-portefolio
 
-This template should help get you started developing with Vue 3 in Vite.
+Site portfolio (Vue 3 + Vite). Les projets et formations se gèrent sans toucher au code.
 
-## Recommended IDE Setup
+## Ajouter un projet
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+```
+npm run new:project -- "Nom du projet"
+```
 
-## Recommended Browser Setup
+Cela crée `src/content/projects/nom-du-projet/project.json`.
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+1. Copie tes images (png, jpg, webp, gif...) dans ce même dossier.
+2. Édite `project.json` (voir `src/content/projects/_modele/project.json`) :
+   - `title`, `category`, `summary`, `tags` : carte sur la page Projets
+   - `status` : badge optionnel (ex. `"EN COURS"`)
+   - `cover` : image de la carte (par défaut la première image du dossier)
+   - `subtitle`, `meta` : en-tête de la page du projet
+   - `sections` : liste de blocs `title`, `text` (texte ou liste de paragraphes), `bullets`, `images` (`{ "file": "capture.png", "caption": "..." }`)
+   - `links` : boutons `{ "label", "url" }`
+   - `order` : ordre d'affichage (petit nombre = en premier)
+   - `"publie": false` masque le projet
+3. Supprimer le dossier supprime le projet.
 
-## Customize configuration
+## Ajouter une formation
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+Ajoute un bloc dans `src/content/formations.json` (ordre du fichier = ordre d'affichage) :
 
-## Project Setup
+```json
+{
+  "icon": "🎓",
+  "title": "Diplôme",
+  "subtitle": "École — Ville",
+  "period": "2020 — 2023",
+  "text": "Description facultative.",
+  "tags": [{ "label": "Étiquette" }, { "label": "Un lien", "url": "https://..." }]
+}
+```
 
-```sh
+## Prévisualiser et publier
+
+```
 npm install
+npm run dev       # prévisualisation locale
+npm run deploy    # build + publication de dist/ sur la branche gp-page
 ```
 
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+`npm run deploy` publie uniquement le build sur la branche `gp-page` (GitHub Pages).
+Pense aussi à commit/push les changements de contenu sur `master`.
