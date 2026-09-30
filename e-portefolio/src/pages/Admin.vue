@@ -1,9 +1,10 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { supabase, supabaseEnabled } from '@/lib/supabase'
-import { remoteRows, editableProjects, loadRemote } from '@/content/remote'
+import { remoteRows, editableProjects, loadRemote, profile, profileRow } from '@/content/remote'
 import { rawProjects, upgradeLegacy } from '@/content'
 import ProjectEditor from '@/components/ProjectEditor.vue'
+import ProfileEditor from '@/components/ProfileEditor.vue'
 
 const input = 'w-full px-3 py-2 rounded-lg bg-slate-900/70 border border-indigo-500/30 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-400'
 const btn = 'px-4 py-2 rounded-lg font-semibold text-white transition-colors'
@@ -134,6 +135,42 @@ function editFormation(r) {
   message.value = error.value = ''
 }
 
+// ---------- Profil & contact ----------
+const profileForm = ref(null)
+function openProfile() {
+  tab.value = 'profile'
+  profileForm.value = clone(profile.value)
+  message.value = error.value = ''
+}
+async function saveProfile() {
+  busy.value = true
+  error.value = message.value = ''
+  const data = clone(profileForm.value)
+  const q = supabase.from('content')
+  const { error: e } = profileRow.value
+    ? await q.update({ data }).eq('id', profileRow.value.id)
+    : await q.insert({ kind: 'profile', slug: 'main', data })
+  busy.value = false
+  if (e) {
+    error.value = /content_kind_check|check constraint/i.test(e.message)
+      ? "La base n'accepte pas encore le profil : exécute supabase/migration-profil.sql dans Supabase (SQL Editor)."
+      : e.message
+    return
+  }
+  await loadRemote()
+  message.value = 'Profil enregistré. Visible tout de suite sur la page d’accueil.'
+}
+async function resetProfile() {
+  if (!profileRow.value || !confirm('Rétablir le profil et les contacts d’origine ?')) return
+  const { error: e } = await supabase.from('content').delete().eq('id', profileRow.value.id)
+  if (e) error.value = e.message
+  else {
+    await loadRemote()
+    profileForm.value = clone(profile.value)
+    message.value = 'Profil d’origine rétabli.'
+  }
+}
+
 // ---------- Enregistrer / supprimer ----------
 async function save() {
   const { id, kind, form } = editing.value
@@ -224,10 +261,22 @@ async function upload(file) {
           <div class="flex gap-3 mb-6">
             <button :class="tab === 'project' ? btnMain : btnGhost" @click="tab = 'project'">Projets</button>
             <button :class="tab === 'formation' ? btnMain : btnGhost" @click="tab = 'formation'">Formations</button>
-            <button :class="btnMain + ' ml-auto'" @click="tab === 'project' ? newProject() : newFormation()">+ Ajouter</button>
+            <button :class="tab === 'profile' ? btnMain : btnGhost" @click="openProfile">Profil & contact</button>
+            <button v-if="tab !== 'profile'" :class="btnMain + ' ml-auto'" @click="tab === 'project' ? newProject() : newFormation()">+ Ajouter</button>
           </div>
 
-          <template v-if="tab === 'project'">
+          <div v-if="tab === 'profile' && profileForm" class="space-y-6">
+            <p class="text-sm text-slate-400">
+              Ces informations s'affichent dans « Profil & Contact » sur la page d'accueil.
+            </p>
+            <ProfileEditor :form="profileForm" :upload="upload" @error="(m) => (error = m)" />
+            <div class="flex gap-3 sticky bottom-0 bg-slate-900/90 py-3">
+              <button :class="btnMain" :disabled="busy" @click="saveProfile">{{ busy ? 'Patiente…' : 'Enregistrer' }}</button>
+              <button v-if="profileRow" :class="btnDanger" @click="resetProfile">Rétablir l'original</button>
+            </div>
+          </div>
+
+          <template v-else-if="tab === 'project'">
             <p class="text-sm text-slate-400 mb-4">
               Tous les projets sont modifiables, y compris ceux du dépôt : la version modifiée remplace l'original.
               « Dupliquer » sert de modèle pour créer une page similaire.
@@ -248,7 +297,7 @@ async function upload(file) {
             </ul>
           </template>
 
-          <template v-else>
+          <template v-else-if="tab === 'formation'">
             <p v-if="!formationRows.length" class="text-slate-400">Aucune formation ajoutée ici. Celles des fichiers du dépôt n'apparaissent pas dans cette liste.</p>
             <ul class="space-y-3">
               <li v-for="r in formationRows" :key="r.id" class="flex items-center gap-3 bg-slate-800/60 border border-indigo-500/20 rounded-xl p-4">

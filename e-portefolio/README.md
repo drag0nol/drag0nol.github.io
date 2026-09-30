@@ -70,3 +70,10 @@ Dans `/admin` > Projets :
 - **Aperçu** montre la page exactement comme sur le site avant d'enregistrer.
 - `**gras**` fonctionne dans les textes.
 - **Hauteur max d'une image** (images seules et diapositives de carrousel) : valeur + unité `px` (taille exacte), `vh` (% de la hauteur de l'écran, s'adapte à l'appareil) ou `rem`. Vide = pas de limite. Dans `project.json` : `"maxHeight": "300px"`. L'image est réduite sans être déformée ni rognée.
+
+### Profil & contact
+
+`/admin` > **Profil & contact** modifie la section « Profil & Contact » de la page d'accueil : informations personnelles, moyens de contact (avec lien `mailto:`, `tel:` ou `https://`), textes des boutons et fichier PDF du CV (envoi d'un nouveau PDF possible).
+Valeurs d'origine dans `src/content/profile.json` ; « Rétablir l'original » y revient.
+**À faire une fois** si tu avais déjà lancé `supabase/setup.sql` : exécuter `supabase/migration-profil.sql` dans le SQL Editor de Supabase.
+

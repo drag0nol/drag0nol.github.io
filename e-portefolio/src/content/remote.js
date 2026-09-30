@@ -1,5 +1,6 @@
 import { ref, computed } from 'vue'
 import { supabase, supabaseEnabled } from '@/lib/supabase'
+import profileDefaults from './profile.json'
 import {
   projects as staticProjects,
   rawProjects,
@@ -52,3 +53,12 @@ export const editableProjects = computed(() => {
     .map((r) => ({ slug: r.slug, data: r.data, row: r, source: 'en ligne' }))
   return [...fromFiles.map((p) => (p.row ? { ...p, data: p.row.data } : p)), ...own]
 })
+
+// Profil & contact : la ligne de la base (kind "profile") complète/remplace le fichier profile.json.
+export const profileRow = computed(() => rowsOf('profile')[0] || null)
+export const profile = computed(() => ({
+  ...profileDefaults,
+  ...(profileRow.value?.data || {}),
+  cv: { ...profileDefaults.cv, ...(profileRow.value?.data?.cv || {}) },
+}))
+export { profileDefaults }

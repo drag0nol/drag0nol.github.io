@@ -4,7 +4,7 @@
 -- Contenu ajouté depuis le site (projets et formations)
 create table if not exists public.content (
   id uuid primary key default gen_random_uuid(),
-  kind text not null check (kind in ('project', 'formation')),
+  kind text not null check (kind in ('project', 'formation', 'profile')),
   slug text,
   data jsonb not null,
   created_at timestamptz not null default now(),

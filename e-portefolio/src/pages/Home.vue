@@ -1,4 +1,7 @@
 <script setup>
+import { profile } from '@/content/remote'
+
+const isExternal = (url) => /^https?:/.test(url)
 </script>
 
 <template>
@@ -39,27 +42,13 @@
         <div class="grid md:grid-cols-2 gap-8">
           <!-- Carte Profil -->
           <div class="bg-gradient-to-r from-indigo-500/20 to-slate-700/20 rounded-3xl p-8 border border-indigo-500/30">
-            <h3 class="text-2xl font-bold text-indigo-200 mb-6">Informations Personnelles</h3>
+            <h3 class="text-2xl font-bold text-indigo-200 mb-6">{{ profile.infosTitle }}</h3>
             <div class="space-y-4 text-slate-300">
-              <div class="flex items-center gap-3">
-                <span class="text-2xl">👤</span>
+              <div v-for="(it, i) in profile.infos" :key="i" class="flex items-center gap-3">
+                <span class="text-2xl">{{ it.icon }}</span>
                 <div>
-                  <p class="text-sm text-slate-400">Nom</p>
-                  <p class="font-semibold text-white">Ethann COCHENET</p>
-                </div>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="text-2xl">📅</span>
-                <div>
-                  <p class="text-sm text-slate-400">Date de naissance</p>
-                  <p class="font-semibold text-white">04/04/2005 (20 ans)</p>
-                </div>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="text-2xl">📍</span>
-                <div>
-                  <p class="text-sm text-slate-400">Localisation</p>
-                  <p class="font-semibold text-white">Cluses, Haute-Savoie</p>
+                  <p class="text-sm text-slate-400">{{ it.label }}</p>
+                  <p class="font-semibold text-white">{{ it.value }}</p>
                 </div>
               </div>
             </div>
@@ -67,47 +56,35 @@
 
           <!-- Carte Contact & Téléchargement -->
           <div class="bg-gradient-to-r from-indigo-500/20 to-slate-700/20 rounded-3xl p-8 border border-indigo-500/30">
-            <h3 class="text-2xl font-bold text-indigo-200 mb-6">Moyens de Contact</h3>
+            <h3 class="text-2xl font-bold text-indigo-200 mb-6">{{ profile.contactTitle }}</h3>
             <div class="space-y-4 text-slate-300">
-              <a href="mailto:ethann.cochenet@gmail.com" class="flex items-center gap-3 hover:text-indigo-300 transition-colors">
-                <span class="text-2xl">✉️</span>
+              <component
+                :is="c.url ? 'a' : 'div'"
+                v-for="(c, i) in profile.contacts"
+                :key="i"
+                :href="c.url || undefined"
+                :target="isExternal(c.url) ? '_blank' : undefined"
+                :rel="isExternal(c.url) ? 'noopener noreferrer' : undefined"
+                :class="c.url ? 'hover:text-indigo-300 transition-colors' : ''"
+                class="flex items-center gap-3"
+              >
+                <span class="text-2xl">{{ c.icon }}</span>
                 <div>
-                  <p class="text-sm text-slate-400">Email</p>
-                  <p class="font-semibold text-white break-all">ethann.cochenet@gmail.com</p>
+                  <p class="text-sm text-slate-400">{{ c.label }}</p>
+                  <p class="font-semibold text-white break-all">{{ c.value }}</p>
                 </div>
-              </a>
-              <a href="tel:0768764606" class="flex items-center gap-3 hover:text-indigo-300 transition-colors">
-                <span class="text-2xl">📱</span>
-                <div>
-                  <p class="text-sm text-slate-400">Téléphone</p>
-                  <p class="font-semibold text-white">07 68 76 46 06</p>
-                </div>
-              </a>
-              <a href="https://www.linkedin.com/in/ethann-cochenet-5211a4206/?originalSubdomain=fr" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 hover:text-indigo-300 transition-colors">
-                <span class="text-2xl">💼</span>
-                <div>
-                  <p class="text-sm text-slate-400">LinkedIn</p>
-                  <p class="font-semibold text-white">Ethann COCHENET</p>
-                </div>
-              </a>
-              <a href="https://github.com/ethann-ol" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 hover:text-indigo-300 transition-colors">
-                <span class="text-2xl">🐙</span>
-                <div>
-                  <p class="text-sm text-slate-400">GitHub</p>
-                  <p class="font-semibold text-white">ethann-ol</p>
-                </div>
-              </a>
+              </component>
             </div>
 
             <!-- Boutons CV -->
-            <div class="mt-8 pt-6 border-t border-indigo-500/30 space-y-3">
-              <a href="/assets/CV_EthannCOCHENET.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors w-full justify-center">
+            <div v-if="profile.cv.url" class="mt-8 pt-6 border-t border-indigo-500/30 space-y-3">
+              <a :href="profile.cv.url" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors w-full justify-center">
                 <span>👁️</span>
-                <span>Prévisualiser mon CV</span>
+                <span>{{ profile.cv.previewLabel }}</span>
               </a>
-              <a href="/assets/CV_EthannCOCHENET.pdf" download class="inline-flex items-center gap-3 px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg transition-colors w-full justify-center">
+              <a :href="profile.cv.url" download class="inline-flex items-center gap-3 px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg transition-colors w-full justify-center">
                 <span>📄</span>
-                <span>Télécharger mon CV</span>
+                <span>{{ profile.cv.downloadLabel }}</span>
               </a>
             </div>
           </div>
@@ -130,8 +107,8 @@
           <router-link to="/experiences" class="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-full transition-all duration-300 hover:scale-105 shadow-lg">
             Découvrir mes expériences
           </router-link>
-          <a href="/assets/CV_EthannCOCHENET.pdf" download class="px-8 py-3 border-2 border-indigo-500 text-indigo-400 hover:bg-indigo-500/10 font-bold rounded-full transition-all duration-300">
-            Télécharger mon CV
+          <a v-if="profile.cv.url" :href="profile.cv.url" download class="px-8 py-3 border-2 border-indigo-500 text-indigo-400 hover:bg-indigo-500/10 font-bold rounded-full transition-all duration-300">
+            {{ profile.cv.downloadLabel }}
           </a>
         </div>
       </section>

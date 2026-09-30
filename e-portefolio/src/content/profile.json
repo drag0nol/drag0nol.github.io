@@ -1,0 +1,52 @@
+{
+  "infosTitle": "Informations Personnelles",
+  "infos": [
+    {
+      "icon": "👤",
+      "label": "Nom",
+      "value": "Ethann COCHENET"
+    },
+    {
+      "icon": "📅",
+      "label": "Date de naissance",
+      "value": "04/04/2005 (21 ans)"
+    },
+    {
+      "icon": "📍",
+      "label": "Localisation",
+      "value": "Lyon, Rhône"
+    }
+  ],
+  "contactTitle": "Moyens de Contact",
+  "contacts": [
+    {
+      "icon": "✉️",
+      "label": "Email",
+      "value": "ethann.cochenet@gmail.com",
+      "url": "mailto:ethann.cochenet@gmail.com"
+    },
+    {
+      "icon": "📱",
+      "label": "Téléphone",
+      "value": "07 68 76 46 06",
+      "url": "tel:0768764606"
+    },
+    {
+      "icon": "💼",
+      "label": "LinkedIn",
+      "value": "Ethann COCHENET",
+      "url": "https://www.linkedin.com/in/ethann-cochenet-5211a4206/?originalSubdomain=fr"
+    },
+    {
+      "icon": "🐙",
+      "label": "GitHub",
+      "value": "drag0nol",
+      "url": "https://github.com/ethann-ol"
+    }
+  ],
+  "cv": {
+    "url": "/assets/CV_EthannCOCHENET.pdf",
+    "previewLabel": "Prévisualiser mon CV",
+    "downloadLabel": "Télécharger mon CV"
+  }
+}
