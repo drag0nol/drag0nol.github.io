@@ -1,0 +1,79 @@
+{
+  "title": "Mes Expériences Professionnelles",
+  "subtitle": "Parcours professionnel et stages",
+  "timelineTitle": "Parcours Chronologique",
+  "items": [
+    {
+      "icon": "🧑‍💻",
+      "title": "Alternant — Reprise & Amélioration",
+      "company": "Savoy International — Cluses",
+      "period": "01 Septembre 2025 - Présent",
+      "description": "Mission : reprendre l'application développée lors du stage, améliorer et optimiser le code et l'architecture, et assurer la pérennité du support (maintenance, corrections, optimisation des performances et évolutions fonctionnelles).",
+      "tags": [
+        "Maintenance",
+        "Optimisation",
+        "C# / Vue.js"
+      ],
+      "timeline": [
+        {
+          "period": "01 Septembre 2025 - Présent"
+        }
+      ]
+    },
+    {
+      "icon": "🔧",
+      "title": "Stage - Refonte Applicative",
+      "company": "Savoy International — Cluses",
+      "period": "14 Avril 2025 - 04 Juillet 2025 (3 mois)",
+      "description": "Mission : Refonte de l'application \"Sidesktop\" (reporting & proactive) — migration d'une application Java vers une API REST en C# et développement d'une interface web en Vue.js. Travaux : conception API, implementation endpoints, migration des flux de données et réalisation d'une interface réactive.",
+      "tags": [
+        "C#",
+        "API REST",
+        "Vue.js"
+      ],
+      "timeline": [
+        {
+          "period": "14 Avril 2025 - 04 Juillet 2025"
+        }
+      ]
+    },
+    {
+      "icon": "🏭",
+      "title": "Opérateur-Conditionneur",
+      "company": "Adecco - Savoie Moulage — Cluses",
+      "periodLabel": "Périodes",
+      "period": "Juin 2023 - Août 2023 (3 mois) · Juillet 2024 - Août 2024 (2 mois)",
+      "description": "Missions : Mise en place d'insert dans une presse à injection plastique ; conditionnement et contrôle visuel de petites pièces. Travail en chaîne, respect des consignes qualité et sécurité.",
+      "tags": [
+        "Production",
+        "Conditionnement",
+        "Qualité"
+      ],
+      "timeline": [
+        {
+          "period": "Juillet 2024 - Août 2024"
+        },
+        {
+          "period": "Juin 2023 - Août 2023"
+        }
+      ]
+    },
+    {
+      "icon": "🥐",
+      "title": "Vendeur en boulangerie",
+      "company": "Au coin du four — Cluses",
+      "period": "Juillet 2022 - Septembre 2022",
+      "description": "Missions : Vente et conseil des produits en boutique ; participation à la cuisson et à la mise en rayon. Relation client, gestion de caisse et respect des règles d'hygiène.",
+      "tags": [
+        "Relation client",
+        "Production",
+        "Hygiène"
+      ],
+      "timeline": [
+        {
+          "period": "Juillet 2022 - Septembre 2022"
+        }
+      ]
+    }
+  ]
+}

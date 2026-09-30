@@ -83,3 +83,8 @@ Valeurs d'origine dans `src/content/profile.json` ; « Rétablir l'original » y
 Valeurs d'origine dans `src/content/competences.json`. « Rétablir l'original » y revient.
 **À faire une fois** : exécuter `supabase/migration-competences.sql` dans le SQL Editor de Supabase (remplace `migration-profil.sql` et évite toute migration future).
 
+### Expériences
+
+`/admin` > **Expériences** : ajout, modification, réordonnancement, duplication et suppression des expériences (poste, entreprise, période, missions, étiquettes). La frise chronologique est générée automatiquement à partir des dates ; une expérience à plusieurs périodes (ex. deux étés) peut avoir plusieurs entrées dans la frise.
+Valeurs d'origine dans `src/content/experiences.json`. Nécessite `supabase/migration-competences.sql` (voir plus haut).
+

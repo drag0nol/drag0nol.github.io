@@ -1,4 +1,20 @@
 <script setup>
+import { computed } from 'vue'
+import { experiences } from '@/content/remote'
+
+// Lieu affiché dans la frise : « Entreprise — Ville » devient « Entreprise (Ville) ».
+const placeOf = (company) => (company || '').replace(/ — (.*)$/, ' ($1)')
+
+// Une entrée de frise par période ; à défaut de « timeline », la période de la carte est utilisée.
+const timeline = computed(() =>
+  (experiences.value.items || []).flatMap((it) =>
+    (it.timeline && it.timeline.length ? it.timeline : [{ period: it.period }]).map((t) => ({
+      period: t.period,
+      title: it.title,
+      place: placeOf(it.company),
+    })),
+  ),
+)
 </script>
 
 <template>
@@ -11,203 +27,60 @@
     <!-- Contenu principal -->
     <div class="relative z-10">
       <header class="pt-12 pb-8 max-w-6xl mx-auto px-6">
-        <h1 class="text-5xl font-bold text-white mb-2">Mes Expériences Professionnelles</h1>
-        <p class="text-indigo-300 text-lg">Parcours professionnel et stages</p>
+        <h1 class="text-5xl font-bold text-white mb-2">{{ experiences.title }}</h1>
+        <p v-if="experiences.subtitle" class="text-indigo-300 text-lg">{{ experiences.subtitle }}</p>
       </header>
 
       <main class="max-w-6xl mx-auto px-6 py-20">
-        <!-- Alternance actuelle -->
-        <div class="mb-12">
+        <!-- Cartes d'expérience -->
+        <div v-for="(it, i) in experiences.items" :key="i" class="mb-12">
           <div class="bg-gradient-to-r from-indigo-500/20 to-slate-700/20 rounded-3xl p-8 border border-indigo-500/30 hover:border-indigo-400/50 transition-all duration-300">
             <div class="flex items-start gap-6">
               <div class="flex-shrink-0">
-                <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-full flex items-center justify-center text-2xl shadow-lg">
-                  🧑‍💻
+                <div
+                  :class="i % 2 ? 'from-indigo-600 to-indigo-700' : 'from-indigo-500 to-indigo-600'"
+                  class="w-16 h-16 bg-gradient-to-br rounded-full flex items-center justify-center text-2xl shadow-lg"
+                >
+                  {{ it.icon }}
                 </div>
               </div>
               <div class="flex-grow">
-                <h3 class="text-2xl font-bold text-indigo-200 mb-2">Alternant — Reprise & Amélioration</h3>
-                <p class="text-indigo-400 font-semibold mb-2">Savoy International — Cluses</p>
-                <p class="text-slate-400 text-sm mb-4">📅 Période : 01 Septembre 2025 - Présent</p>
-                <p class="text-slate-300 mb-4">
-                  Mission : reprendre l'application développée lors du stage, améliorer et optimiser le code et l'architecture, et assurer la pérennité du support (maintenance, corrections, optimisation des performances et évolutions fonctionnelles).
-                </p>
-                <div class="flex flex-wrap gap-2">
-                  <span class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm">Maintenance</span>
-                  <span class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm">Optimisation</span>
-                  <span class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm">C# / Vue.js</span>
+                <h3 class="text-2xl font-bold text-indigo-200 mb-2">{{ it.title }}</h3>
+                <p v-if="it.company" class="text-indigo-400 font-semibold mb-2">{{ it.company }}</p>
+                <p v-if="it.period" class="text-slate-400 text-sm mb-4">📅 {{ it.periodLabel || 'Période' }} : {{ it.period }}</p>
+                <p v-if="it.description" class="text-slate-300 mb-4">{{ it.description }}</p>
+                <div v-if="it.tags && it.tags.length" class="flex flex-wrap gap-2">
+                  <span v-for="t in it.tags" :key="t" class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm">{{ t }}</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        <!-- Ajout : Savoy International (Stage) -->
-        <div class="mb-12">
-          <div class="bg-gradient-to-r from-indigo-500/20 to-slate-700/20 rounded-3xl p-8 border border-indigo-500/30 hover:border-indigo-400/50 transition-all duration-300">
-            <div class="flex items-start gap-6">
-              <div class="flex-shrink-0">
-                <div class="w-16 h-16 bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-full flex items-center justify-center text-2xl shadow-lg">
-                  🔧
-                </div>
-              </div>
-              <div class="flex-grow">
-                <h3 class="text-2xl font-bold text-indigo-200 mb-2">Stage - Refonte Applicative</h3>
-                <p class="text-indigo-400 font-semibold mb-2">Savoy International — Cluses</p>
-                <p class="text-slate-400 text-sm mb-4">📅 Période : 14 Avril 2025 - 04 Juillet 2025 (3 mois)</p>
-                <p class="text-slate-300 mb-4">
-                  Mission : Refonte de l'application "Sidesktop" (reporting & proactive) — migration d'une application Java vers une API REST en C# et développement d'une interface web en Vue.js. Travaux : conception API, implementation endpoints, migration des flux de données et réalisation d'une interface réactive.
-                </p>
-                <div class="flex flex-wrap gap-2">
-                  <span class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm">C#</span>
-                  <span class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm">API REST</span>
-                  <span class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm">Vue.js</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Ajout : Adecco-Savoie Moulage -->
-        <div class="mb-12">
-          <div class="bg-gradient-to-r from-indigo-500/20 to-slate-700/20 rounded-3xl p-8 border border-indigo-500/30 hover:border-indigo-400/50 transition-all duration-300">
-            <div class="flex items-start gap-6">
-              <div class="flex-shrink-0">
-                <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-full flex items-center justify-center text-2xl shadow-lg">
-                  🏭
-                </div>
-              </div>
-              <div class="flex-grow">
-                <h3 class="text-2xl font-bold text-indigo-200 mb-2">Opérateur-Conditionneur</h3>
-                <p class="text-indigo-400 font-semibold mb-2">Adecco - Savoie Moulage — Cluses</p>
-                <p class="text-slate-400 text-sm mb-4">📅 Périodes : Juin 2023 - Août 2023 (3 mois) · Juillet 2024 - Août 2024 (2 mois)</p>
-                <p class="text-slate-300 mb-4">
-                  Missions : Mise en place d'insert dans une presse à injection plastique ; conditionnement et contrôle visuel de petites pièces. Travail en chaîne, respect des consignes qualité et sécurité.
-                </p>
-                <div class="flex flex-wrap gap-2">
-                  <span class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm">Production</span>
-                  <span class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm">Conditionnement</span>
-                  <span class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm">Qualité</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Ajout : Au coin du four -->
-        <div class="mb-12">
-          <div class="bg-gradient-to-r from-indigo-500/20 to-slate-700/20 rounded-3xl p-8 border border-indigo-500/30 hover:border-indigo-400/50 transition-all duration-300">
-            <div class="flex items-start gap-6">
-              <div class="flex-shrink-0">
-                <div class="w-16 h-16 bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-full flex items-center justify-center text-2xl shadow-lg">
-                  🥐
-                </div>
-              </div>
-              <div class="flex-grow">
-                <h3 class="text-2xl font-bold text-indigo-200 mb-2">Vendeur en boulangerie</h3>
-                <p class="text-indigo-400 font-semibold mb-2">Au coin du four — Cluses</p>
-                <p class="text-slate-400 text-sm mb-4">📅 Période : Juillet 2022 - Septembre 2022</p>
-                <p class="text-slate-300 mb-4">
-                  Missions : Vente et conseil des produits en boutique ; participation à la cuisson et à la mise en rayon. Relation client, gestion de caisse et respect des règles d'hygiène.
-                </p>
-                <div class="flex flex-wrap gap-2">
-                  <span class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm">Relation client</span>
-                  <span class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm">Production</span>
-                  <span class="px-3 py-1 bg-indigo-500/30 text-indigo-300 rounded-full text-sm">Hygiène</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
 
         <!-- Timeline section -->
-        <h2 class="text-3xl font-bold text-white mt-20 mb-12 text-center">Parcours Chronologique</h2>
-        <div class="relative">
-          <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-indigo-500 to-slate-700"></div>
-          
-          <div class="space-y-12">
-            <!-- Timeline: Alternance -->
-            <div class="relative">
-              <div class="ml-1/2 md:ml-0">
-                <div class="flex justify-end md:justify-start gap-6 md:gap-0">
-                  <div class="md:w-1/2 md:text-right md:pr-12">
-                    <div class="bg-indigo-500/20 rounded-2xl p-4 border border-indigo-500/30">
-                      <p class="text-indigo-300 font-bold">01 Septembre 2025 - Présent</p>
-                      <p class="text-white font-semibold">Alternant — Reprise & Amélioration</p>
-                      <p class="text-slate-400 text-sm">Savoy International (Cluses)</p>
-                    </div>
-                  </div>
-                  <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-indigo-500 rounded-full border-4 border-slate-900"></div>
-                </div>
-              </div>
-            </div>
+        <template v-if="timeline.length">
+          <h2 class="text-3xl font-bold text-white mt-20 mb-12 text-center">{{ experiences.timelineTitle || 'Parcours Chronologique' }}</h2>
+          <div class="relative">
+            <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-indigo-500 to-slate-700"></div>
 
-            <!-- Timeline: Stage Savoy 2025 -->
-            <div class="relative">
-              <div class="ml-1/2 md:ml-0">
-                <div class="flex justify-start md:justify-end gap-6 md:gap-0">
-                  <div class="md:w-1/2 md:text-left md:pl-12">
-                    <div class="bg-indigo-500/20 rounded-2xl p-4 border border-indigo-500/30">
-                      <p class="text-indigo-300 font-bold">14 Avril 2025 - 04 Juillet 2025</p>
-                      <p class="text-white font-semibold">Stage - Refonte Applicative</p>
-                      <p class="text-slate-400 text-sm">Savoy International (Cluses)</p>
+            <div class="space-y-12">
+              <div v-for="(t, i) in timeline" :key="i" class="relative">
+                <div class="ml-1/2 md:ml-0">
+                  <div :class="i % 2 ? 'justify-start md:justify-end' : 'justify-end md:justify-start'" class="flex gap-6 md:gap-0">
+                    <div :class="i % 2 ? 'md:text-left md:pl-12' : 'md:text-right md:pr-12'" class="md:w-1/2">
+                      <div class="bg-indigo-500/20 rounded-2xl p-4 border border-indigo-500/30">
+                        <p class="text-indigo-300 font-bold">{{ t.period }}</p>
+                        <p class="text-white font-semibold">{{ t.title }}</p>
+                        <p class="text-slate-400 text-sm">{{ t.place }}</p>
+                      </div>
                     </div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-indigo-500 rounded-full border-4 border-slate-900"></div>
                   </div>
-                  <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-indigo-500 rounded-full border-4 border-slate-900"></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Timeline: Adecco 2024 -->
-            <div class="relative">
-              <div class="ml-1/2 md:ml-0">
-                <div class="flex justify-end md:justify-start gap-6 md:gap-0">
-                  <div class="md:w-1/2 md:text-right md:pr-12">
-                    <div class="bg-indigo-500/20 rounded-2xl p-4 border border-indigo-500/30">
-                      <p class="text-indigo-300 font-bold">Juillet 2024 - Août 2024</p>
-                      <p class="text-white font-semibold">Opérateur-Conditionneur</p>
-                      <p class="text-slate-400 text-sm">Adecco - Savoie Moulage (Cluses)</p>
-                    </div>
-                  </div>
-                  <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-indigo-500 rounded-full border-4 border-slate-900"></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Timeline: Adecco 2023 -->
-            <div class="relative">
-              <div class="ml-1/2 md:ml-0">
-                <div class="flex justify-start md:justify-end gap-6 md:gap-0">
-                  <div class="md:w-1/2 md:text-left md:pl-12">
-                    <div class="bg-indigo-500/20 rounded-2xl p-4 border border-indigo-500/30">
-                      <p class="text-indigo-300 font-bold">Juin 2023 - Août 2023</p>
-                      <p class="text-white font-semibold">Opérateur-Conditionneur</p>
-                      <p class="text-slate-400 text-sm">Adecco - Savoie Moulage (Cluses)</p>
-                    </div>
-                  </div>
-                  <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-indigo-500 rounded-full border-4 border-slate-900"></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Timeline: Au coin du four -->
-            <div class="relative">
-              <div class="ml-1/2 md:ml-0">
-                <div class="flex justify-end md:justify-start gap-6 md:gap-0">
-                  <div class="md:w-1/2 md:text-right md:pr-12">
-                    <div class="bg-indigo-500/20 rounded-2xl p-4 border border-indigo-500/30">
-                      <p class="text-indigo-300 font-bold">Juillet 2022 - Septembre 2022</p>
-                      <p class="text-white font-semibold">Vendeur en boulangerie</p>
-                      <p class="text-slate-400 text-sm">Au coin du four (Cluses)</p>
-                    </div>
-                  </div>
-                  <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-indigo-500 rounded-full border-4 border-slate-900"></div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </template>
 
         <!-- CTA Section -->
         <section class="max-w-6xl mx-auto mt-20 py-20 text-center">

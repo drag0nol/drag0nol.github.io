@@ -2,6 +2,7 @@ import { ref, computed } from 'vue'
 import { supabase, supabaseEnabled } from '@/lib/supabase'
 import profileDefaults from './profile.json'
 import competencesDefaults from './competences.json'
+import experiencesDefaults from './experiences.json'
 import {
   projects as staticProjects,
   rawProjects,
@@ -68,3 +69,8 @@ export { profileDefaults }
 export const competencesRow = computed(() => rowsOf('competences')[0] || null)
 export const competences = computed(() => competencesRow.value?.data || competencesDefaults)
 export { competencesDefaults }
+
+// Expériences : la ligne de la base (kind "experiences") remplace entièrement experiences.json.
+export const experiencesRow = computed(() => rowsOf('experiences')[0] || null)
+export const experiences = computed(() => experiencesRow.value?.data || experiencesDefaults)
+export { experiencesDefaults }
