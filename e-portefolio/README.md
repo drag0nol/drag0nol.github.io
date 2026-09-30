@@ -77,3 +77,9 @@ Dans `/admin` > Projets :
 Valeurs d'origine dans `src/content/profile.json` ; « Rétablir l'original » y revient.
 **À faire une fois** si tu avais déjà lancé `supabase/setup.sql` : exécuter `supabase/migration-profil.sql` dans le SQL Editor de Supabase.
 
+### Compétences
+
+`/admin` > **Compétences** : la page Compétences est faite de **cadres** (un par formation : BUT Informatique, Bachelor, Master…). Chaque cadre contient des cartes de compétences dépliables, avec leurs niveaux, leurs apprentissages critiques et des boutons vers les projets. On peut ajouter, réordonner, dupliquer et supprimer cadres, cartes, niveaux et lignes.
+Valeurs d'origine dans `src/content/competences.json`. « Rétablir l'original » y revient.
+**À faire une fois** : exécuter `supabase/migration-competences.sql` dans le SQL Editor de Supabase (remplace `migration-profil.sql` et évite toute migration future).
+

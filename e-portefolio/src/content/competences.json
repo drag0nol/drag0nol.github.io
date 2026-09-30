@@ -1,0 +1,458 @@
+{
+  "title": "Mes Compétences",
+  "heading": "Compétences et apprentissages critiques",
+  "intro": "Cliquez sur une carte pour afficher les apprentissages critiques (AC).",
+  "sections": [
+    {
+      "title": "BUT Informatique",
+      "subtitle": "Compétences acquises durant le BUT Informatique — Parcours A",
+      "ues": [
+        {
+          "title": "Réaliser — Conception & développement",
+          "description": "Concevoir, coder, tester et intégrer une solution informatique.",
+          "levels": [
+            {
+              "title": "Niveau 1 : Développer des applications informatiques simples",
+              "items": [
+                {
+                  "text": "AC11.01 : Implémenter des conceptions simples",
+                  "links": [
+                    {
+                      "label": "StarBound",
+                      "to": "/projects/starbound-legacy"
+                    }
+                  ]
+                },
+                {
+                  "text": "AC11.02 : Élaborer des conceptions simples",
+                  "links": [
+                    {
+                      "label": "Marathon",
+                      "to": "/projects/marathon-beaune"
+                    }
+                  ]
+                },
+                {
+                  "text": "AC11.03 : Faire des essais et évaluer leurs résultats en regard des spécifications"
+                },
+                {
+                  "text": "AC11.04 : Développer des interfaces utilisateurs",
+                  "links": [
+                    {
+                      "label": "StarBound",
+                      "to": "/projects/starbound-legacy"
+                    },
+                    {
+                      "label": "Marathon",
+                      "to": "/projects/marathon-beaune"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Niveau 2 : Partir des exigences et aller jusqu'à une application complète",
+              "items": [
+                {
+                  "text": "AC21.01 : Élaborer et implémenter les spécifications fonctionnelles et non fonctionnelles à partir des exigences",
+                  "links": [
+                    {
+                      "label": "Savoy",
+                      "to": "/projects/savoy-sidesktop"
+                    }
+                  ]
+                },
+                {
+                  "text": "AC21.02 : Appliquer des principes d'accessibilité et d'ergonomie"
+                },
+                {
+                  "text": "AC21.03 : Adopter de bonnes pratiques de conception et de programmation"
+                },
+                {
+                  "text": "AC21.04 : Vérifier et valider la qualité de l'application par les tests",
+                  "links": [
+                    {
+                      "label": "Savoy",
+                      "to": "/projects/savoy-sidesktop"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Niveau 3 : Adapter des applications sur un ensemble de supports (embarqué, web, mobile, IoT...)",
+              "items": [
+                {
+                  "text": "AC31.01 : Choisir et implémenter les architectures adaptées",
+                  "links": [
+                    {
+                      "label": "Caspino",
+                      "to": "/projects/caspino"
+                    }
+                  ]
+                },
+                {
+                  "text": "AC31.02 : Faire évoluer une application existante",
+                  "links": [
+                    {
+                      "label": "Savoy",
+                      "to": "/projects/savoy-sidesktop"
+                    }
+                  ]
+                },
+                {
+                  "text": "AC31.03 : Intégrer des solutions dans un environnement de production",
+                  "links": [
+                    {
+                      "label": "Caspino",
+                      "to": "/projects/caspino"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Optimiser — Performance & efficience",
+          "description": "Optimiser le temps d'exécution et la consommation de ressources.",
+          "levels": [
+            {
+              "title": "Niveau 1 : Appréhender et construire des algorithmes",
+              "items": [
+                {
+                  "text": "AC12.01 : Analyser un problème avec méthode (découpage, structure de données...)",
+                  "links": [
+                    {
+                      "label": "StarBound",
+                      "to": "/projects/starbound-legacy"
+                    }
+                  ]
+                },
+                {
+                  "text": "AC12.02 : Comparer des algorithmes pour des problèmes classiques",
+                  "links": [
+                    {
+                      "label": "StarBound",
+                      "to": "/projects/starbound-legacy"
+                    }
+                  ]
+                },
+                {
+                  "text": "AC12.03 : Formaliser et mettre en œuvre des outils mathématiques pour l'informatique"
+                }
+              ]
+            },
+            {
+              "title": "Niveau 2 : Sélectionner les algorithmes adéquats pour répondre à un problème donné",
+              "items": [
+                {
+                  "text": "AC22.01 : Choisir des structures de données complexes adaptées au problème",
+                  "links": [
+                    {
+                      "label": "Marathon",
+                      "to": "/projects/marathon-beaune"
+                    }
+                  ]
+                },
+                {
+                  "text": "AC22.02 : Utiliser des techniques algorithmiques adaptées pour des problèmes complexes"
+                },
+                {
+                  "text": "AC22.03 : Comprendre les enjeux et moyens de sécurisation des données et du code",
+                  "links": [
+                    {
+                      "label": "Savoy",
+                      "to": "/projects/savoy-sidesktop"
+                    }
+                  ]
+                },
+                {
+                  "text": "AC22.04 : Évaluer l'impact environnemental et sociétal des solutions proposées"
+                }
+              ]
+            },
+            {
+              "title": "Niveau 3 : Analyser et optimiser des applications",
+              "items": [
+                {
+                  "text": "AC32.01 : Anticiper les résultats de diverses métriques"
+                },
+                {
+                  "text": "AC32.02 : Profiler, analyser et justifier le comportement d'un code existant"
+                },
+                {
+                  "text": "AC32.03 : Choisir et utiliser des bibliothèques et méthodes dédiées au domaine d'application",
+                  "links": [
+                    {
+                      "label": "Caspino",
+                      "to": "/projects/caspino"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Administrer — Infrastructures & services",
+          "description": "Installer, configurer et maintenir infrastructures, services et réseaux.",
+          "levels": [
+            {
+              "title": "Niveau 1 : Installer et configurer un poste de travail",
+              "items": [
+                {
+                  "text": "AC13.01 : Identifier les différents composants d'un système numérique",
+                  "links": [
+                    {
+                      "label": "VM",
+                      "to": "/projects/vm-developpement"
+                    }
+                  ]
+                },
+                {
+                  "text": "AC13.02 : Utiliser les fonctionnalités de base d'un système multiutilisateurs"
+                },
+                {
+                  "text": "AC13.03 : Installer et configurer un système d'exploitation et des outils de développement",
+                  "links": [
+                    {
+                      "label": "VM",
+                      "to": "/projects/vm-developpement"
+                    }
+                  ]
+                },
+                {
+                  "text": "AC13.04 : Configurer un poste de travail dans un réseau d'entreprise",
+                  "links": [
+                    {
+                      "label": "VM",
+                      "to": "/projects/vm-developpement"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Niveau 2 : Déployer des services dans une architecture réseau",
+              "items": [
+                {
+                  "text": "AC23.01 : Concevoir et développer des applications communicantes",
+                  "links": [
+                    {
+                      "label": "Caspino",
+                      "to": "/projects/caspino"
+                    }
+                  ]
+                },
+                {
+                  "text": "AC23.02 : Utiliser des serveurs et des services réseaux virtualisés",
+                  "links": [
+                    {
+                      "label": "Caspino",
+                      "to": "/projects/caspino"
+                    }
+                  ]
+                },
+                {
+                  "text": "AC23.03 : Sécuriser les services et données d'un système"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Gérer — Données & pilotage",
+          "description": "Concevoir et exploiter les données pour le pilotage de l'entreprise.",
+          "levels": [
+            {
+              "title": "Niveau 1 : Concevoir et mettre en place une base de données à partir d'un cahier des charges client",
+              "items": [
+                {
+                  "text": "AC14.01 : Mettre à jour et interroger une base de données relationnelle",
+                  "links": [
+                    {
+                      "label": "Marathon",
+                      "to": "/projects/marathon-beaune"
+                    }
+                  ]
+                },
+                {
+                  "text": "AC14.02 : Visualiser des données",
+                  "links": [
+                    {
+                      "label": "Marathon",
+                      "to": "/projects/marathon-beaune"
+                    }
+                  ]
+                },
+                {
+                  "text": "AC14.03 : Concevoir une base de données relationnelle à partir d'un cahier des charges"
+                }
+              ]
+            },
+            {
+              "title": "Niveau 2 : Optimiser une base de données, interagir avec une application et mettre en œuvre la sécurité",
+              "items": [
+                {
+                  "text": "AC24.01 : Optimiser les modèles de données de l'entreprise",
+                  "links": [
+                    {
+                      "label": "Caspino",
+                      "to": "/projects/caspino"
+                    }
+                  ]
+                },
+                {
+                  "text": "AC24.02 : Assurer la sécurité des données (intégrité et confidentialité)",
+                  "links": [
+                    {
+                      "label": "Caspino",
+                      "to": "/projects/caspino"
+                    }
+                  ]
+                },
+                {
+                  "text": "AC24.03 : Organiser la restitution de données à travers la programmation et la visualisation"
+                },
+                {
+                  "text": "AC24.04 : Manipuler des données hétérogènes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Conduire — Pilotage de projet",
+          "description": "Organiser et piloter des projets informatiques (classiques ou agiles).",
+          "levels": [
+            {
+              "title": "Niveau 1 : Identifier les besoins métiers des clients et des utilisateurs",
+              "items": [
+                {
+                  "text": "AC15.01 : Appréhender les besoins du client et de l'utilisateur",
+                  "links": [
+                    {
+                      "label": "VM",
+                      "to": "/projects/vm-developpement"
+                    }
+                  ]
+                },
+                {
+                  "text": "AC15.02 : Mettre en place les outils de gestion de projet"
+                },
+                {
+                  "text": "AC15.03 : Identifier les acteurs et les différentes phases d'un cycle de développement"
+                }
+              ]
+            },
+            {
+              "title": "Niveau 2 : Appliquer une démarche de suivi de projet en fonction des besoins métiers des clients et des utilisateurs",
+              "items": [
+                {
+                  "text": "AC25.01 : Identifier les processus présents dans une organisation pour améliorer les SI",
+                  "links": [
+                    {
+                      "label": "VM",
+                      "to": "/projects/vm-developpement"
+                    }
+                  ]
+                },
+                {
+                  "text": "AC25.02 : Formaliser les besoins du client et de l'utilisateur"
+                },
+                {
+                  "text": "AC25.03 : Identifier les critères de faisabilité d'un projet informatique"
+                },
+                {
+                  "text": "AC25.04 : Définir et mettre en œuvre une démarche de suivi de projet"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Collaborer — Travail en équipe",
+          "description": "Acquérir et mobiliser les aptitudes pour travailler efficacement en équipe.",
+          "levels": [
+            {
+              "title": "Niveau 1 : Identifier ses aptitudes pour travailler dans une équipe",
+              "items": [
+                {
+                  "text": "AC16.01 : Appréhender l'écosystème numérique"
+                },
+                {
+                  "text": "AC16.02 : Découvrir les aptitudes requises selon les différents secteurs informatiques"
+                },
+                {
+                  "text": "AC16.03 : Identifier les statuts, fonctions et rôles de chaque membre d'une équipe pluridisciplinaire",
+                  "links": [
+                    {
+                      "label": "Hunter",
+                      "to": "/projects/hunter"
+                    }
+                  ]
+                },
+                {
+                  "text": "AC16.04 : Acquérir les compétences interpersonnelles pour travailler en équipe",
+                  "links": [
+                    {
+                      "label": "Hunter",
+                      "to": "/projects/hunter"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Niveau 2 : Situer son rôle et ses missions au sein d'une équipe informatique",
+              "items": [
+                {
+                  "text": "AC26.01 : Comprendre la diversité, la structure et la dimension de l'informatique dans une organisation"
+                },
+                {
+                  "text": "AC26.02 : Appliquer une démarche pour intégrer une équipe informatique au sein d'une organisation",
+                  "links": [
+                    {
+                      "label": "Hunter",
+                      "to": "/projects/hunter"
+                    }
+                  ]
+                },
+                {
+                  "text": "AC26.03 : Mobiliser les compétences interpersonnelles pour travailler dans une équipe informatique",
+                  "links": [
+                    {
+                      "label": "Hunter",
+                      "to": "/projects/hunter"
+                    }
+                  ]
+                },
+                {
+                  "text": "AC26.04 : Rendre compte de son activité professionnelle"
+                }
+              ]
+            },
+            {
+              "title": "Niveau 3 : Manager une équipe informatique",
+              "items": [
+                {
+                  "text": "AC36.01 : Organiser et partager une veille technologique et informationnelle"
+                },
+                {
+                  "text": "AC36.02 : Identifier les enjeux de l'économie de l'innovation numérique"
+                },
+                {
+                  "text": "AC36.03 : Guider la conduite du changement informatique au sein d'une organisation"
+                },
+                {
+                  "text": "AC36.04 : Accompagner le management de projet informatique"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

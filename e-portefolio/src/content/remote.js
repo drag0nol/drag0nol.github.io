@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue'
 import { supabase, supabaseEnabled } from '@/lib/supabase'
 import profileDefaults from './profile.json'
+import competencesDefaults from './competences.json'
 import {
   projects as staticProjects,
   rawProjects,
@@ -62,3 +63,8 @@ export const profile = computed(() => ({
   cv: { ...profileDefaults.cv, ...(profileRow.value?.data?.cv || {}) },
 }))
 export { profileDefaults }
+
+// Compétences : la ligne de la base (kind "competences") remplace entièrement competences.json.
+export const competencesRow = computed(() => rowsOf('competences')[0] || null)
+export const competences = computed(() => competencesRow.value?.data || competencesDefaults)
+export { competencesDefaults }

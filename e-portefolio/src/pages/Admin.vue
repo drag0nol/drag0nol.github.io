@@ -1,10 +1,11 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { supabase, supabaseEnabled } from '@/lib/supabase'
-import { remoteRows, editableProjects, loadRemote, profile, profileRow } from '@/content/remote'
+import { remoteRows, editableProjects, loadRemote, profile, profileRow, competences, competencesRow } from '@/content/remote'
 import { rawProjects, upgradeLegacy } from '@/content'
 import ProjectEditor from '@/components/ProjectEditor.vue'
 import ProfileEditor from '@/components/ProfileEditor.vue'
+import CompetencesEditor from '@/components/CompetencesEditor.vue'
 
 const input = 'w-full px-3 py-2 rounded-lg bg-slate-900/70 border border-indigo-500/30 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-400'
 const btn = 'px-4 py-2 rounded-lg font-semibold text-white transition-colors'
@@ -171,6 +172,42 @@ async function resetProfile() {
   }
 }
 
+// ---------- Compétences ----------
+const compForm = ref(null)
+function openCompetences() {
+  tab.value = 'competences'
+  compForm.value = clone(competences.value)
+  message.value = error.value = ''
+}
+async function saveCompetences() {
+  busy.value = true
+  error.value = message.value = ''
+  const data = clone(compForm.value)
+  const q = supabase.from('content')
+  const { error: e } = competencesRow.value
+    ? await q.update({ data }).eq('id', competencesRow.value.id)
+    : await q.insert({ kind: 'competences', slug: 'main', data })
+  busy.value = false
+  if (e) {
+    error.value = /content_kind_check|check constraint/i.test(e.message)
+      ? "La base n'accepte pas encore ce contenu : exécute supabase/migration-competences.sql dans Supabase (SQL Editor)."
+      : e.message
+    return
+  }
+  await loadRemote()
+  message.value = 'Compétences enregistrées. Visibles tout de suite sur le site.'
+}
+async function resetCompetences() {
+  if (!competencesRow.value || !confirm('Rétablir les compétences d’origine ?')) return
+  const { error: e } = await supabase.from('content').delete().eq('id', competencesRow.value.id)
+  if (e) error.value = e.message
+  else {
+    await loadRemote()
+    compForm.value = clone(competences.value)
+    message.value = 'Compétences d’origine rétablies.'
+  }
+}
+
 // ---------- Enregistrer / supprimer ----------
 async function save() {
   const { id, kind, form } = editing.value
@@ -262,7 +299,8 @@ async function upload(file) {
             <button :class="tab === 'project' ? btnMain : btnGhost" @click="tab = 'project'">Projets</button>
             <button :class="tab === 'formation' ? btnMain : btnGhost" @click="tab = 'formation'">Formations</button>
             <button :class="tab === 'profile' ? btnMain : btnGhost" @click="openProfile">Profil & contact</button>
-            <button v-if="tab !== 'profile'" :class="btnMain + ' ml-auto'" @click="tab === 'project' ? newProject() : newFormation()">+ Ajouter</button>
+            <button :class="tab === 'competences' ? btnMain : btnGhost" @click="openCompetences">Compétences</button>
+            <button v-if="tab === 'project' || tab === 'formation'" :class="btnMain + ' ml-auto'" @click="tab === 'project' ? newProject() : newFormation()">+ Ajouter</button>
           </div>
 
           <div v-if="tab === 'profile' && profileForm" class="space-y-6">
@@ -273,6 +311,17 @@ async function upload(file) {
             <div class="flex gap-3 sticky bottom-0 bg-slate-900/90 py-3">
               <button :class="btnMain" :disabled="busy" @click="saveProfile">{{ busy ? 'Patiente…' : 'Enregistrer' }}</button>
               <button v-if="profileRow" :class="btnDanger" @click="resetProfile">Rétablir l'original</button>
+            </div>
+          </div>
+
+          <div v-else-if="tab === 'competences' && compForm" class="space-y-6">
+            <p class="text-sm text-slate-400">
+              Chaque cadre correspond à une formation (BUT Informatique, Bachelor, Master…) et contient ses cartes de compétences.
+            </p>
+            <CompetencesEditor :form="compForm" />
+            <div class="flex gap-3 sticky bottom-0 bg-slate-900/90 py-3">
+              <button :class="btnMain" :disabled="busy" @click="saveCompetences">{{ busy ? 'Patiente…' : 'Enregistrer' }}</button>
+              <button v-if="competencesRow" :class="btnDanger" @click="resetCompetences">Rétablir l'original</button>
             </div>
           </div>
 
