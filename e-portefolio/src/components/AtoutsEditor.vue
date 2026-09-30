@@ -84,6 +84,7 @@ const setLevel = (it, v) => (it.level = v === '' ? '' : Math.min(100, Math.max(0
               min="0"
               max="100"
               :value="it.level === '' ? 0 : it.level"
+              :style="{ '--pct': (it.level === '' ? 0 : it.level) + '%' }"
               class="w-full"
               @input="setLevel(it, $event.target.value)"
             />
