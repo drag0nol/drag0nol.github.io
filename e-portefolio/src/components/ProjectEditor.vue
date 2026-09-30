@@ -5,6 +5,12 @@ import ListInput from './ListInput.vue'
 import PageRenderer from './PageRenderer.vue'
 import CardEditor from './CardEditor.vue'
 import MaxHeightInput from './MaxHeightInput.vue'
+import EdField from './admin/EdField.vue'
+import EdPanel from './admin/EdPanel.vue'
+import EdItem from './admin/EdItem.vue'
+import EdRow from './admin/EdRow.vue'
+import EdAdd from './admin/EdAdd.vue'
+import { move, duplicate, clone } from './admin/ed.js'
 import { normalizeProject, resolverFor } from '@/content'
 
 const props = defineProps({
@@ -14,16 +20,8 @@ const props = defineProps({
 })
 const emit = defineEmits(['error'])
 
-const input = 'w-full px-3 py-2 rounded-lg bg-slate-900/70 border border-indigo-500/30 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-400'
-const small = 'px-2 py-1 rounded bg-slate-700 hover:bg-slate-600 text-sm text-white'
-const danger = 'px-2 py-1 rounded bg-red-600/80 hover:bg-red-600 text-sm text-white'
-const btn = 'px-3 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white text-sm font-semibold'
-const box = 'bg-slate-800/60 border border-indigo-500/20 rounded-xl p-4 space-y-3'
-const label = 'block text-sm text-slate-400'
-
 const resolve = computed(() => resolverFor(props.baseSlug))
-const imgSrc = (img) =>
-  img.url || (img.file && (/^(https?:)?\/\//.test(img.file) ? img.file : resolve.value(img.file)))
+const imgSrc = (img) => img.url || (img.file && (/^(https?:)?\/\//.test(img.file) ? img.file : resolve.value(img.file)))
 
 const BLOCK_TYPES = [
   ['callout', 'Texte'],
@@ -34,6 +32,8 @@ const BLOCK_TYPES = [
   ['button', 'Bouton'],
 ]
 const BLOCK_LABEL = Object.fromEntries(BLOCK_TYPES)
+const BLOCK_ICON = { callout: '📝', heading: '🔤', cards: '🗂️', image: '🖼️', carousel: '🎞️', button: '🔘' }
+const SLIDE_LABEL = { image: 'Image', card: 'Carte', text: 'Texte' }
 
 const newCard = () => ({ icon: '', iconPosition: 'left', iconSize: '3xl', title: '', subtitle: '', text: '', items: [], bullet: 'dot', size: 'base' })
 const newBlock = (type) =>
@@ -45,40 +45,23 @@ const newBlock = (type) =>
     carousel: { type, perView: 1, autoplay: 0, cardStyle: 'plain', slides: [] },
     button: { type, icon: '📂', label: '', url: '' },
   })[type]
-
-function move(list, i, d) {
-  const j = i + d
-  if (j < 0 || j >= list.length) return
-  ;[list[i], list[j]] = [list[j], list[i]]
-}
-const clone = (o) => JSON.parse(JSON.stringify(o))
-const duplicate = (list, i) => list.splice(i + 1, 0, clone(list[i]))
-
-async function uploadImages(ev, images) {
-  try {
-    for (const file of ev.target.files) images.push({ url: await props.upload(file), caption: '' })
-  } catch (e) {
-    emit('error', "Envoi de l'image impossible : " + e.message)
-  }
-  ev.target.value = ''
-}
-async function uploadSlides(ev, slides) {
-  try {
-    for (const file of ev.target.files) slides.push({ type: 'image', url: await props.upload(file), caption: '' })
-  } catch (e) {
-    emit('error', "Envoi de l'image impossible : " + e.message)
-  }
-  ev.target.value = ''
-}
-const SLIDE_LABEL = { image: 'Image', card: 'Carte', text: 'Texte' }
 const newSlide = (type) =>
-  type === 'card'
-    ? { type, ...newCard() }
-    : { type, tone: 'indigo', title: '', paragraphs: [], items: [], bullet: 'arrow' }
+  type === 'card' ? { type, ...newCard() } : { type, tone: 'indigo', title: '', paragraphs: [], items: [], bullet: 'arrow' }
 
-async function uploadCover(ev) {
+// Résumé d'un bloc affiché dans l'en-tête replié
+const blockSummary = (b) =>
+  ({
+    heading: b.text,
+    callout: b.title || (b.paragraphs && b.paragraphs[0]) || '',
+    cards: (b.cards || []).length + ' carte(s)',
+    image: (b.images || []).length + ' image(s)',
+    carousel: (b.slides || []).length + ' diapositive(s)',
+    button: b.label,
+  })[b.type] || ''
+
+async function uploadInto(ev, list, make) {
   try {
-    props.form.cover = await props.upload(ev.target.files[0])
+    for (const file of ev.target.files) list.push(make(await props.upload(file)))
   } catch (e) {
     emit('error', "Envoi de l'image impossible : " + e.message)
   }
@@ -97,264 +80,295 @@ const previewProject = computed(() =>
 </script>
 
 <template>
-  <div class="space-y-8">
+  <div class="space-y-6">
     <!-- Carte -->
-    <fieldset :class="box">
-      <legend class="px-2 text-lg font-bold text-indigo-200">1. Carte sur la page « Projets »</legend>
-      <input v-model="form.title" placeholder="Titre de la carte" required :class="input" />
+    <EdPanel title="Carte sur la page « Projets »" description="Ce qui s'affiche dans la liste des projets.">
+      <EdField label="Titre de la carte"><input v-model="form.title" class="ed-input" required /></EdField>
       <div class="grid md:grid-cols-2 gap-3">
-        <input v-model="form.category" placeholder="Catégorie (ex. SAE — Jeu)" :class="input" />
-        <input v-model="form.status" placeholder="Badge (ex. EN COURS)" :class="input" />
+        <EdField label="Catégorie"><input v-model="form.category" class="ed-input" placeholder="SAE — Jeu" /></EdField>
+        <EdField label="Badge" hint="Facultatif, ex. EN COURS"><input v-model="form.status" class="ed-input" /></EdField>
       </div>
-      <textarea v-model="form.summary" rows="2" placeholder="Résumé de la carte" :class="input"></textarea>
-      <label :class="label">Technologies (séparées par des virgules)
-        <ListInput v-model="form.tags" mode="comma" :rows="1" />
-      </label>
-      <div class="flex flex-wrap items-center gap-4 text-sm text-slate-400">
-        <label>Couleur
-          <select v-model="form.tone" :class="input + ' w-auto ml-2'">
+      <EdField label="Résumé"><textarea v-model="form.summary" rows="2" class="ed-input"></textarea></EdField>
+      <EdField label="Technologies" hint="Séparées par des virgules"><ListInput v-model="form.tags" mode="comma" :rows="1" /></EdField>
+      <div class="grid sm:grid-cols-[1fr_6rem_auto] items-end gap-3">
+        <EdField label="Couleur">
+          <select v-model="form.tone" class="ed-input">
             <option value="indigo">Indigo</option>
             <option value="amber">Ambre (en cours)</option>
           </select>
-        </label>
-        <label>Ordre <input type="number" v-model.number="form.order" :class="input + ' w-20 inline-block'" /></label>
-        <label class="flex items-center gap-2"><input type="checkbox" v-model="form.publie" /> Publié</label>
+        </EdField>
+        <EdField label="Ordre"><input v-model.number="form.order" type="number" class="ed-input" /></EdField>
+        <label class="flex items-center gap-2 pb-2 text-sm text-slate-300"><input v-model="form.publie" type="checkbox" /> Publié</label>
       </div>
-    </fieldset>
+    </EdPanel>
 
     <!-- En-tête -->
-    <fieldset :class="box">
-      <legend class="px-2 text-lg font-bold text-indigo-200">2. En-tête de la page</legend>
-      <input v-model="h.kicker" placeholder="Petit texte au-dessus (ex. Projet étudiant — SAE)" :class="input" />
-      <input v-model="h.title" placeholder="Titre de la page" :class="input" />
-      <label class="flex items-center gap-2 text-sm text-slate-400"><input type="checkbox" v-model="h.smallTitle" /> Titre plus petit (titre long)</label>
-      <input v-model="h.subtitle" placeholder="Sous-titre" :class="input" />
+    <EdPanel title="En-tête de la page">
+      <EdField label="Petit texte au-dessus du titre"><input v-model="h.kicker" class="ed-input" placeholder="Projet étudiant — SAE" /></EdField>
+      <div class="grid md:grid-cols-[1fr_auto] items-end gap-3">
+        <EdField label="Titre de la page"><input v-model="h.title" class="ed-input" /></EdField>
+        <label class="flex items-center gap-2 pb-2 text-sm text-slate-300"><input v-model="h.smallTitle" type="checkbox" /> Titre plus petit</label>
+      </div>
+      <EdField label="Sous-titre"><input v-model="h.subtitle" class="ed-input" /></EdField>
 
-      <div class="flex gap-3">
-        <button type="button" :class="btn" @click="toggleNotice">{{ h.notice ? '− Retirer' : '+ Ajouter' }} un bandeau d'avertissement</button>
-        <button type="button" :class="btn" @click="toggleCriteria">{{ h.criteria ? '− Retirer' : '+ Ajouter' }} les apprentissages critiques</button>
+      <div class="flex flex-wrap gap-2">
+        <button type="button" class="ed-btn ed-btn-ghost ed-btn-sm" @click="toggleNotice">{{ h.notice ? '− Retirer le bandeau d’avertissement' : '+ Bandeau d’avertissement' }}</button>
+        <button type="button" class="ed-btn ed-btn-ghost ed-btn-sm" @click="toggleCriteria">{{ h.criteria ? '− Retirer les apprentissages critiques' : '+ Apprentissages critiques' }}</button>
       </div>
 
-      <div v-if="h.notice" :class="box">
-        <div class="grid grid-cols-[70px_1fr] gap-3">
-          <input v-model="h.notice.icon" placeholder="⚠️" :class="input" />
-          <input v-model="h.notice.title" placeholder="Titre du bandeau" :class="input" />
+      <div v-if="h.notice" class="ed-card p-4 space-y-3">
+        <p class="ed-label !mb-0">Bandeau d'avertissement</p>
+        <div class="grid grid-cols-[5rem_1fr] gap-3">
+          <EdField label="Icône"><input v-model="h.notice.icon" class="ed-input" /></EdField>
+          <EdField label="Titre"><input v-model="h.notice.title" class="ed-input" /></EdField>
         </div>
-        <textarea v-model="h.notice.text" rows="2" placeholder="Texte du bandeau" :class="input"></textarea>
+        <EdField label="Texte"><textarea v-model="h.notice.text" rows="2" class="ed-input"></textarea></EdField>
       </div>
 
-      <div v-if="h.criteria" :class="box">
-        <input v-model="h.criteria.title" placeholder="Titre de l'encadré" :class="input" />
-        <div v-for="(it, i) in h.criteria.items" :key="i" class="grid grid-cols-[110px_1fr_auto] gap-2">
-          <input v-model="it.code" placeholder="AC11.01" :class="input" />
-          <input v-model="it.text" placeholder="Intitulé" :class="input" />
-          <button type="button" :class="danger" @click="h.criteria.items.splice(i, 1)">✕</button>
-        </div>
-        <button type="button" :class="small" @click="h.criteria.items.push({ code: '', text: '' })">+ Ligne</button>
+      <div v-if="h.criteria" class="ed-card p-4 space-y-3">
+        <EdField label="Titre de l'encadré des apprentissages critiques"><input v-model="h.criteria.title" class="ed-input" /></EdField>
+        <EdRow
+          v-for="(it, i) in h.criteria.items"
+          :key="i"
+          :first="i === 0"
+          :last="i === h.criteria.items.length - 1"
+          @up="move(h.criteria.items, i, -1)"
+          @down="move(h.criteria.items, i, 1)"
+          @remove="h.criteria.items.splice(i, 1)"
+        >
+          <div class="grid grid-cols-[7rem_1fr] gap-3">
+            <EdField label="Code"><input v-model="it.code" class="ed-input" placeholder="AC11.01" /></EdField>
+            <EdField label="Intitulé"><input v-model="it.text" class="ed-input" /></EdField>
+          </div>
+        </EdRow>
+        <EdAdd @click="h.criteria.items.push({ code: '', text: '' })">Ligne</EdAdd>
       </div>
 
-      <div class="space-y-2">
-        <div class="flex items-center gap-3 text-sm text-slate-400">
-          <span>Badges d'infos</span>
-          <select v-model="h.factsStyle" :class="input + ' w-auto'">
+      <div class="space-y-3">
+        <EdField label="Badges d'infos">
+          <select v-model="h.factsStyle" class="ed-input sm:!w-auto">
             <option value="plain">Simples (icône + texte)</option>
             <option value="chips">Étiquettes encadrées</option>
           </select>
-        </div>
-        <div v-for="(f, i) in h.facts" :key="i" class="grid grid-cols-[70px_1fr_auto] gap-2">
-          <input v-model="f.icon" placeholder="👥" :class="input" />
-          <input v-model="f.text" placeholder="**Équipe de 3** personnes" :class="input" />
-          <button type="button" :class="danger" @click="h.facts.splice(i, 1)">✕</button>
-        </div>
-        <button type="button" :class="small" @click="h.facts.push({ icon: '', text: '' })">+ Badge</button>
+        </EdField>
+        <EdRow v-for="(f, i) in h.facts" :key="i" :first="i === 0" :last="i === h.facts.length - 1" @up="move(h.facts, i, -1)" @down="move(h.facts, i, 1)" @remove="h.facts.splice(i, 1)">
+          <div class="grid grid-cols-[5rem_1fr] gap-3">
+            <EdField label="Icône"><input v-model="f.icon" class="ed-input" placeholder="👥" /></EdField>
+            <EdField label="Texte" hint="**gras** possible"><input v-model="f.text" class="ed-input" placeholder="**Équipe de 3** personnes" /></EdField>
+          </div>
+        </EdRow>
+        <EdAdd @click="h.facts.push({ icon: '', text: '' })">Badge</EdAdd>
       </div>
-    </fieldset>
+    </EdPanel>
 
     <!-- Sections -->
-    <div v-for="(s, si) in form.sections" :key="si" :class="box + ' !border-indigo-500/40'">
-      <div class="flex items-center gap-2">
-        <span class="text-lg font-bold text-indigo-200 whitespace-nowrap">Section {{ si + 1 }}</span>
-        <input v-model="s.title" placeholder="Titre de la section (ex. Partie 1 : Concept)" :class="input" />
-        <button type="button" :class="small" @click="move(form.sections, si, -1)">↑</button>
-        <button type="button" :class="small" @click="move(form.sections, si, 1)">↓</button>
-        <button type="button" :class="danger" @click="form.sections.splice(si, 1)">✕</button>
-      </div>
+    <EdPanel title="Contenu de la page" description="Des sections, chacune composée de blocs.">
+      <template #actions>
+        <EdAdd @click="form.sections.push({ title: '', blocks: [] })">Nouvelle section</EdAdd>
+      </template>
 
-      <div v-for="(b, bi) in s.blocks" :key="bi" :class="box + ' bg-slate-900/50'">
-        <div class="flex items-center gap-2">
-          <span class="font-semibold text-indigo-300 flex-1">{{ BLOCK_LABEL[b.type] }}</span>
-          <button type="button" :class="small" @click="move(s.blocks, bi, -1)">↑</button>
-          <button type="button" :class="small" @click="move(s.blocks, bi, 1)">↓</button>
-          <button type="button" :class="small" @click="duplicate(s.blocks, bi)">Dupliquer</button>
-          <button type="button" :class="danger" @click="s.blocks.splice(bi, 1)">✕</button>
-        </div>
+      <EdItem
+        v-for="(s, si) in form.sections"
+        :key="si"
+        :title="s.title"
+        :subtitle="s.blocks.length + ' bloc(s)'"
+        empty-title="Section sans titre"
+        :open="!s.title"
+        :first="si === 0"
+        :last="si === form.sections.length - 1"
+        :confirm="'Supprimer la section « ' + (s.title || 'sans titre') + ' » et ses ' + s.blocks.length + ' bloc(s) ?'"
+        @up="move(form.sections, si, -1)"
+        @down="move(form.sections, si, 1)"
+        @duplicate="duplicate(form.sections, si)"
+        @remove="form.sections.splice(si, 1)"
+      >
+        <EdField label="Titre de la section"><input v-model="s.title" class="ed-input" placeholder="Partie 1 : Concept & Objectif" /></EdField>
 
-        <!-- Sous-titre -->
-        <input v-if="b.type === 'heading'" v-model="b.text" placeholder="Sous-titre" :class="input" />
+        <EdItem
+          v-for="(b, bi) in s.blocks"
+          :key="bi"
+          nested
+          :icon="BLOCK_ICON[b.type]"
+          :title="BLOCK_LABEL[b.type]"
+          :subtitle="blockSummary(b)"
+          :first="bi === 0"
+          :last="bi === s.blocks.length - 1"
+          confirm="Supprimer ce bloc ?"
+          @up="move(s.blocks, bi, -1)"
+          @down="move(s.blocks, bi, 1)"
+          @duplicate="duplicate(s.blocks, bi)"
+          @remove="s.blocks.splice(bi, 1)"
+        >
+          <!-- Sous-titre -->
+          <EdField v-if="b.type === 'heading'" label="Sous-titre"><input v-model="b.text" class="ed-input" /></EdField>
 
-        <!-- Texte -->
-        <template v-else-if="b.type === 'callout'">
-          <div class="flex flex-wrap gap-3 text-sm text-slate-400">
-            <select v-model="b.tone" :class="input + ' w-auto'">
-              <option value="indigo">Indigo</option>
-              <option value="amber">Ambre</option>
-            </select>
-            <select v-model="b.size" :class="input + ' w-auto'">
-              <option value="lg">Grand texte</option>
-              <option value="sm">Petit texte</option>
-            </select>
-          </div>
-          <input v-model="b.title" placeholder="Titre de l'encadré (facultatif)" :class="input" />
-          <label :class="label">Paragraphes (ligne vide = nouveau paragraphe, **gras**)
-            <ListInput v-model="b.paragraphs" mode="para" :rows="4" />
-          </label>
-          <label :class="label">Liste à puces (une par ligne, facultatif)
-            <ListInput v-model="b.items" :rows="3" />
-          </label>
-          <select v-model="b.bullet" :class="input + ' w-auto'">
-            <option value="arrow">Puce ▸</option>
-            <option value="dot">Puce •</option>
-            <option value="square">Puce ▫️</option>
-          </select>
-        </template>
-
-        <!-- Cartes -->
-        <template v-else-if="b.type === 'cards'">
-          <div class="flex flex-wrap gap-3 text-sm text-slate-400">
-            <select v-model.number="b.columns" :class="input + ' w-auto'">
-              <option :value="1">1 colonne</option>
-              <option :value="2">2 colonnes</option>
-              <option :value="3">3 colonnes</option>
-            </select>
-            <select v-model="b.style" :class="input + ' w-auto'">
-              <option value="plain">Cartes simples</option>
-              <option value="gradient">Cartes dégradées</option>
-            </select>
-          </div>
-
-          <div v-for="(c, ci) in b.cards" :key="ci" :class="box">
-            <div class="flex items-center gap-2">
-              <span class="text-sm font-semibold text-slate-300 flex-1">Carte {{ ci + 1 }}</span>
-              <button type="button" :class="small" @click="move(b.cards, ci, -1)">←</button>
-              <button type="button" :class="small" @click="move(b.cards, ci, 1)">→</button>
-              <button type="button" :class="small" @click="duplicate(b.cards, ci)">Dupliquer</button>
-              <button type="button" :class="danger" @click="b.cards.splice(ci, 1)">✕</button>
+          <!-- Texte -->
+          <template v-else-if="b.type === 'callout'">
+            <div class="grid sm:grid-cols-2 gap-3">
+              <EdField label="Couleur">
+                <select v-model="b.tone" class="ed-input"><option value="indigo">Indigo</option><option value="amber">Ambre</option></select>
+              </EdField>
+              <EdField label="Taille du texte">
+                <select v-model="b.size" class="ed-input"><option value="lg">Grand</option><option value="sm">Petit</option></select>
+              </EdField>
             </div>
-            <CardEditor :card="c" />
-          </div>
-          <button type="button" :class="small" @click="b.cards.push(newCard())">+ Carte</button>
-        </template>
+            <EdField label="Titre de l'encadré" hint="Facultatif"><input v-model="b.title" class="ed-input" /></EdField>
+            <EdField label="Paragraphes" hint="Une ligne vide = nouveau paragraphe · **gras** possible"><ListInput v-model="b.paragraphs" mode="para" :rows="4" /></EdField>
+            <EdField label="Liste à puces" hint="Une par ligne, facultatif"><ListInput v-model="b.items" :rows="3" /></EdField>
+            <EdField label="Puces">
+              <select v-model="b.bullet" class="ed-input sm:!w-auto"><option value="arrow">▸</option><option value="dot">•</option><option value="square">▫️</option></select>
+            </EdField>
+          </template>
 
-        <!-- Images -->
-        <template v-else-if="b.type === 'image'">
-          <div v-for="(img, ii) in b.images" :key="ii" :class="box + ' bg-slate-900/50'">
-            <div class="flex items-center gap-3">
-              <img :src="imgSrc(img)" class="h-14 w-20 object-cover rounded bg-slate-700" />
-              <input v-model="img.caption" placeholder="Légende" :class="input" />
-              <button type="button" :class="danger" @click="b.images.splice(ii, 1)">✕</button>
+          <!-- Cartes -->
+          <template v-else-if="b.type === 'cards'">
+            <div class="grid sm:grid-cols-2 gap-3">
+              <EdField label="Colonnes">
+                <select v-model.number="b.columns" class="ed-input"><option :value="1">1</option><option :value="2">2</option><option :value="3">3</option></select>
+              </EdField>
+              <EdField label="Style des cartes">
+                <select v-model="b.style" class="ed-input"><option value="plain">Simples</option><option value="gradient">Dégradées</option></select>
+              </EdField>
             </div>
-            <div class="flex flex-wrap items-center gap-3">
-              <select v-model="img.fit" :class="input + ' w-auto'">
-                <option value="">Pleine largeur</option>
-                <option value="contain">Logo (contenu)</option>
-              </select>
-              <MaxHeightInput v-model="img.maxHeight" />
-            </div>
-          </div>
-          <label :class="label">Ajouter des images
-            <input type="file" accept="image/*" multiple class="block mt-1" @change="uploadImages($event, b.images)" />
-          </label>
-        </template>
+            <EdItem
+              v-for="(c, ci) in b.cards"
+              :key="ci"
+              nested
+              :icon="c.icon"
+              :title="c.title"
+              empty-title="Carte sans titre"
+              :open="!c.title"
+              :first="ci === 0"
+              :last="ci === b.cards.length - 1"
+              confirm="Supprimer cette carte ?"
+              @up="move(b.cards, ci, -1)"
+              @down="move(b.cards, ci, 1)"
+              @duplicate="duplicate(b.cards, ci)"
+              @remove="b.cards.splice(ci, 1)"
+            >
+              <CardEditor :card="c" />
+            </EdItem>
+            <EdAdd @click="b.cards.push(newCard())">Carte</EdAdd>
+          </template>
 
-        <!-- Carrousel -->
-        <template v-else-if="b.type === 'carousel'">
-          <div class="flex flex-wrap gap-3 text-sm text-slate-400">
-            <select v-model.number="b.perView" :class="input + ' w-auto'">
-              <option :value="1">1 élément à la fois</option>
-              <option :value="2">2 à la fois (ordinateur)</option>
-              <option :value="3">3 à la fois (ordinateur)</option>
-            </select>
-            <select v-model.number="b.autoplay" :class="input + ' w-auto'">
-              <option :value="0">Défilement manuel</option>
-              <option :value="3">Auto : 3 s</option>
-              <option :value="5">Auto : 5 s</option>
-              <option :value="8">Auto : 8 s</option>
-            </select>
-            <select v-model="b.cardStyle" :class="input + ' w-auto'">
-              <option value="plain">Cartes simples</option>
-              <option value="gradient">Cartes dégradées</option>
-            </select>
-          </div>
-
-          <div v-for="(sl, li) in b.slides" :key="li" :class="box">
-            <div class="flex items-center gap-2">
-              <span class="text-sm font-semibold text-slate-300 flex-1">Diapositive {{ li + 1 }} — {{ SLIDE_LABEL[sl.type] }}</span>
-              <button type="button" :class="small" @click="move(b.slides, li, -1)">←</button>
-              <button type="button" :class="small" @click="move(b.slides, li, 1)">→</button>
-              <button type="button" :class="small" @click="duplicate(b.slides, li)">Dupliquer</button>
-              <button type="button" :class="danger" @click="b.slides.splice(li, 1)">✕</button>
-            </div>
-
-            <div v-if="sl.type === 'image'" class="space-y-3">
-              <div class="flex items-center gap-3">
-                <img :src="imgSrc(sl)" class="h-14 w-20 object-cover rounded bg-slate-700" />
-                <input v-model="sl.caption" placeholder="Légende" :class="input" />
+          <!-- Images -->
+          <template v-else-if="b.type === 'image'">
+            <EdItem
+              v-for="(img, ii) in b.images"
+              :key="ii"
+              nested
+              :title="img.caption || 'Image ' + (ii + 1)"
+              :first="ii === 0"
+              :last="ii === b.images.length - 1"
+              confirm="Retirer cette image ?"
+              no-duplicate
+              open
+              @up="move(b.images, ii, -1)"
+              @down="move(b.images, ii, 1)"
+              @remove="b.images.splice(ii, 1)"
+            >
+              <div class="flex items-start gap-4">
+                <img :src="imgSrc(img)" alt="" class="h-20 w-28 object-cover rounded-lg bg-slate-700 shrink-0" />
+                <div class="flex-1 space-y-3">
+                  <EdField label="Légende" hint="Facultatif"><input v-model="img.caption" class="ed-input" /></EdField>
+                  <div class="grid sm:grid-cols-2 gap-3">
+                    <EdField label="Affichage">
+                      <select v-model="img.fit" class="ed-input"><option value="">Pleine largeur</option><option value="contain">Logo (contenu)</option></select>
+                    </EdField>
+                    <MaxHeightInput v-model="img.maxHeight" />
+                  </div>
+                </div>
               </div>
-              <div class="flex flex-wrap items-center gap-3">
-                <select v-model="sl.fit" :class="input + ' w-auto'">
-                  <option value="">Pleine largeur</option>
-                  <option value="contain">Logo (contenu)</option>
-                </select>
-                <MaxHeightInput v-model="sl.maxHeight" />
-              </div>
+            </EdItem>
+            <EdField label="Ajouter des images">
+              <input type="file" accept="image/*" multiple @change="uploadInto($event, b.images, (url) => ({ url, caption: '' }))" />
+            </EdField>
+          </template>
+
+          <!-- Carrousel -->
+          <template v-else-if="b.type === 'carousel'">
+            <div class="grid sm:grid-cols-3 gap-3">
+              <EdField label="Éléments visibles">
+                <select v-model.number="b.perView" class="ed-input"><option :value="1">1 à la fois</option><option :value="2">2 (ordinateur)</option><option :value="3">3 (ordinateur)</option></select>
+              </EdField>
+              <EdField label="Défilement">
+                <select v-model.number="b.autoplay" class="ed-input"><option :value="0">Manuel</option><option :value="3">Auto : 3 s</option><option :value="5">Auto : 5 s</option><option :value="8">Auto : 8 s</option></select>
+              </EdField>
+              <EdField label="Style des cartes">
+                <select v-model="b.cardStyle" class="ed-input"><option value="plain">Simples</option><option value="gradient">Dégradées</option></select>
+              </EdField>
             </div>
 
-            <CardEditor v-else-if="sl.type === 'card'" :card="sl" />
+            <EdItem
+              v-for="(sl, li) in b.slides"
+              :key="li"
+              nested
+              :title="(SLIDE_LABEL[sl.type] || 'Diapositive') + ' ' + (li + 1)"
+              :subtitle="sl.caption || sl.title"
+              :open="sl.type !== 'image' && !sl.title"
+              :first="li === 0"
+              :last="li === b.slides.length - 1"
+              confirm="Supprimer cette diapositive ?"
+              @up="move(b.slides, li, -1)"
+              @down="move(b.slides, li, 1)"
+              @duplicate="duplicate(b.slides, li)"
+              @remove="b.slides.splice(li, 1)"
+            >
+              <div v-if="sl.type === 'image'" class="flex items-start gap-4">
+                <img :src="imgSrc(sl)" alt="" class="h-20 w-28 object-cover rounded-lg bg-slate-700 shrink-0" />
+                <div class="flex-1 space-y-3">
+                  <EdField label="Légende" hint="Facultatif"><input v-model="sl.caption" class="ed-input" /></EdField>
+                  <div class="grid sm:grid-cols-2 gap-3">
+                    <EdField label="Affichage">
+                      <select v-model="sl.fit" class="ed-input"><option value="">Pleine largeur</option><option value="contain">Logo (contenu)</option></select>
+                    </EdField>
+                    <MaxHeightInput v-model="sl.maxHeight" />
+                  </div>
+                </div>
+              </div>
 
-            <template v-else>
-              <select v-model="sl.tone" :class="input + ' w-auto'">
-                <option value="indigo">Indigo</option>
-                <option value="amber">Ambre</option>
-              </select>
-              <input v-model="sl.title" placeholder="Titre (facultatif)" :class="input" />
-              <label :class="label">Paragraphes (ligne vide = nouveau paragraphe)
-                <ListInput v-model="sl.paragraphs" mode="para" :rows="3" />
-              </label>
-              <label :class="label">Liste à puces (facultatif)
-                <ListInput v-model="sl.items" :rows="3" />
-              </label>
-            </template>
+              <CardEditor v-else-if="sl.type === 'card'" :card="sl" />
+
+              <template v-else>
+                <div class="grid sm:grid-cols-2 gap-3">
+                  <EdField label="Couleur">
+                    <select v-model="sl.tone" class="ed-input"><option value="indigo">Indigo</option><option value="amber">Ambre</option></select>
+                  </EdField>
+                  <EdField label="Titre" hint="Facultatif"><input v-model="sl.title" class="ed-input" /></EdField>
+                </div>
+                <EdField label="Paragraphes" hint="Une ligne vide = nouveau paragraphe"><ListInput v-model="sl.paragraphs" mode="para" :rows="3" /></EdField>
+                <EdField label="Liste à puces" hint="Facultatif"><ListInput v-model="sl.items" :rows="3" /></EdField>
+              </template>
+            </EdItem>
+
+            <div class="flex flex-wrap gap-2">
+              <EdAdd @click="b.slides.push(newSlide('card'))">Carte</EdAdd>
+              <EdAdd @click="b.slides.push(newSlide('text'))">Texte</EdAdd>
+            </div>
+            <EdField label="Ajouter des images" hint="Une diapositive par image">
+              <input type="file" accept="image/*" multiple @change="uploadInto($event, b.slides, (url) => ({ type: 'image', url, caption: '' }))" />
+            </EdField>
+          </template>
+
+          <!-- Bouton -->
+          <div v-else-if="b.type === 'button'" class="grid grid-cols-[5rem_1fr] sm:grid-cols-[5rem_1fr_1fr] gap-3">
+            <EdField label="Icône"><input v-model="b.icon" class="ed-input" placeholder="📂" /></EdField>
+            <EdField label="Texte du bouton"><input v-model="b.label" class="ed-input" /></EdField>
+            <EdField label="Lien" class="col-span-2 sm:col-span-1"><input v-model="b.url" class="ed-input" placeholder="https://…" /></EdField>
           </div>
+        </EdItem>
 
-          <div class="flex flex-wrap items-center gap-2">
-            <button type="button" :class="small" @click="b.slides.push(newSlide('card'))">+ Carte</button>
-            <button type="button" :class="small" @click="b.slides.push(newSlide('text'))">+ Texte</button>
-          </div>
-          <label :class="label">Ajouter des images (une diapositive par image)
-            <input type="file" accept="image/*" multiple class="block mt-1" @change="uploadSlides($event, b.slides)" />
-          </label>
-        </template>
-
-        <!-- Bouton -->
-        <div v-else-if="b.type === 'button'" class="grid grid-cols-[70px_1fr_1fr] gap-2">
-          <input v-model="b.icon" placeholder="📂" :class="input" />
-          <input v-model="b.label" placeholder="Texte du bouton" :class="input" />
-          <input v-model="b.url" placeholder="https://..." :class="input" />
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="text-sm text-slate-400">Ajouter un bloc :</span>
+          <EdAdd v-for="[type, name] in BLOCK_TYPES" :key="type" @click="s.blocks.push(newBlock(type))">{{ name }}</EdAdd>
         </div>
-      </div>
-
-      <div class="flex flex-wrap items-center gap-2">
-        <span class="text-sm text-slate-400">Ajouter :</span>
-        <button v-for="[type, name] in BLOCK_TYPES" :key="type" type="button" :class="btn" @click="s.blocks.push(newBlock(type))">+ {{ name }}</button>
-      </div>
-    </div>
-
-    <button type="button" :class="btn" @click="form.sections.push({ title: '', blocks: [] })">+ Nouvelle section</button>
+      </EdItem>
+    </EdPanel>
 
     <!-- Aperçu -->
-    <button type="button" :class="btn + ' !bg-emerald-700 hover:!bg-emerald-600'" @click="preview = true">👁 Aperçu de la page</button>
+    <button type="button" class="ed-btn ed-btn-ok" @click="preview = true">👁 Aperçu de la page</button>
     <div v-if="preview" class="fixed inset-0 z-[100] overflow-auto bg-slate-900">
-      <button type="button" :class="btn + ' fixed top-4 right-4 z-[110] !bg-red-600'" @click="preview = false">✕ Fermer l'aperçu</button>
+      <button type="button" class="ed-btn ed-btn-danger fixed top-4 right-4 z-[110]" @click="preview = false">✕ Fermer l'aperçu</button>
       <PageRenderer :project="previewProject" :show-back="false" />
     </div>
   </div>

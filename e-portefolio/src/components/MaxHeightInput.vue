@@ -30,23 +30,14 @@ const push = () => emit('update:modelValue', n.value !== '' && Number(n.value) >
 </script>
 
 <template>
-  <div class="flex items-center gap-2 text-sm text-slate-400" title="Hauteur maximale de l'image (vide = pas de limite)">
-    <span class="whitespace-nowrap">Hauteur max</span>
-    <input
-      v-model="n"
-      type="number"
-      min="1"
-      step="any"
-      placeholder="auto"
-      class="w-24 px-3 py-2 rounded-lg bg-slate-900/70 border border-indigo-500/30 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-400"
-      @input="push"
-    />
-    <select
-      v-model="unit"
-      class="px-3 py-2 rounded-lg bg-slate-900/70 border border-indigo-500/30 text-slate-100 focus:outline-none focus:border-indigo-400"
-      @change="push"
-    >
-      <option v-for="u in UNITS" :key="u" :value="u">{{ u }}</option>
-    </select>
+  <div>
+    <span class="ed-label">Hauteur max</span>
+    <div class="flex items-center gap-2">
+      <input v-model="n" type="number" min="1" step="any" placeholder="auto" class="ed-input !w-24" aria-label="Hauteur maximale" @input="push" />
+      <select v-model="unit" class="ed-input !w-auto" aria-label="Unité" @change="push">
+        <option v-for="u in UNITS" :key="u" :value="u">{{ u }}</option>
+      </select>
+    </div>
+    <span class="ed-hint block">vide = pas de limite · vh = % de l'écran</span>
   </div>
 </template>

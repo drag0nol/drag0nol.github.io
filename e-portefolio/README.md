@@ -95,3 +95,13 @@ Valeurs d'origine dans `src/content/experiences.json`. Nécessite `supabase/migr
 
 Valeurs d'origine dans `src/content/atouts.json` et `src/content/loisirs.json` ; « Rétablir l'original » y revient. Nécessite `supabase/migration-competences.sql` (voir plus haut).
 
+### Ergonomie de l'administration
+
+Tous les éditeurs partagent les mêmes composants (`src/components/admin/`) et les mêmes styles (classes `ed-*` dans `src/assets/main.css`) :
+- champs avec libellé visible et aide ;
+- éléments repliables avec la même barre d'actions : **↑ ↓** (déplacer), **⧉** (dupliquer), **✕** (supprimer, avec confirmation pour les éléments importants) ;
+- barre d'enregistrement collée en bas, avec l'état « Modifications non enregistrées » ;
+- avertissement avant de changer d'onglet ou de quitter la page avec des modifications non enregistrées ;
+- **Ctrl+S** (ou Cmd+S) enregistre l'éditeur en cours ;
+- lien « Voir la page ↗ » vers la page éditée.
+

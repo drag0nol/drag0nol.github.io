@@ -120,3 +120,48 @@ input[type='range']::-moz-range-thumb {
 input[type='range']:hover::-moz-range-thumb {
   background: rgb(165 180 252);
 }
+
+/* ---------- Kit d'interface de l'administration (classes partagées par tous les éditeurs) ---------- */
+@layer components {
+  .ed-input {
+    @apply w-full px-3 py-2 rounded-lg bg-slate-900/70 border border-indigo-500/30 text-slate-100 placeholder-slate-500 transition-colors;
+  }
+  .ed-input:focus {
+    @apply outline-none border-indigo-400 ring-1 ring-indigo-400/40;
+  }
+  .ed-label {
+    @apply block text-sm font-medium text-slate-300 mb-1;
+  }
+  .ed-hint {
+    @apply text-xs text-slate-400 mt-1;
+  }
+
+  .ed-btn {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-semibold text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .ed-btn-primary { @apply bg-indigo-600 hover:bg-indigo-700; }
+  .ed-btn-ghost { @apply bg-slate-700 hover:bg-slate-600; }
+  .ed-btn-danger { @apply bg-red-600/80 hover:bg-red-600; }
+  .ed-btn-ok { @apply bg-emerald-700 hover:bg-emerald-600; }
+  .ed-btn-sm { @apply px-3 py-1.5 text-sm; }
+
+  .ed-icon-btn {
+    @apply inline-flex items-center justify-center w-8 h-8 rounded-md bg-slate-700/70 hover:bg-slate-600 text-slate-200 text-sm leading-none transition-colors disabled:opacity-30 disabled:cursor-not-allowed;
+  }
+  .ed-icon-btn-danger { @apply hover:bg-red-600 hover:text-white; }
+
+  .ed-panel {
+    @apply bg-slate-800/60 border border-indigo-500/20 rounded-2xl p-5 space-y-4;
+  }
+  .ed-card {
+    @apply bg-slate-900/50 border border-indigo-500/20 rounded-xl;
+  }
+  .ed-item > summary {
+    @apply flex items-center gap-3 cursor-pointer select-none px-4 py-3 rounded-xl hover:bg-indigo-500/10 transition-colors;
+    list-style: none;
+  }
+  .ed-item > summary::-webkit-details-marker { display: none; }
+  .ed-item[open] > summary { @apply rounded-b-none border-b border-indigo-500/20; }
+  .ed-chevron { @apply text-indigo-300 transition-transform duration-150 inline-block; }
+  .ed-item[open] > summary .ed-chevron { transform: rotate(90deg); }
+}
