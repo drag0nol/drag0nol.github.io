@@ -1,0 +1,141 @@
+{
+  "title": "Mes atouts",
+  "subtitle": "Consultez ci-dessous mes atouts techniques, mon niveau en langues étrangères, ainsi que mes soft-skills",
+  "categories": [
+    {
+      "label": "Outils numériques",
+      "heading": "Outils Numériques & Technologies",
+      "layout": "cards",
+      "items": [
+        {
+          "icon": "💻",
+          "title": "Visual Studio / IDEs",
+          "description": "Maîtrise avancée de Visual Studio pour le développement C#/.NET, WPF. Utilisation de VS Code pour le développement web (Vue.js, JavaScript).",
+          "level": 90,
+          "levelLabel": "Avancé"
+        },
+        {
+          "icon": "🔀",
+          "title": "Git / GitHub",
+          "description": "Gestion de versions avec Git, collaboration sur GitHub, création de branches, pull requests, résolution de conflits. Workflow d'équipe maîtrisé.",
+          "level": 85,
+          "levelLabel": "Avancé"
+        },
+        {
+          "icon": "🗄️",
+          "title": "Bases de Données",
+          "description": "SQL Server, PostgreSQL, MySQL, DB2. Maîtrise des requêtes SQL, Entity Framework, ADO.NET. Conception de modèles relationnels normalisés.",
+          "level": 88,
+          "levelLabel": "Avancé"
+        },
+        {
+          "icon": "🎮",
+          "title": "Unity / Blender",
+          "description": "Développement de jeux 2D/3D avec Unity (C#). Création de modèles 3D avec Blender. Intégration d'assets, physique, animations.",
+          "level": 75,
+          "levelLabel": "Intermédiaire avancé"
+        },
+        {
+          "icon": "🖥️",
+          "title": "VirtualBox / Administration",
+          "description": "Configuration de machines virtuelles, installation systèmes (Windows, Linux), configuration réseau, optimisation performances.",
+          "level": 80,
+          "levelLabel": "Avancé"
+        },
+        {
+          "icon": "🌐",
+          "title": "Vue.js / Frameworks Web",
+          "description": "Développement d'applications web avec Vue.js 3, Vue Router, Vite. Connaissances HTML5, CSS3, JavaScript moderne (ES6+).",
+          "level": 82,
+          "levelLabel": "Avancé"
+        }
+      ]
+    },
+    {
+      "label": "Langues étrangères",
+      "heading": "Langues Étrangères",
+      "layout": "languages",
+      "items": [
+        {
+          "icon": "🇫🇷",
+          "title": "Français",
+          "tagline": "Langue maternelle",
+          "detail": "Maîtrise complète à l'écrit et à l'oral",
+          "level": 100,
+          "levelLabel": "Natif"
+        },
+        {
+          "icon": "🇬🇧",
+          "title": "Anglais",
+          "tagline": "Compréhension technique et professionnelle",
+          "detail": "Lecture de documentation technique, communication écrite",
+          "level": 70,
+          "levelLabel": "Intermédiaire (B2)"
+        }
+      ]
+    },
+    {
+      "label": "Soft skills",
+      "heading": "Soft Skills & Qualités Comportementales",
+      "layout": "cards",
+      "items": [
+        {
+          "icon": "🤝",
+          "title": "Travail d'Équipe",
+          "description": "Excellent collaborateur, capable de travailler efficacement en binôme ou en équipe. Partage des connaissances, écoute active et respect des idées diverses.",
+          "level": 90,
+          "levelLabel": "Très Avancé"
+        },
+        {
+          "icon": "💡",
+          "title": "Résolution de Problèmes",
+          "description": "Approche analytique et méthodique. Capacité à décomposer les problèmes complexes, identifier les causes racines et proposer des solutions efficaces.",
+          "level": 92,
+          "levelLabel": "Expert"
+        },
+        {
+          "icon": "🚀",
+          "title": "Autonomie & Proactivité",
+          "description": "Autonome dans mes projets, capable de prendre des initiatives et de proposer des améliorations. Je n'hésite pas à chercher des solutions de manière proactive.",
+          "level": 88,
+          "levelLabel": "Très Avancé"
+        },
+        {
+          "icon": "⚙️",
+          "title": "Adaptabilité",
+          "description": "Très adaptable aux changements technologiques et organisationnels. Apprends rapidement de nouveaux langages, frameworks et méthodologies de travail.",
+          "level": 91,
+          "levelLabel": "Très Avancé"
+        },
+        {
+          "icon": "🎯",
+          "title": "Rigueur & Organisation",
+          "description": "Très organisé et rigoureux. Respect des délais, documentation claire, suivi des bonnes pratiques de développement et conventions de code.",
+          "level": 87,
+          "levelLabel": "Avancé"
+        },
+        {
+          "icon": "💬",
+          "title": "Communication",
+          "description": "Bonne capacité de communication, tant à l'écrit qu'à l'oral. Capable d'expliquer des concepts techniques de manière claire et accessible.",
+          "level": 83,
+          "levelLabel": "Avancé"
+        },
+        {
+          "icon": "🌱",
+          "title": "Curiosité & Apprentissage",
+          "description": "Passionné par l'apprentissage continu. Toujours curieux de découvrir de nouvelles technologies, méthodes et bonnes pratiques du développement.",
+          "level": 94,
+          "levelLabel": "Expert"
+        },
+        {
+          "icon": "🤲",
+          "title": "Fiabilité & Engagement",
+          "description": "Fiable et engagé dans mes projets. Je prends mes responsabilités au sérieux et m'assure de la qualité et du respect des engagements pris.",
+          "level": 89,
+          "levelLabel": "Très Avancé"
+        }
+      ]
+    }
+  ]
+}

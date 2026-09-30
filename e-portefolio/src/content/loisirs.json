@@ -1,0 +1,53 @@
+{
+  "title": "Mes Loisirs & Passions",
+  "subtitle": "Ce qui me passionne en dehors du code",
+  "items": [
+    {
+      "icon": "🎮",
+      "label": "Jeux Vidéo",
+      "title": "Jeux Vidéo & Gaming",
+      "description": "Passionné par les jeux vidéo depuis longtemps. Je mets l'accent sur l'expérience de jeux : exploration d'univers, compétition, coopération en ligne et immersion. Le jeu est avant tout un loisir qui me permet de me détendre, d'analyser des mécaniques et d'apprendre des stratégies et des systèmes de gameplay.",
+      "shade": "500"
+    },
+    {
+      "icon": "🏁",
+      "label": "Sport Automobile",
+      "title": "Endurance & Championnats",
+      "description": "Passionné par le sport automobile, en particulier l'endurance (WEC) et les championnats annexes. Je suis les courses, étudie les stratégies et je m'intéresse aussi aux aspects techniques et logistiques des écuries.",
+      "shade": "600"
+    },
+    {
+      "icon": "🏉",
+      "label": "Rugby",
+      "title": "Rugby & Esprit d'équipe",
+      "description": "Passionné de rugby : j'apprécie l'esprit d'équipe, la stratégie collective et la préparation physique. Ce sport m'a appris le leadership et la résilience.",
+      "shade": "500"
+    },
+    {
+      "icon": "🕹️",
+      "label": "Réalisation de jeux / logiciels",
+      "title": "Création de jeux et logiciels",
+      "description": "Conception et développement de jeux et petits logiciels en projets personnels : design de gameplay, architecture logicielle, programmation (moteurs et scripts), tests et déploiement. J'aime transformer une idée en prototype jouable et itérer jusqu'à une version aboutie.",
+      "shade": "500"
+    }
+  ],
+  "impactTitle": "Comment mes passions influencent mon travail",
+  "impacts": [
+    {
+      "title": "🎨 Créativité & Design",
+      "text": "Mon travail sur la réalisation de jeux et logiciels, ainsi que mon intérêt pour les univers visuels du gaming et du sport automobile, m'a développé une sensibilité au design et à l'expérience utilisateur."
+    },
+    {
+      "title": "⚡ Curiosité Technique",
+      "text": "La réalisation de jeux et logiciels m'encourage à explorer constamment de nouvelles technologies, frameworks et outils pour améliorer mes projets."
+    },
+    {
+      "title": "🧠 Pensée analytique",
+      "text": "Le sport (rugby, endurance) m'a appris la discipline et la stratégie ; la création de jeux m'a formé à découper des problèmes complexes en tâches techniques réalisables."
+    },
+    {
+      "title": "🌍 Approche holistique",
+      "text": "Avoir des intérêts variés me permet d'avoir une vision globale, de mieux comprendre mes utilisateurs et de créer des solutions vraiment adaptées."
+    }
+  ]
+}

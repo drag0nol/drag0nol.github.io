@@ -88,3 +88,10 @@ Valeurs d'origine dans `src/content/competences.json`. « Rétablir l'original �
 `/admin` > **Expériences** : ajout, modification, réordonnancement, duplication et suppression des expériences (poste, entreprise, période, missions, étiquettes). La frise chronologique est générée automatiquement à partir des dates ; une expérience à plusieurs périodes (ex. deux étés) peut avoir plusieurs entrées dans la frise.
 Valeurs d'origine dans `src/content/experiences.json`. Nécessite `supabase/migration-competences.sql` (voir plus haut).
 
+### Atouts et loisirs
+
+- `/admin` > **Atouts** : chaque catégorie est un onglet de la page « Mes atouts » (outils numériques, langues, soft skills… ou les tiennes : certifications, etc.). Deux mises en page : **cartes avec barre de niveau** (icône, titre, description, niveau en % + texte) et **langues** (grand drapeau, phrase, détail, niveau). On ajoute, renomme, réordonne, duplique ou supprime catégories et éléments.
+- `/admin` > **Loisirs** : passions (icône, texte de la bulle, titre, description, teinte de la bulle) et bloc « impact sur mon travail ».
+
+Valeurs d'origine dans `src/content/atouts.json` et `src/content/loisirs.json` ; « Rétablir l'original » y revient. Nécessite `supabase/migration-competences.sql` (voir plus haut).
+

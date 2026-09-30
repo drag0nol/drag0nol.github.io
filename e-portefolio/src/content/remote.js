@@ -3,6 +3,8 @@ import { supabase, supabaseEnabled } from '@/lib/supabase'
 import profileDefaults from './profile.json'
 import competencesDefaults from './competences.json'
 import experiencesDefaults from './experiences.json'
+import atoutsDefaults from './atouts.json'
+import loisirsDefaults from './loisirs.json'
 import {
   projects as staticProjects,
   rawProjects,
@@ -74,3 +76,10 @@ export { competencesDefaults }
 export const experiencesRow = computed(() => rowsOf('experiences')[0] || null)
 export const experiences = computed(() => experiencesRow.value?.data || experiencesDefaults)
 export { experiencesDefaults }
+
+// Atouts et loisirs : la ligne de la base (kind atouts / loisirs) remplace entièrement le fichier JSON.
+export const atoutsRow = computed(() => rowsOf('atouts')[0] || null)
+export const atouts = computed(() => atoutsRow.value?.data || atoutsDefaults)
+export const loisirsRow = computed(() => rowsOf('loisirs')[0] || null)
+export const loisirs = computed(() => loisirsRow.value?.data || loisirsDefaults)
+export { atoutsDefaults, loisirsDefaults }
